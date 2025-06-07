@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Selector de Plantillas
+// @name         Selector de Plantillas Lois
 // @version      1.0
 // @description  Añade un selector de plantillas antes de ctl04_ExtenderContentEditable
 // @author       TuNombre
