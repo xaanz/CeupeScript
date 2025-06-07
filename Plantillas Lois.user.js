@@ -97,7 +97,28 @@
     const plantillas = [
 
         {
-            nombre: 'Bienvenida',
+            
+nombre: 'SESIÓN BIENVENIDA INESEM PRIVADOS',
+    contenido: datos => (
+        `${datos.greeting},
+Buenos días,
+
+¡Le damos la bienvenida a su formación! 
+
+Nos ponemos en contacto con usted para remitirle la sesión de bienvenida realizada por su docente.  A continuación, tiene la grabación para volver a visualizarla:
+
+https://recordings.reu1.blindsidenetworks.com/educaedtech/378a75e60574d1e21d5dd7904c53ba6bde395c8a-1720455154509/capture/
+
+Le recordamos que mediante el Centro de Ayuda podrá contactarnos siempre que lo necesite, le estaremos acompañando en todo su periodo formativo.
+
+¡Mucho ánimo!
+
+Un saludo,
+Un saludo.`
+    ).replace(/\r\n|\n/g, "</br>")
+},
+
+nombre: 'Bienvenida',
             contenido: datos => (
             `${datos.greeting},
 
@@ -144,7 +165,8 @@
                 )
         },
         {
-            nombre: 'Bienvenida UCAM',
+
+nombre: 'Bienvenida UCAM',
             contenido: datos => (
             `${datos.greeting},
 
@@ -190,7 +212,8 @@
             )
         },
         {
-            nombre: 'Enlace Bienvenida',
+
+nombre: 'Enlace Bienvenida',
             contenido: datos => (
         `${datos.greeting},
 
@@ -208,7 +231,8 @@
             )
         },
         {
-            nombre: 'Enlace masterclass grabada',
+
+nombre: 'Enlace masterclass grabada',
             contenido: datos => (
         `${datos.greeting},
 
@@ -224,7 +248,8 @@
             )
         },
 {
-    nombre: 'Seguimiento Base',
+
+nombre: 'Seguimiento Base',
     contenido: datos => (
     `${datos.greeting},
 
@@ -275,7 +300,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-    nombre: 'Seguimiento UCAM Base',
+
+nombre: 'Seguimiento UCAM Base',
     contenido: datos => (
     `${datos.greeting},
 
@@ -328,7 +354,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-        nombre: 'Seguimiento con avance',
+
+nombre: 'Seguimiento con avance',
         contenido: datos => (
         `${datos.greeting},
 
@@ -361,7 +388,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-    nombre: 'Seguimiento no responde ( 3 meses )',
+
+nombre: 'Seguimiento no responde ( 3 meses )',
     contenido: datos => (
     `${datos.greeting},
 
@@ -401,7 +429,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-    nombre: 'Seguimiento UCAM no responde ( 3 meses )',
+
+nombre: 'Seguimiento UCAM no responde ( 3 meses )',
     contenido: datos => (
     `${datos.greeting},
 
@@ -442,7 +471,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-    nombre: 'Dificultad de acceso',
+
+nombre: 'Dificultad de acceso',
     contenido: datos => (
     `${datos.greeting},
 
@@ -460,7 +490,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-        nombre: 'Acceso correcto',
+
+nombre: 'Acceso correcto',
         contenido: datos => (
     `${datos.greeting},
 
@@ -480,7 +511,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
       {
-    nombre: 'MC : Calendario No',
+
+nombre: 'MC : Calendario No',
     contenido: datos => (
             `${datos.greeting},
 
@@ -493,7 +525,8 @@
         ).replace(/\r\n|\n/g, "</br>")
     },
     {
-        nombre: 'Casos prácticos',
+
+nombre: 'Casos prácticos',
         contenido: datos => (
     `${datos.greeting},
 
@@ -515,7 +548,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-        nombre: 'Finalización Pendiente de cuotas',
+
+nombre: 'Finalización Pendiente de cuotas',
         contenido: datos => (
     `${datos.greeting},
 
@@ -561,7 +595,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-        nombre: 'Titulación y precios',
+
+nombre: 'Titulación y precios',
         contenido: datos => (
     `${datos.greeting},
 
@@ -599,7 +634,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-        nombre: 'Cancelación formación',
+
+nombre: 'Cancelación formación',
         contenido: datos => (
     `${datos.greeting},
 
@@ -615,7 +651,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-        nombre: 'Paralizar o congelar formación',
+
+nombre: 'Paralizar o congelar formación',
         contenido: datos => (
     `${datos.greeting},
 
@@ -639,7 +676,8 @@
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     {
-        nombre: 'verficacion violent monkey',
+
+nombre: 'verficacion violent monkey',
         contenido: datos => (
     `${datos.greeting},
     Fecha minima : ${datos.minimumFinishDate}
