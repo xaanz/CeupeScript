@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         InnoTutor País en Tutorías 2.1
+// @name         InnoTutor País en Tutorías Github version
 // @version      1.0
 // @description  Añade columna de país en base a matrícula
 // @author       Perplexity AI
