@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Tabla mejorada STUDENT SUCCESS padre
+// @name        Tabla mejorada STUDENT SUCCESS GitHub
 // @namespace   Violentmonkey Scripts
 // @grant       none
 // @version     1.0
