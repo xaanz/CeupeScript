@@ -5,6 +5,8 @@
 // @author       Perplexity AI
 // @grant        GM.xmlHttpRequest
 // @connect      innotutor.com
+// @updateURL    https://raw.githubusercontent.com/xaanz/CeupeScript/main/Filtrar%20Pais.user.js
+// @downloadURL  https://raw.githubusercontent.com/xaanz/CeupeScript/main/Filtrar%20Pais.user.js
 // ==/UserScript==
 
 (function() {
