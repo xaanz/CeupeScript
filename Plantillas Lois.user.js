@@ -99,28 +99,7 @@
     const plantillas = [
 
         {
-            
-nombre: 'SESIÓN BIENVENIDA INESEM PRIVADOS',
-    contenido: datos => (
-        `${datos.greeting},
-Buenos días,
-
-¡Le damos la bienvenida a su formación! 
-
-Nos ponemos en contacto con usted para remitirle la sesión de bienvenida realizada por su docente.  A continuación, tiene la grabación para volver a visualizarla:
-
-https://recordings.reu1.blindsidenetworks.com/educaedtech/378a75e60574d1e21d5dd7904c53ba6bde395c8a-1720455154509/capture/
-
-Le recordamos que mediante el Centro de Ayuda podrá contactarnos siempre que lo necesite, le estaremos acompañando en todo su periodo formativo.
-
-¡Mucho ánimo!
-
-Un saludo,
-Un saludo.`
-    ).replace(/\r\n|\n/g, "</br>")
-},
-
-nombre: 'Bienvenida',
+            nombre: 'Bienvenida',
             contenido: datos => (
             `${datos.greeting},
 
