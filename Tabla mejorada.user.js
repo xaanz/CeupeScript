@@ -2,11 +2,11 @@
 // @name        Tabla mejorada STUDENT SUCCESS GitHub
 // @namespace   Violentmonkey Scripts
 // @grant       none
-// @version     1.0
+// @version     1.2
 // @author      Rafa y lois
 // @description Mejora visual de la tabla de tutorías con filtros de búsqueda y por programa formativo. Colores de tutorías: Blanco (por defecto) para BS ESPAÑA, Amarillo para Bienvenidas, DarkOrange para BS INTERNACIONAL, LimeGreen para MOOC y Salmon para UDAVINCI
-// @updateURL   https://raw.githubusercontent.com/xaanz/CeupeScript/refs/heads/main/Tabla mejorada.user.js 
-// @downloadURL https://raw.githubusercontent.com/xaanz/CeupeScript/refs/heads/main/Tabla mejorada.user.js
+// @updateURL   https://github.com/xaanz/CeupeScript/raw/main/Tabla mejorada.user.js 
+// @downloadURL https://github.com/xaanz/CeupeScript/raw/main/Tabla mejorada.user.js
 // ==/UserScript==
 
 
