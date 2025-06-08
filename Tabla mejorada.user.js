@@ -5,7 +5,8 @@
 // @version     1.0
 // @author      Rafa y lois
 // @description Mejora visual de la tabla de tutorías con filtros de búsqueda y por programa formativo. Colores de tutorías: Blanco (por defecto) para BS ESPAÑA, Amarillo para Bienvenidas, DarkOrange para BS INTERNACIONAL, LimeGreen para MOOC y Salmon para UDAVINCI
-// @modified    2025-05-15
+// @updateURL    
+// @downloadURL  
 // ==/UserScript==
 
 
