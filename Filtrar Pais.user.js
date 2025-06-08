@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         InnoTutor País en Tutorías Github version
-// @version      1.0
+// @version      1.1
 // @description  Añade columna de país en base a matrícula
 // @author       Lois
 // @grant        GM.xmlHttpRequest
