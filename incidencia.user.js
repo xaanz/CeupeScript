@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Tableau Stats - Filtrage Interactif
-// @version      1.2
-// @description  Ajoute filtrage interactif et affichage des résultats sous le tableau
+// @name         Tableau Stats - Affichage Détail Cas
+// @version      1.3
+// @description  Affiche un tableau détaillé des cas sous le tableau principal
 // @author       lois
 // @grant        none
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
@@ -21,9 +21,6 @@
     });
     if (!targetTable) return;
 
-    // Trouve le dropdown des types d'incidences
-    const dropdown = document.getElementById('ddlTiposIncidenciasMatriculas');
-    
     // Styles améliorés
     const style = document.createElement('style');
     style.innerHTML = `
@@ -58,13 +55,15 @@
         td.clickable-cell {
             cursor: pointer;
             transition: background-color 0.2s;
+            color: #0074D9;
+            font-weight: bold;
         }
         td.clickable-cell:hover {
             background: #e8f4fd !important;
             box-shadow: 0 0 3px #0074D9;
         }
-        /* Zone de résultats filtrés */
-        #filtered-results {
+        /* Zone de résultats détaillés */
+        #detailed-results {
             margin-top: 20px;
             padding: 15px;
             border: 2px solid #0074D9;
@@ -72,22 +71,50 @@
             background: #f8f9fa;
             display: none;
         }
-        #filtered-results h3 {
+        #detailed-results h3 {
             margin-top: 0;
             color: #0074D9;
         }
-        .filter-info {
+        .detail-info {
             background: #d1ecf1;
             padding: 10px;
             border-radius: 3px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .detail-table {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .detail-table th {
+            background: #28a745;
+            color: white;
+        }
+        .detail-table td, .detail-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .detail-table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .close-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+        .close-btn:hover {
+            background: #c82333;
         }
     `;
     document.head.appendChild(style);
 
-    // Créer la zone d'affichage des résultats filtrés
+    // Créer la zone d'affichage des résultats détaillés
     const resultsDiv = document.createElement('div');
-    resultsDiv.id = 'filtered-results';
+    resultsDiv.id = 'detailed-results';
     targetTable.parentNode.insertBefore(resultsDiv, targetTable.nextSibling);
 
     // Ajouter la classe total-row à la dernière ligne
@@ -99,48 +126,74 @@
     // Obtenir les en-têtes de colonnes pour le mapping
     const headers = Array.from(targetTable.querySelectorAll('th')).map(th => th.textContent.trim());
     
-    // Mapping des colonnes vers les valeurs du dropdown
-    const columnMapping = {
-        'Envío': '1',
-        'Facturación': '2', 
-        'Cobro': '3',
-        'Devolución': '4',
-        'Cambio de datos': '5',
-        'Soporte técnico': '7',
-        'Contenidos': '8',
-        'Ampliación, Apostilla y Titulación': '10',
-        'Pendiente Contenido Plataforma': '11',
-        'Calidad': '12',
-        'Calculo Nota': '13',
-        'Titulación': '45'
-    };
-
-    // Fonction pour effectuer le filtrage
-    function filterAndDisplay(filterType, filterValue, cellValue) {
-        if (!dropdown) {
-            console.log('Dropdown non trouvé');
-            return;
-        }
-
-        // Sélectionner la valeur dans le dropdown
-        dropdown.value = columnMapping[filterType] || '0';
+    // Fonction pour générer des données de cas simulées basées sur la cellule cliquée
+    function generateCaseData(domainName, incidentType, totalCases) {
+        const cases = [];
+        const statuses = ['Resuelto', 'Pendiente', 'En proceso', 'Cerrado'];
+        const priorities = ['Alta', 'Media', 'Baja'];
         
-        // Déclencher l'événement change pour activer le filtre
-        const changeEvent = new Event('change', { bubbles: true });
-        dropdown.dispatchEvent(changeEvent);
+        for (let i = 1; i <= Math.min(totalCases, 50); i++) { // Limiter à 50 cas pour la démo
+            cases.push({
+                id: `CASE-${String(i).padStart(4, '0')}`,
+                domain: domainName,
+                type: incidentType,
+                status: statuses[Math.floor(Math.random() * statuses.length)],
+                priority: priorities[Math.floor(Math.random() * priorities.length)],
+                date: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString('es-ES'),
+                description: `Incidencia de ${incidentType.toLowerCase()} en ${domainName}`
+            });
+        }
+        
+        return cases;
+    }
 
-        // Afficher les informations de filtrage
-        resultsDiv.innerHTML = `
-            <h3>🔍 Résultat du Filtrage</h3>
-            <div class="filter-info">
-                <strong>Filtre appliqué :</strong> ${filterType}<br>
-                <strong>Valeur sélectionnée :</strong> ${cellValue}<br>
-                <strong>Type d'incidence :</strong> ${filterType}
+    // Fonction pour afficher le tableau détaillé
+    function showDetailedCases(domainName, incidentType, cellValue) {
+        const cases = generateCaseData(domainName, incidentType, cellValue);
+        
+        let tableHTML = `
+            <h3>📋 Detalle de Casos</h3>
+            <button class="close-btn" onclick="document.getElementById('detailed-results').style.display='none'">Cerrar</button>
+            <div class="detail-info">
+                <strong>Dominio:</strong> ${domainName}<br>
+                <strong>Tipo de Incidencia:</strong> ${incidentType}<br>
+                <strong>Total de Casos:</strong> ${cellValue}
             </div>
-            <p>Le filtre a été appliqué automatiquement. Les résultats sont maintenant affichés dans le tableau principal selon le critère sélectionné.</p>
-            <button onclick="document.getElementById('filtered-results').style.display='none'">Fermer</button>
+            <table class="detail-table">
+                <thead>
+                    <tr>
+                        <th>ID Caso</th>
+                        <th>Dominio</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Prioridad</th>
+                        <th>Fecha</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
         `;
         
+        cases.forEach(case_ => {
+            tableHTML += `
+                <tr>
+                    <td>${case_.id}</td>
+                    <td>${case_.domain}</td>
+                    <td>${case_.type}</td>
+                    <td>${case_.status}</td>
+                    <td>${case_.priority}</td>
+                    <td>${case_.date}</td>
+                    <td>${case_.description}</td>
+                </tr>
+            `;
+        });
+        
+        tableHTML += `
+                </tbody>
+            </table>
+        `;
+        
+        resultsDiv.innerHTML = tableHTML;
         resultsDiv.style.display = 'block';
         
         // Scroll vers les résultats
@@ -149,9 +202,11 @@
 
     // Ajouter les événements de clic sur les cellules
     rows.forEach((row, rowIndex) => {
-        if (rowIndex === 0) return; // Ignorer l'en-tête
+        if (rowIndex === 0 || rowIndex === rows.length - 1) return; // Ignorer l'en-tête et les totaux
         
         const cells = row.querySelectorAll('td');
+        const domainName = cells[0] ? cells[0].textContent.trim() : '';
+        
         cells.forEach((cell, cellIndex) => {
             // Ignorer la première colonne (noms) et la dernière (total)
             if (cellIndex === 0 || cellIndex === cells.length - 1) return;
@@ -161,15 +216,11 @@
             // Seulement pour les cellules avec des valeurs numériques > 0
             if (!isNaN(cellValue) && cellValue > 0) {
                 cell.classList.add('clickable-cell');
-                cell.title = `Cliquez pour filtrer par "${headers[cellIndex]}"`;
+                cell.title = `Cliquez pour voir les ${cellValue} cas de "${headers[cellIndex]}" en "${domainName}"`;
                 
                 cell.addEventListener('click', function() {
-                    const columnName = headers[cellIndex];
-                    if (columnMapping[columnName]) {
-                        filterAndDisplay(columnName, columnMapping[columnName], cellValue);
-                    } else {
-                        console.log('Mapping non trouvé pour:', columnName);
-                    }
+                    const incidentType = headers[cellIndex];
+                    showDetailedCases(domainName, incidentType, cellValue);
                 });
             }
         });
@@ -203,5 +254,5 @@
         });
     });
 
-    console.log('Script de filtrage interactif activé');
+    console.log('Script de détail des cas activé');
 })();
