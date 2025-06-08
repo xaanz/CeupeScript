@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Amélioration Tableau Stats
-// @version      1.0
+// @version      1.1
 // @description  Améliore la lisibilité et l'interactivité du tableau des domaines
 // @author       lois
 // @grant        none
@@ -11,7 +11,7 @@
 (function() {
     'use strict';
 
-    // Sélectionne le tableau en cherchant la colonne "ART AND ARCHITECTURE AREA"
+    // Sélection du tableau par la colonne "ART AND ARCHITECTURE AREA"
     let tables = document.querySelectorAll('table');
     let targetTable = null;
     tables.forEach(table => {
@@ -21,70 +21,60 @@
     });
     if (!targetTable) return;
 
-    // Ajoute un style moderne
+    // Fonction pour calculer et afficher le total filtré
+    function updateFilteredTotal() {
+        // Retirer l'ancien total filtré s'il existe
+        let old = targetTable.querySelector('tr.filtered-total-row');
+        if (old) old.remove();
+
+        let rows = targetTable.querySelectorAll('tr');
+        let colCount = rows[0].children.length;
+        let totals = Array(colCount).fill(0);
+
+        // Pour chaque ligne visible (hors entête et totaux), additionner les valeurs
+        for (let i = 1; i < rows.length - 1; i++) {
+            let row = rows[i];
+            if (row.style.display === "none") continue; // ignorer les lignes cachées
+            for (let j = 1; j < colCount; j++) {
+                let cell = row.children[j];
+                if (!cell) continue;
+                let val = parseFloat(cell.textContent.replace(/\s/g, '').replace(',','.')) || 0;
+                totals[j] += val;
+            }
+        }
+
+        // Créer la ligne de total filtré
+        let filteredRow = document.createElement('tr');
+        filteredRow.className = 'filtered-total-row';
+        filteredRow.style.background = '#ffeeba';
+        for (let j = 0; j < colCount; j++) {
+            let td = document.createElement(j === 0 ? 'td' : 'td');
+            td.textContent = j === 0 ? 'Total filtré' : totals[j];
+            td.style.fontWeight = 'bold';
+            filteredRow.appendChild(td);
+        }
+        targetTable.tBodies[0].appendChild(filteredRow);
+    }
+
+    // Ajout d’un style pour la ligne de total filtré
     const style = document.createElement('style');
     style.innerHTML = `
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-        }
-        th, td {
-            border: 1px solid #cccccc;
-            padding: 8px 6px;
-            text-align: center;
-        }
-        th {
-            background: #0074D9;
-            color: white;
-            cursor: pointer;
-        }
-        tr:hover td {
-            background: #f0f8ff !important;
-        }
-        tr.total-row td {
+        tr.filtered-total-row td {
             font-weight: bold;
-            background: #e0e0e0;
-        }
-        td:last-child, th:last-child {
-            font-weight: bold;
-            background: #f6f6f6;
+            background: #ffeeba;
+            color: #222;
         }
     `;
     document.head.appendChild(style);
 
-    // Ajoute la classe "total-row" à la dernière ligne
-    let rows = targetTable.querySelectorAll('tr');
-    if (rows.length > 1) {
-        rows[rows.length-1].classList.add('total-row');
-    }
+    // Appeler la fonction après chaque filtre (à adapter selon votre méthode de filtrage)
+    // Exemple : si vous filtrez avec un champ texte ou des boutons, appelez updateFilteredTotal() après chaque action de filtrage
 
-    // Fonction de tri
-    function sortTable(table, col, reverse) {
-        const tbody = table.tBodies[0] || table;
-        Array.from(tbody.querySelectorAll('tr:not(.total-row)'))
-            .sort((a, b) => {
-                let aText = a.children[col].innerText.trim();
-                let bText = b.children[col].innerText.trim();
-                let aNum = parseFloat(aText.replace(/\s/g, '').replace(',','.')) || 0;
-                let bNum = parseFloat(bText.replace(/\s/g, '').replace(',','.')) || 0;
-                if (!isNaN(aNum) && !isNaN(bNum)) {
-                    return reverse ? bNum - aNum : aNum - bNum;
-                }
-                return reverse ? bText.localeCompare(aText) : aText.localeCompare(bText);
-            })
-            .forEach(tr => tbody.appendChild(tr));
-    }
+    // Appel initial
+    updateFilteredTotal();
 
-    // Ajoute le tri sur chaque colonne
-    let ths = targetTable.querySelectorAll('th');
-    ths.forEach((th, idx) => {
-        th.addEventListener('click', function() {
-            let reverse = th.classList.contains('sorted-asc');
-            ths.forEach(t => t.classList.remove('sorted-asc', 'sorted-desc'));
-            th.classList.add(reverse ? 'sorted-desc' : 'sorted-asc');
-            sortTable(targetTable, idx, !reverse);
-        });
-    });
+    // Exemple : observer les changements de visibilité des lignes (filtrage par JS)
+    const observer = new MutationObserver(updateFilteredTotal);
+    observer.observe(targetTable, { subtree: true, attributes: true, attributeFilter: ['style'] });
+
 })();
