@@ -1,8 +1,10 @@
 // ==UserScript==
 // @name         Selector de Plantillas Lois
-// @version      1.0
+// @version      1.1
 // @description  Añade un selector de plantillas antes de ctl04_ExtenderContentEditable
-// @author       TuNombre
+// @author       Lois
+// @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas%20Lois.user.js
+// @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Plantillas%20Lois.user.js
 // ==/UserScript==
 
 (function() {
