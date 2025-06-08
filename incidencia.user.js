@@ -4,6 +4,8 @@
 // @description  Améliore la lisibilité et l'interactivité du tableau des domaines
 // @author       lois
 // @grant        none
+// @updateURL    https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
+// @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
 // ==/UserScript==
 
 (function() {
