@@ -2,7 +2,7 @@
 // @name         InnoTutor País en Tutorías Github version
 // @version      1.0
 // @description  Añade columna de país en base a matrícula
-// @author       Perplexity AI
+// @author       Lois
 // @grant        GM.xmlHttpRequest
 // @connect      innotutor.com
 // @updateURL    https://raw.githubusercontent.com/xaanz/CeupeScript/main/Filtrar%20Pais.user.js
