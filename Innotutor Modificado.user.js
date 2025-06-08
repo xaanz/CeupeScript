@@ -7,6 +7,8 @@
 // @grant        none
 // @grant        GM_xmlhttpRequest
 // @connect      innotutor.com
+// @updateURL    https://raw.githubusercontent.com/xaanz/CeupeScript/main/Innotutor%20Modificado.user.js
+// @downloadURL  https://raw.githubusercontent.com/xaanz/CeupeScript/main/Innotutor%20Modificado.user.js
 // ==/UserScript==
 
 (function() {
