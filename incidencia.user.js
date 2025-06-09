@@ -5,6 +5,8 @@
 // @description  Filtro fixe par Programme et bouton pour n’afficher que les lignes avec résultat dans "País"
 // @match        http://innotutor.com/Tutoria/ResolverIncidenciasMatriculas.aspx
 // @grant        none
+// @updateURL   https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
+// @downloadURL https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
 // ==/UserScript==
 
 (function() {
