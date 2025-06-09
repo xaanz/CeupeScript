@@ -3,7 +3,6 @@
 // @namespace    Violentmonkey Scripts
 // @version      2.2
 // @description  Botón moderno para filtros, mejora visual y filtro por tipo en tabla de incidencias
-// @match        http://innotutor.com/Tutoria/ResolverIncidenciasMatriculas.aspx
 // @grant        none
 // @updateURL   https://github.com/xaanz/CeupeScript/raw/main/Mejoras graficas Incidencias.user.js
 // @downloadURL https://github.com/xaanz/CeupeScript/raw/main/Mejoras graficas Incidencias.user.js
