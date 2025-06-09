@@ -1,258 +1,442 @@
 // ==UserScript==
-// @name         Tableau Stats - Affichage Détail Cas
-// @version      1.3
-// @description  Affiche un tableau détaillé des cas sous le tableau principal
-// @author       lois
+// @name         incidencia
+// @namespace    http://tampermonkey.net/
+// @version      1.7
+// @description  Filtro fixe par Programme et bouton pour n’afficher que les lignes avec résultat dans "País"
+// @match        http://innotutor.com/Tutoria/ResolverIncidenciasMatriculas.aspx
 // @grant        none
-// @updateURL    https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
-// @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    // Sélectionne le tableau
-    let tables = document.querySelectorAll('table');
-    let targetTable = null;
-    tables.forEach(table => {
-        if (table.innerText.includes('ART AND ARCHITECTURE AREA')) {
-            targetTable = table;
-        }
-    });
-    if (!targetTable) return;
+    let detenerBusqueda = false;
 
-    // Styles améliorés
-    const style = document.createElement('style');
-    style.innerHTML = `
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-        }
-        th, td {
-            border: 1px solid #cccccc;
-            padding: 8px 6px;
-            text-align: center;
-        }
-        th {
-            background: #0074D9;
-            color: white;
-            cursor: pointer;
-        }
-        tr:hover td {
-            background: #f0f8ff !important;
-        }
-        tr.total-row td {
-            font-weight: bold;
-            background: #e0e0e0;
-        }
-        td:last-child, th:last-child {
-            font-weight: bold;
-            background: #f6f6f6;
-        }
-        /* Styles pour les cellules cliquables */
-        td.clickable-cell {
-            cursor: pointer;
-            transition: background-color 0.2s;
-            color: #0074D9;
-            font-weight: bold;
-        }
-        td.clickable-cell:hover {
-            background: #e8f4fd !important;
-            box-shadow: 0 0 3px #0074D9;
-        }
-        /* Zone de résultats détaillés */
-        #detailed-results {
-            margin-top: 20px;
-            padding: 15px;
-            border: 2px solid #0074D9;
-            border-radius: 5px;
-            background: #f8f9fa;
-            display: none;
-        }
-        #detailed-results h3 {
-            margin-top: 0;
-            color: #0074D9;
-        }
-        .detail-info {
-            background: #d1ecf1;
-            padding: 10px;
-            border-radius: 3px;
-            margin-bottom: 15px;
-        }
-        .detail-table {
-            width: 100%;
-            margin-top: 10px;
-        }
-        .detail-table th {
-            background: #28a745;
-            color: white;
-        }
-        .detail-table td, .detail-table th {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .detail-table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        .close-btn {
-            background: #dc3545;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
-        }
-        .close-btn:hover {
-            background: #c82333;
-        }
-    `;
-    document.head.appendChild(style);
+    const tabla = document.querySelector('table.cuadro_incidencias_matriculas');
+    if (!tabla) return;
 
-    // Créer la zone d'affichage des résultats détaillés
-    const resultsDiv = document.createElement('div');
-    resultsDiv.id = 'detailed-results';
-    targetTable.parentNode.insertBefore(resultsDiv, targetTable.nextSibling);
-
-    // Ajouter la classe total-row à la dernière ligne
-    let rows = targetTable.querySelectorAll('tr');
-    if (rows.length > 1) {
-        rows[rows.length-1].classList.add('total-row');
+    // 1. Supprimer la colonne "Estado" si elle existe
+    const filaEncabezado = tabla.querySelector('thead tr, tr:first-child');
+    let indiceColEstado = -1;
+    if (filaEncabezado) {
+        const ths = Array.from(filaEncabezado.children);
+        indiceColEstado = ths.findIndex(th => th.textContent.trim().toLowerCase() === 'estado');
     }
-
-    // Obtenir les en-têtes de colonnes pour le mapping
-    const headers = Array.from(targetTable.querySelectorAll('th')).map(th => th.textContent.trim());
-    
-    // Fonction pour générer des données de cas simulées basées sur la cellule cliquée
-    function generateCaseData(domainName, incidentType, totalCases) {
-        const cases = [];
-        const statuses = ['Resuelto', 'Pendiente', 'En proceso', 'Cerrado'];
-        const priorities = ['Alta', 'Media', 'Baja'];
-        
-        for (let i = 1; i <= Math.min(totalCases, 50); i++) { // Limiter à 50 cas pour la démo
-            cases.push({
-                id: `CASE-${String(i).padStart(4, '0')}`,
-                domain: domainName,
-                type: incidentType,
-                status: statuses[Math.floor(Math.random() * statuses.length)],
-                priority: priorities[Math.floor(Math.random() * priorities.length)],
-                date: new Date(2024, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).toLocaleDateString('es-ES'),
-                description: `Incidencia de ${incidentType.toLowerCase()} en ${domainName}`
-            });
-        }
-        
-        return cases;
-    }
-
-    // Fonction pour afficher le tableau détaillé
-    function showDetailedCases(domainName, incidentType, cellValue) {
-        const cases = generateCaseData(domainName, incidentType, cellValue);
-        
-        let tableHTML = `
-            <h3>📋 Detalle de Casos</h3>
-            <button class="close-btn" onclick="document.getElementById('detailed-results').style.display='none'">Cerrar</button>
-            <div class="detail-info">
-                <strong>Dominio:</strong> ${domainName}<br>
-                <strong>Tipo de Incidencia:</strong> ${incidentType}<br>
-                <strong>Total de Casos:</strong> ${cellValue}
-            </div>
-            <table class="detail-table">
-                <thead>
-                    <tr>
-                        <th>ID Caso</th>
-                        <th>Dominio</th>
-                        <th>Tipo</th>
-                        <th>Estado</th>
-                        <th>Prioridad</th>
-                        <th>Fecha</th>
-                        <th>Descripción</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-        
-        cases.forEach(case_ => {
-            tableHTML += `
-                <tr>
-                    <td>${case_.id}</td>
-                    <td>${case_.domain}</td>
-                    <td>${case_.type}</td>
-                    <td>${case_.status}</td>
-                    <td>${case_.priority}</td>
-                    <td>${case_.date}</td>
-                    <td>${case_.description}</td>
-                </tr>
-            `;
+    if (indiceColEstado !== -1) {
+        tabla.querySelectorAll('tr').forEach(fila => {
+            if (fila.cells.length > indiceColEstado) {
+                fila.deleteCell(indiceColEstado);
+            }
         });
-        
-        tableHTML += `
-                </tbody>
-            </table>
-        `;
-        
-        resultsDiv.innerHTML = tableHTML;
-        resultsDiv.style.display = 'block';
-        
-        // Scroll vers les résultats
-        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Ajouter les événements de clic sur les cellules
-    rows.forEach((row, rowIndex) => {
-        if (rowIndex === 0 || rowIndex === rows.length - 1) return; // Ignorer l'en-tête et les totaux
-        
-        const cells = row.querySelectorAll('td');
-        const domainName = cells[0] ? cells[0].textContent.trim() : '';
-        
-        cells.forEach((cell, cellIndex) => {
-            // Ignorer la première colonne (noms) et la dernière (total)
-            if (cellIndex === 0 || cellIndex === cells.length - 1) return;
-            
-            const cellValue = parseInt(cell.textContent.trim());
-            
-            // Seulement pour les cellules avec des valeurs numériques > 0
-            if (!isNaN(cellValue) && cellValue > 0) {
-                cell.classList.add('clickable-cell');
-                cell.title = `Cliquez pour voir les ${cellValue} cas de "${headers[cellIndex]}" en "${domainName}"`;
-                
-                cell.addEventListener('click', function() {
-                    const incidentType = headers[cellIndex];
-                    showDetailedCases(domainName, incidentType, cellValue);
-                });
+    // 2. Index de la colonne "Programa"
+    let indiceColPrograma = -1;
+    if (filaEncabezado) {
+        const ths = Array.from(filaEncabezado.children);
+        indiceColPrograma = ths.findIndex(th =>
+            th.textContent.trim().toLowerCase() === 'programa' ||
+            th.textContent.trim().toLowerCase() === 'programma'
+        );
+        if (indiceColPrograma !== -1) {
+            const thPrograma = filaEncabezado.children[indiceColPrograma];
+            thPrograma.id = "columna_programa";
+            thPrograma.classList.add("col_programa");
+            thPrograma.textContent = "Programa";
+        }
+    }
+    if (indiceColPrograma === -1) return;
+
+    // 3. Nettoyer la colonne Programme (texte uniquement)
+    const filas = tabla.querySelectorAll('tbody tr');
+    filas.forEach(fila => {
+        const celda = fila.cells[indiceColPrograma];
+        if (!celda) return;
+        const img = celda.querySelector('img');
+        if (img) {
+            let texto = img.alt || img.title || '';
+            if (!texto.trim() && img.src) {
+                let partesSrc = img.src.split('/');
+                let nombreArchivo = partesSrc[partesSrc.length - 1].split('.')[0];
+                texto = nombreArchivo.replace(/_/g, ' ').replace(/%20/g, ' ').trim();
+            }
+            if (!texto.trim()) texto = 'Programa';
+            texto = texto.replace(/^Programa Formación:\s*/i, '');
+            img.remove();
+            celda.textContent = texto;
+        }
+        celda.setAttribute('data-programa', celda.textContent.trim());
+        celda.setAttribute('headers', 'columna_programa');
+    });
+
+    // 4. Liste fixe des programmes pour le filtre
+    const listaProgramas = [
+        "2EDOP",
+        "2EMAG",
+        "2NEDU",
+        "CECE",
+        "CEDE",
+        "CESA",
+        "CESU",
+        "CEUM",
+        "CEUP",
+        "CONE",
+        "EDOP",
+        "EDUB",
+        "EDUS",
+        "EMAG",
+        "ESCP",
+        "ESIB",
+        "EUDE",
+        "EUFO",
+        "EUNE",
+        "EUNO",
+        "EURB09",
+        "EURB21",
+        "EURB22",
+        "EURO",
+        "EURP",
+        "FPDP",
+        "IEPROB25",
+        "INEAB25",
+        "INEAF",
+        "INEB15",
+        "INEB16",
+        "INEB17",
+        "INEB21",
+        "INEB22",
+        "INEB23",
+        "INEB24",
+        "INEB25",
+        "INES",
+        "ISAL",
+        "ITAL",
+        "MANE",
+        "MANI",
+        "MCER",
+        "MOFI",
+        "MOOC",
+        "MUDE",
+        "NEBE",
+        "NEBI",
+        "NEDU",
+        "NFCE",
+        "NFCI",
+        "OPAM",
+        "REDE",
+        "SANE",
+        "SIUM",
+        "SKRO",
+        "STEDU",
+        "STISA",
+        "STRU",
+        "STRUB24",
+        "STRUB25",
+        "STRUP",
+        "STUC",
+        "STUDA",
+        "UANE",
+        "UCAF",
+        "UCAM",
+        "UCAV",
+        "UCED",
+        "UCIN",
+        "UCJC",
+        "UCNE",
+        "UCTU",
+        "UDAV",
+        "UDIN",
+        "UECA",
+        "UHEM",
+        "UJPI",
+        "UMAT",
+        "UNOR",
+        "UPAD",
+        "UPIH",
+        "UPSA",
+        "URJC",
+        "USEK",
+        "UTEG",
+        "UULA",
+        "VICO",
+        "VINC"
+    ];
+
+    // 5. Créer le filtre déroulant Programme
+    const divFiltro = document.createElement('div');
+    divFiltro.style.margin = "10px 0";
+    const labelFiltro = document.createElement('label');
+    labelFiltro.textContent = "Filtrar por Programa: ";
+    labelFiltro.style.marginRight = "8px";
+    const selectFiltro = document.createElement('select');
+    selectFiltro.style.padding = "5px";
+    selectFiltro.style.borderRadius = "4px";
+    selectFiltro.style.border = "1px solid #ccc";
+    selectFiltro.style.width = "250px";
+    // Option "Tous"
+    const optionTous = document.createElement('option');
+    optionTous.value = "";
+    optionTous.textContent = "TODOS";
+    selectFiltro.appendChild(optionTous);
+    // Options fixes
+    listaProgramas.forEach(valor => {
+        const opt = document.createElement('option');
+        opt.value = valor;
+        opt.textContent = valor;
+        selectFiltro.appendChild(opt);
+    });
+    divFiltro.appendChild(labelFiltro);
+    divFiltro.appendChild(selectFiltro);
+    tabla.parentNode.insertBefore(divFiltro, tabla);
+
+    // 6. Filtrage par programme
+    selectFiltro.addEventListener('change', function() {
+        const filtre = selectFiltro.value;
+        filas.forEach(fila => {
+            const celda = fila.cells[indiceColPrograma];
+            if (!celda) return;
+            if (!filtre || celda.textContent.trim() === filtre) {
+                fila.style.display = "";
+            } else {
+                fila.style.display = "none";
             }
         });
     });
 
-    // Fonction de tri (conservée du script original)
-    function sortTable(table, col, reverse) {
-        const tbody = table.tBodies[0] || table;
-        Array.from(tbody.querySelectorAll('tr:not(.total-row)'))
-            .sort((a, b) => {
-                let aText = a.children[col].innerText.trim();
-                let bText = b.children[col].innerText.trim();
-                let aNum = parseFloat(aText.replace(/\s/g, '').replace(',','.')) || 0;
-                let bNum = parseFloat(bText.replace(/\s/g, '').replace(',','.')) || 0;
-                if (!isNaN(aNum) && !isNaN(bNum)) {
-                    return reverse ? bNum - aNum : aNum - bNum;
-                }
-                return reverse ? bText.localeCompare(aText) : aText.localeCompare(bText);
-            })
-            .forEach(tr => tbody.appendChild(tr));
+    // 7. Index de la colonne "País"
+    let indiceColPais = -1;
+    if (filaEncabezado) {
+        const ths = Array.from(filaEncabezado.children);
+        indiceColPais = ths.findIndex(th => th.textContent.trim().toLowerCase() === 'país' || th.textContent.trim().toLowerCase() === 'pays');
+        if (indiceColPais === -1) {
+            const thPais = document.createElement('th');
+            thPais.textContent = 'País';
+            thPais.style.backgroundColor = '#1976d2';
+            thPais.style.color = '#fff';
+            filaEncabezado.appendChild(thPais);
+            indiceColPais = filaEncabezado.children.length - 1;
+        }
     }
 
-    // Ajouter le tri sur chaque en-tête
-    let ths = targetTable.querySelectorAll('th');
-    ths.forEach((th, idx) => {
-        th.addEventListener('click', function() {
-            let reverse = th.classList.contains('sorted-asc');
-            ths.forEach(t => t.classList.remove('sorted-asc', 'sorted-desc'));
-            th.classList.add(reverse ? 'sorted-desc' : 'sorted-asc');
-            sortTable(targetTable, idx, !reverse);
-        });
+    // 8. Ajouter la colonne "País" si besoin
+    filas.forEach(fila => {
+        if (fila.cells.length === filaEncabezado.children.length - 1) {
+            const celdaPais = document.createElement('td');
+            celdaPais.textContent = '...';
+            celdaPais.style.textAlign = 'center';
+            fila.appendChild(celdaPais);
+        }
     });
 
-    console.log('Script de détail des cas activé');
+  const cuadroIncidencias = document.createElement('div');
+cuadroIncidencias.id = 'cuadro-incidencias-visibles';
+cuadroIncidencias.style.cssText = `
+    background: #1976d2;
+    color: white;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 6px;
+    display: inline-block;
+    margin: 10px 0 14px 0;
+    font-size: 18px;
+`;
+cuadroIncidencias.textContent = 'Incidencias visibles: ...';
+tabla.parentNode.insertBefore(cuadroIncidencias, tabla);
+
+// Función para contar y actualizar el número de incidencias visibles
+function actualizarContadorIncidencias() {
+    const filas = Array.from(tabla.querySelectorAll('tbody tr'));
+    // Excluye la primera fila (índice 0) y cuenta solo las visibles
+    const filasVisibles = filas.slice(1).filter(fila => fila.style.display !== 'none');
+    cuadroIncidencias.textContent = `Incidencias visibles: ${filasVisibles.length}`;
+}
+
+// Actualiza el contador al cargar y cada 5 segundos
+actualizarContadorIncidencias();
+setInterval(actualizarContadorIncidencias, 5000);
+
+// (Opcional) Actualiza el contador también al cambiar el filtro
+if (typeof selectFiltro !== 'undefined') {
+    selectFiltro.addEventListener('change', actualizarContadorIncidencias);
+}
+
+        // 10. Boutons de recherche (inchangés)
+    const botonIniciar = document.createElement('button');
+    botonIniciar.textContent = 'Buscar País';
+    botonIniciar.style.cssText = `
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px 10px 10px 0;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+    `;
+
+    const botonDetener = document.createElement('button');
+    botonDetener.textContent = 'Detener búsqueda';
+    botonDetener.style.cssText = `
+        background: #f44336;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px 0 10px 0;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+    `;
+    botonDetener.disabled = true;
+
+    botonIniciar.addEventListener('click', async () => {
+        detenerBusqueda = false;
+        botonIniciar.disabled = true;
+        botonDetener.disabled = false;
+        botonIniciar.textContent = 'Buscando...';
+        await procesarFilas();
+        botonIniciar.textContent = 'Buscar País';
+        botonIniciar.disabled = false;
+        botonDetener.disabled = true;
+    });
+
+    botonDetener.addEventListener('click', () => {
+        detenerBusqueda = true;
+    });
+
+    tabla.parentNode.insertBefore(botonIniciar, tabla);
+    tabla.parentNode.insertBefore(botonDetener, tabla);
+
+    // 11. Traitement principal (inchangé)
+    async function procesarFilas() {
+        const filas = tabla.querySelectorAll('tbody tr');
+        let indiceCodigo = 1;
+        if (filaEncabezado) {
+            const ths = filaEncabezado.querySelectorAll('th');
+            ths.forEach((th, idx) => {
+                if (th.textContent.trim().toLowerCase().includes('código')) {
+                    indiceCodigo = idx;
+                }
+            });
+        }
+        let indicePais = -1;
+        if (filaEncabezado) {
+            const ths = filaEncabezado.querySelectorAll('th');
+            ths.forEach((th, idx) => {
+                if (th.textContent.trim() === 'País') {
+                    indicePais = idx;
+                }
+            });
+        }
+        for (let i = 1; i < filas.length; i++) {
+            if (detenerBusqueda) {
+                for (let j = i; j < filas.length; j++) {
+                    const fila = filas[j];
+                    const celdaPais = fila.cells[indicePais];
+                    if (celdaPais.textContent === 'En espera...') {
+                        celdaPais.textContent = 'Detenido';
+                        celdaPais.style.backgroundColor = '#ffe0b2';
+                    }
+                }
+                break;
+            }
+            const fila = filas[i];
+            const celdaCodigo = fila.cells[indiceCodigo];
+            const celdaPais = fila.cells[indicePais];
+            if (!celdaCodigo) {
+                celdaPais.textContent = 'Columna Código no encontrada';
+                celdaPais.style.backgroundColor = '#f8d7da';
+                continue;
+            }
+            const codigo = celdaCodigo.textContent.trim();
+            celdaPais.textContent = `Buscando ${i}/${filas.length - 1}...`;
+            celdaPais.style.backgroundColor = '#fff3cd';
+
+            try {
+                const matricula = await obtenerMatricula(codigo);
+
+                if (matricula) {
+                    const pais = await obtenerPais(matricula);
+
+                    celdaPais.textContent = pais || 'No encontrado';
+                    celdaPais.style.backgroundColor = pais ? '#d4edda' : '#f8d7da';
+                } else {
+                    celdaPais.textContent = 'Matrícula no encontrada';
+                    celdaPais.style.backgroundColor = '#f8d7da';
+                }
+            } catch (error) {
+                console.error(`Error para el código ${codigo}:`, error);
+                celdaPais.textContent = 'Error';
+                celdaPais.style.backgroundColor = '#f8d7da';
+            }
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
+    }
+
+    async function obtenerMatricula(codigo) {
+        const codigoCodificado = encodeURIComponent(codigo);
+        const url = `http://innotutor.com/Tutoria/IncidenciaMatricula.aspx?incidenciaMatriculaId=${codigoCodificado}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            let elementoMatricula =
+                doc.getElementById('datosAlumnoCurso_txtNumeroMatricula') ||
+                doc.querySelector('input[name="datosAlumnoCurso$txtNumeroMatricula"]') ||
+                doc.querySelector('input[id*="NumeroMatricula"]') ||
+                doc.querySelector('input[name*="NumeroMatricula"]');
+
+            if (!elementoMatricula) {
+                console.warn('Matrícula no encontrada en la página', url);
+                return null;
+            }
+            return elementoMatricula.value || null;
+        } catch (error) {
+            console.error('Error obteniendo matrícula:', error);
+            return null;
+        }
+    }
+
+    async function obtenerPais(matricula) {
+        const url = `http://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx?matriculaId=${encodeURIComponent(matricula)}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            let inputPais = doc.querySelector('input#txtPais');
+            if (inputPais && inputPais.value) {
+                return inputPais.value.trim();
+            }
+            console.warn('Campo país no encontrado en la página:', url);
+            return null;
+        } catch (error) {
+            console.error('Error obteniendo país:', error);
+            return null;
+        }
+    }
+
+    // 12. Style pour la table
+    const estilo = document.createElement('style');
+    estilo.innerHTML = `
+        table.cuadro_incidencias_matriculas {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table.cuadro_incidencias_matriculas th,
+        table.cuadro_incidencias_matriculas td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table.cuadro_incidencias_matriculas tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    `;
+    document.head.appendChild(estilo);
+
 })();
