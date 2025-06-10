@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         incidencia
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.8
 // @description  Filtro fixe par Programme et bouton pour n’afficher que les lignes avec résultat dans "País"
-// @match        http://innotutor.com/Tutoria/ResolverIncidenciasMatriculas.aspx
+// @match        *://innotutor.com/Tutoria/ResolverIncidenciasMatriculas.aspx
 // @grant        none
 // @updateURL   https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
 // @downloadURL https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
@@ -376,7 +376,7 @@ if (typeof selectFiltro !== 'undefined') {
 
     async function obtenerMatricula(codigo) {
         const codigoCodificado = encodeURIComponent(codigo);
-        const url = `http://innotutor.com/Tutoria/IncidenciaMatricula.aspx?incidenciaMatriculaId=${codigoCodificado}`;
+        const url = `//innotutor.com/Tutoria/IncidenciaMatricula.aspx?incidenciaMatriculaId=${codigoCodificado}`;
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
@@ -402,7 +402,7 @@ if (typeof selectFiltro !== 'undefined') {
     }
 
     async function obtenerPais(matricula) {
-        const url = `http://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx?matriculaId=${encodeURIComponent(matricula)}`;
+        const url = `//innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx?matriculaId=${encodeURIComponent(matricula)}`;
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
