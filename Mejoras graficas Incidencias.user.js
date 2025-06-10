@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Mejoras graficas Incidencias
 // @namespace    Violentmonkey Scripts
-// @version      2.3
+// @version      2.4
 // @description  Botón moderno para filtros, mejora visual y filtro por tipo en tabla de incidencias
-// @grant        none
+// @grant GM_addStyle
 // @updateURL   https://github.com/xaanz/CeupeScript/raw/main/Mejoras graficas Incidencias.user.js
 // @downloadURL https://github.com/xaanz/CeupeScript/raw/main/Mejoras graficas Incidencias.user.js
 // ==/UserScript==
