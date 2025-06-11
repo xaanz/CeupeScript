@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Selector de Plantillas Lois
-// @version      1.2
+// @version      1.3
 // @description  Añade un selector de plantillas antes de ctl04_ExtenderContentEditable
 // @author       Lois
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas%20Lois.user.js
@@ -98,7 +98,8 @@
     // Plantillas con variables dinámicas y HTML
     const plantillas = [
 
-        {
+        
+{
             nombre: 'Bienvenida',
             contenido: datos => (
             `${datos.greeting},
@@ -145,7 +146,8 @@
             Atentamente.`.replace(/\r\n|\r|\n/g, "</br>")
                 )
         },
-        {
+
+{
 
 nombre: 'Bienvenida UCAM',
             contenido: datos => (
@@ -192,7 +194,8 @@ nombre: 'Bienvenida UCAM',
             Atentamente.`.replace(/\r\n|\r|\n/g, "</br>")
             )
         },
-        {
+
+{
 
 nombre: 'Enlace Bienvenida',
             contenido: datos => (
@@ -211,7 +214,8 @@ nombre: 'Enlace Bienvenida',
         Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
             )
         },
-        {
+
+{
 
 nombre: 'Enlace masterclass grabada',
             contenido: datos => (
@@ -228,6 +232,7 @@ nombre: 'Enlace masterclass grabada',
         Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
             )
         },
+
 {
 
 nombre: 'Seguimiento Base',
@@ -280,7 +285,8 @@ nombre: 'Seguimiento Base',
     Reciba un cordial saludo.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Seguimiento UCAM Base',
     contenido: datos => (
@@ -334,7 +340,8 @@ nombre: 'Seguimiento UCAM Base',
     Reciba un cordial saludo.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Seguimiento con avance',
         contenido: datos => (
@@ -368,7 +375,8 @@ nombre: 'Seguimiento con avance',
         Un saludo.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Seguimiento no responde ( 3 meses )',
     contenido: datos => (
@@ -409,7 +417,8 @@ nombre: 'Seguimiento no responde ( 3 meses )',
     ¡Saludos!`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Seguimiento UCAM no responde ( 3 meses )',
     contenido: datos => (
@@ -451,7 +460,8 @@ nombre: 'Seguimiento UCAM no responde ( 3 meses )',
     ¡Saludos!`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Dificultad de acceso',
     contenido: datos => (
@@ -470,7 +480,8 @@ nombre: 'Dificultad de acceso',
     Saludos cordiales.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Acceso correcto',
         contenido: datos => (
@@ -491,7 +502,8 @@ nombre: 'Acceso correcto',
     Un saludo y buen día.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-      {
+
+{
 
 nombre: 'MC : Calendario No',
     contenido: datos => (
@@ -505,7 +517,8 @@ nombre: 'MC : Calendario No',
     Un saludo.`
         ).replace(/\r\n|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Casos prácticos',
         contenido: datos => (
@@ -528,7 +541,8 @@ nombre: 'Casos prácticos',
     Reciba un cordial saludo.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Finalización Pendiente de cuotas',
         contenido: datos => (
@@ -575,7 +589,8 @@ nombre: 'Finalización Pendiente de cuotas',
     Un saludo cordial,`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Titulación y precios',
         contenido: datos => (
@@ -614,7 +629,37 @@ nombre: 'Titulación y precios',
     Agradeciéndole de antemano su atención, le enviamos un cordial saludo y nuestras más sinceras felicitaciones nuevamente.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
+            nombre: 'SIM - Octubre 2025 ',
+            contenido: datos => (
+            `${datos.greeting},
+
+            La Semana Internacional de Madrid de CEUPE es mucho más que un curso: es tu pasaporte al futuro profesional.
+
+En caso de tener interés en la Semana Internacional y Graduación Final, no dude en contactarnos para ampliar información y aprovechar los descuentos disponibles que se ofrecen como alumno matriculado.
+
+Durante una semana inmersiva en el corazón de Madrid, vivirás una combinación perfecta de aprendizaje de alto nivel, networking internacional y experiencias culturales. Asistirás a clases magistrales con expertos de primer nivel en liderazgo, gestión de proyectos, negociación, emprendimiento digital, ciberseguridad, y muchos mas.
+
+Aprenderás con casos reales de empresas multinacionales y tendrás la oportunidad de visitar sus sedes, además de descubrir los rincones más emblemáticos de Madrid.
+
+Este programa es ideal tanto si eres estudiante como profesional, ya que te permitirá conectar con personas de todo el mundo, especialmente de América Latina, y construir relaciones que durarán toda la vida. Al finalizar, recibirás un título avalado por CEUPE, reconocido en el mercado laboral internacional.
+
+Si participas en la semana internacional de Madrid, recibirás el título de manera gratuita, además de recibir también el segundo título PDD (Programa de Desarrollo Directivo) de la Semana internacional.
+
+Si formalizas tu inscripción ahora, mientras aún estás estudiando, podrás beneficiarte de una reducción del 20% sobre el precio completo. El precio habitual del programa es de 1.000€, pero con el descuento exclusivo para alumnos en curso, el coste final será de 800€, lo que supone un ahorro de 200€.
+
+Adjunto la infografía con toda la información sobre la Semana Internacional de Madrid, que tendrá lugar del 6 al 10 de octubre de 2025.
+
+No dejes pasar esta oportunidad para destacar, aprender y crecer. ¡La Semana Internacional de Madrid de CEUPE es tu puente hacia el éxito global!
+
+Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+
+Un saludo cordial,`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+
+{
 
 nombre: 'Cancelación formación',
         contenido: datos => (
@@ -631,7 +676,8 @@ nombre: 'Cancelación formación',
     Un saludo.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'Paralizar o congelar formación',
         contenido: datos => (
@@ -656,7 +702,8 @@ nombre: 'Paralizar o congelar formación',
     Saludos cordiales.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
-    {
+
+{
 
 nombre: 'verficacion violent monkey',
         contenido: datos => (
