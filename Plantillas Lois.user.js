@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Selector de Plantillas Lois
-// @version      1.3
+// @version      1.4
 // @description  Añade un selector de plantillas antes de ctl04_ExtenderContentEditable
 // @author       Lois
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas%20Lois.user.js
@@ -570,6 +570,9 @@ nombre: 'Finalización Pendiente de cuotas',
     - Título Físico: 100 €
     <p><em><span data-contrast="none">Recibir&aacute; su t&iacute;tulo impreso en formato f&iacute;sico, ideal para presentaciones oficiales y conservaci&oacute;n personal.</span></em></p>
 
+    - Título Físico en la graduacion de la SIM: 0 €
+    <p><em><span data-contrast="none">Si participas en la semana internacional de Madrid, recibirás el título de manera gratuita, además de recibir también el segundo título PDD (Programa de Desarrollo Directivo) de la Semana internacional.</span></em></p>
+
     <p><span style="color: #3366ff;"><strong><span data-contrast="none">Servicios adicionales disponibles:</span></strong></span></p>
 
     - Apostilla de La Haya: 65 €
@@ -607,6 +610,9 @@ nombre: 'Titulación y precios',
 
     - Título Físico: 100 €
     <p><em><span data-contrast="none">Recibir&aacute; su t&iacute;tulo impreso en formato f&iacute;sico, ideal para presentaciones oficiales y conservaci&oacute;n personal.</span></em></p>
+
+    - Título Físico en la graduacion de la SIM: 0 €
+    <p><em><span data-contrast="none">Si participas en la semana internacional de Madrid, recibirás el título de manera gratuita, además de recibir también el segundo título PDD (Programa de Desarrollo Directivo) de la Semana internacional.</span></em></p>
 
     <p><span style="color: #3366ff;"><strong><span data-contrast="none">Servicios adicionales disponibles:</span></strong></span></p>
 
