@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InnoTutor Modificado GitHub version
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Modifica elementos en la página de respuesta de tutorías y muestra país, bandera y código telefónico por matrícula
 // @author       Lois
 // @grant        none
@@ -260,46 +260,48 @@ function getCountryTime(tz) {
     });
 }
 
-    function showCountryInfo(countryName) {
-        const infoDivId = "pais-bandera-codigo-info";
-        let infoDiv = document.getElementById(infoDivId);
-        if (!infoDiv) {
-            infoDiv = document.createElement("div");
-            infoDiv.id = infoDivId;
-            infoDiv.style.marginTop = "10px";
-            infoDiv.style.fontSize = "1.2em";
-            let ref = document.getElementById("datosAlumno");
-            if (ref) {
-                ref.insertAdjacentElement('afterend', infoDiv);
-            } else {
-                document.body.appendChild(infoDiv);
-            }
+    function showCountryInfo(countryName, estadoMatricula) {
+    const infoDivId = "pais-bandera-codigo-info";
+    let infoDiv = document.getElementById(infoDivId);
+    if (!infoDiv) {
+        infoDiv = document.createElement("div");
+        infoDiv.id = infoDivId;
+        infoDiv.style.marginTop = "10px";
+        infoDiv.style.fontSize = "1.2em";
+        let ref = document.getElementById("datosAlumno");
+        if (ref) {
+            ref.insertAdjacentElement('afterend', infoDiv);
+        } else {
+            document.body.appendChild(infoDiv);
         }
-        if (countryName) {
-            const normalizedCountry = normalize(countryName);
-            const match = Object.keys(countryData).find(key => normalize(key) === normalizedCountry);
-            if (match) {
-                infoDiv.style.fontSize = "3em";
-                infoDiv.innerHTML = `
-                    <strong>País:</strong> ${match} <br>
-                    <strong>Código telefónico:</strong> ${countryData[match].phone}<br>
-                    <img src="https://flagcdn.com/48x36/${countryData[match].flag}.png"
-                         style="vertical-align:middle; border:1px solid #ccc; margin-top:8px;"
-                         width="72" height="54" alt="Bandera de ${match}"><br>
-                  <span style="font-size:0.5em;">
-                <strong>Hora actual en ${match}:</strong> ${getCountryTime(countryData[match].tz)}<br>
-                <strong>Hora actual en España:</strong> ${getSpainTimeString()}
-            </span>
-                `;
-                return;
-            }
-        }
-        infoDiv.innerHTML = "<em>No se pudo encontrar el país o no está en la base de datos.</em>";
     }
-
+    if (countryName) {
+        const normalizedCountry = normalize(countryName);
+        const match = Object.keys(countryData).find(key => normalize(key) === normalizedCountry);
+        if (match) {
+            infoDiv.style.fontSize = "3em";
+            infoDiv.innerHTML = `
+                <strong>País:</strong> ${match} <br>
+                <strong>Código telefónico:</strong> ${countryData[match].phone}<br>
+                <img src="https://flagcdn.com/48x36/${countryData[match].flag}.png"
+                     style="vertical-align:middle; margin-top:8px;"
+                     width="72" height="54" alt="Bandera de ${match}">
+                <span style="display:inline-block; vertical-align:middle; margin-left:10px; font-size:0.7em;">
+                    <strong>Estado matrícula:</strong> ${estadoMatricula ? estadoMatricula : "Desconocido"}
+                </span>
+                <br>
+                <span style="font-size:0.5em;">
+                    <strong>Hora actual en ${match}:</strong> ${getCountryTime(countryData[match].tz)}<br>
+                    <strong>Hora actual en España:</strong> ${getSpainTimeString()}
+                </span>
+            `;
+            return;
+        }
+    }
+    infoDiv.innerHTML = "<em>No se pudo encontrar el país o no está en la base de datos.</em>";
+}
     function fetchCountryFromEnrollment(enrollmentID) {
         const enrollmentURL = `http://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx?matriculaId=${enrollmentID}`;
-        // GM_xmlhttpRequest solo funciona si el @grant está activo
         if (typeof GM_xmlhttpRequest !== "undefined") {
             GM_xmlhttpRequest({
                 method: "GET",
@@ -309,10 +311,12 @@ function getCountryTime(tz) {
                     let doc = parser.parseFromString(response.responseText, "text/html");
                     let countryInput = doc.getElementById("txtPais");
                     let countryName = countryInput ? countryInput.value.trim() : null;
-                    showCountryInfo(countryName);
+                    let estadoDiv = doc.getElementById("barraEstadoMatricula_iconoEstado");
+                    let estadoMatricula = estadoDiv ? estadoDiv.getAttribute("title") : null;
+                    showCountryInfo(countryName, estadoMatricula);
                 },
                 onerror: function() {
-                    showCountryInfo(null);
+                    showCountryInfo(null, null);
                 }
             });
         }
