@@ -7,6 +7,8 @@
 // @grant        GM_addStyle
 // @grant        GM.xmlHttpRequest
 // @connect      innotutor.com
+// @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Buscador.user.js
+// @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Buscador.user.js
 // ==/UserScript==
 
 // PART 1 TABLA
