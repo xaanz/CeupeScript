@@ -1,6 +1,5 @@
 // ==UserScript==
 // @name         InnoTutorUltimateBUSCADOR
-// @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Combina estilos modernos, filtros combinados, columna de país y mejoras de interfaz
 // @author       Loïs
