@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         InnoTutorUltimateBUSCADOR
-// @version      1.0
+// @version      1.1
 // @description  Combina estilos modernos, filtros combinados, columna de país y mejoras de interfaz
 // @author       Loïs
-// @match        https://innotutor.com/Tutoria/Alumnos.aspx*
+// @match        *://innotutor.com/Tutoria/Alumnos.aspx*
 // @grant        GM_addStyle
 // @grant        GM.xmlHttpRequest
 // @connect      innotutor.com
