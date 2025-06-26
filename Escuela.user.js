@@ -1,9 +1,10 @@
 // ==UserScript==
 // @name         Escuela
-// @namespace    http://tampermonkey.net/
 // @version      1.3
 // @description  Consulta el href y muestra el nombre de la escuela en el div datosCurso, buscando el span correcto
 // @match        *://*/*
+// @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Escuela.user.js
+// @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Escuela.user.js
 // @grant        none
 // ==/UserScript==
 
