@@ -2,7 +2,6 @@
 // @name         Escuela
 // @version      1.3
 // @description  Consulta el href y muestra el nombre de la escuela en el div datosCurso, buscando el span correcto
-// @match        *://*/*
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Escuela.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Escuela.user.js
 // @grant        none
@@ -37,31 +36,34 @@
         fetch(url)
             .then(response => response.text())
             .then(html => {
-                // Crea un DOM virtual para buscar el span
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 const escuelaSpan = doc.querySelector('#lblEscuela');
                 let escuela = 'No se encontró el nombre de la escuela';
+
                 if (escuelaSpan) {
                     escuela = escuelaSpan.textContent.trim();
                 }
 
-                // Inserta el resultado en el div datosCurso
                 const datosCurso = document.getElementById('datosCurso');
                 if (datosCurso) {
                     let escuelaDiv = document.getElementById('escuelaExtraida');
+
                     if (!escuelaDiv) {
                         escuelaDiv = document.createElement('div');
                         escuelaDiv.id = 'escuelaExtraida';
-                        escuelaDiv.style.marginTop = '10px';
-                        escuelaDiv.style.fontWeight = 'bold';
+                        // Estilo mejorado: Texto grande y rojo
+                        escuelaDiv.style.cssText = `
+                            margin-top: 10px;
+                            font-weight: bold;
+                            font-size: 22px;   /* Tamaño aumentado */
+                            color: #fc6000;     /* Color rojo */
+                        `;
                         datosCurso.appendChild(escuelaDiv);
                     }
                     escuelaDiv.textContent = 'Escuela: ' + escuela;
                 }
             })
-            .catch(err => {
-                console.error('Error al consultar el enlace:', err);
-            });
+            .catch(err => console.error('Error al consultar el enlace:', err));
     });
 })();
