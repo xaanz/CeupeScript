@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         InnoTutor Info Button en datosCurso con info CEUP, certificados y campus
 // @namespace    http://tampermonkey.net/
-// @version      0.6
+// @version      0.7
 // @description  Botón "info" en #datosCurso con información CEUP en tres columnas
 // @author       ChatGPT
-// @match        http://innotutor.com/Tutoria/Tutoria.aspx?tutoriaId=*
+// @match        *://innotutor.com/Tutoria/Tutoria.aspx?tutoriaId=*
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Info.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Info.user.js
 // @grant        none
