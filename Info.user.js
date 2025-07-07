@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfoTutor
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1
 // @description  Botón "info" en #datosCurso con información CEUP en tres columnas
 // @author       Lois
 // @match        *://innotutor.com/Tutoria/Tutoria.aspx?tutoriaId=*
@@ -41,7 +41,7 @@
         menu.style.boxShadow = '0 2px 8px rgba(0,0,0,0.07)';
         menu.style.display = 'none';
 
-        const formations = ['CEUP', 'CEUM', 'EURO', 'INES', 'STUC', 'ESIB'];
+        const formations = ['CEUP', 'CEUM', 'EURO', 'ESIB', 'INES', 'MANE', 'STUC'];
 
         const select = document.createElement('select');
         select.style.fontSize = '15px';
@@ -255,7 +255,7 @@
             `<b>Campus:</b> <a href="mylxp.euroinnova.com" target="_blank" style="color:#007bff;text-decoration:underline;">mylxp.euroinnova.com</a>
             <b>Condiciones:</b> <a href="https://www.euroinnova.com/condiciones-de-matriculacion" target="_blank" style="color:#007bff;text-decoration:underline;">Condiciones de Matriculación</a>`;
 
-            } else if(selected === 'stuc') {
+            } else if(selected === 'STUC') {
                 leftColumn.textContent =`
             EXTENSIÓN : 118
             TELÉFONO : 914904200 
