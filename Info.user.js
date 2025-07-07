@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfoTutor
 // @namespace    http://tampermonkey.net/
-// @version      0.9
+// @version      1.0
 // @description  Botón "info" en #datosCurso con información CEUP en tres columnas
 // @author       Lois
 // @match        *://innotutor.com/Tutoria/Tutoria.aspx?tutoriaId=*
@@ -41,7 +41,7 @@
         menu.style.boxShadow = '0 2px 8px rgba(0,0,0,0.07)';
         menu.style.display = 'none';
 
-        const formations = ['CEUP', 'CEUM', 'EURO', 'INES', 'STUC'];
+        const formations = ['CEUP', 'CEUM', 'EURO', 'INES', 'STUC', 'ESIB'];
 
         const select = document.createElement('select');
         select.style.fontSize = '15px';
@@ -134,6 +134,39 @@
 
             <b>Condiciones:</b> <a href="https://cdn.educaedtech.com/welcome/Es/Condiciones_generales_de_matriculacion_EducaEdtech-ES.pdf" target="_blank" style="color:#007bff;text-decoration:underline;">Condiciones Generales de Matriculación</a>`;
 
+            } else if(selected === 'MANE') {
+                leftColumn.textContent =`
+  	    EXTENSIÓN : 81
+            TELÉFONO : 958948544
+            DURACIÓN : 12 meses (fin de título 1 año)
+            Prórroga: NO (opción de pasar a privado)
+            Ampliación: Nueva convocatoria (aviso secretaría-secretaria@euroinnova.com) y matrícula 12 meses + 495 €
+            REQUISITOS DE SUPERACIÓN :
+            100% visualización contenido
+            100% autoevaluaciones
+            100% exámenes
+            Proyecto final de Máster y videodefensa (mínimo 5 sobre 10 en cada parte)  
+	    Actividades optativas  
+	    Nota: 40% auto + 40% examen final + 20% PFM  	
+	    Prácticas: garantizadas 6 meses
+            PFM : NO`;
+                            centerColumn.textContent =
+            `👩‍🎓 CERTIFICADOS Y TITULACIONES
+    	    CERTIFICADO ESTAR CURSANDO
+            DIGITAL - DESCARGA DESDE Intranet
+            FÍSICO - 60€
+            CERTIFICADO :
+            DIGITAL - 40€
+            FÍSICO - 60€
+            APOSTILLA DE LA HAYA : 120 €  Tiempo envío 3 meses
+            TITULO: UNIVERSITARIO + PRIVADO
+            DIGITAL PRIVADO 75€
+            FÍSICO PRIVADO 100€ (Envío 20 días)
+            FÍSICO UNIVERSITARIO 160€`;
+                            // Columna derecha con campus y enlace
+                            rightColumn.innerHTML =
+            `<b>Campus:</b> <a href="https://mylxp.euroinnova.com/" target="_blank" style="color:#007bff;text-decoration:underline;">mylxp.euroinnova.com</a>
+<b>Condiciones:</b> <a href="https://www.euroinnova.com/condiciones-de-matriculacion" target="_blank" style="color:#007bff;text-decoration:underline;">Condiciones de Matriculación</a>`;
             } else if(selected === 'CEUM') {
                 leftColumn.textContent =`
             EXTENSIÓN : 48
