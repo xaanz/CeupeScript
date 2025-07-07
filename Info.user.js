@@ -222,9 +222,51 @@
             `<b>Campus:</b> <a href="mylxp.euroinnova.com" target="_blank" style="color:#007bff;text-decoration:underline;">mylxp.euroinnova.com</a>
             <b>Condiciones:</b> <a href="https://www.euroinnova.com/condiciones-de-matriculacion" target="_blank" style="color:#007bff;text-decoration:underline;">Condiciones de Matriculación</a>`;
 
-            }
+            } else if(selected === 'stuc') {
+                leftColumn.textContent =`
+            EXTENSIÓN : 118
+            TELÉFONO : 914904200 
+             
+            DURACIÓN : 1 año
+            Prórroga: NO
+            Ampliación: 1 año + 495 €
+             
+            REQUISITOS DE SUPERACIÓN :
+             
+            100% visualización contenido 
+            100% autoevaluaciones  
+            100% exámenes  
+            Superación Proyecto Final de Máster 
+            Actividades optativas  
+            Nota: 40% auto + 40% examen final + 20% PFM 
+             
+            Prácticas: NO
+             
+            PFM : SI
 
-        else if (selected) {
+                            centerColumn.textContent =
+            `👩‍🎓 CERTIFICADOS Y TITULACIONES
+
+            DIGITAL - Descarga desde la intranet personalizada de Structuralia 
+            FÍSICO - 60€ 
+            Universitario - 40€ 
+
+            CERTIFICADO :
+            DIGITAL - Descarga desde la intranet personalizada de Structuralia 
+            FÍSICO - 60€
+
+            APOSTILLA DE LA HAYA : Precio 120 € Tiempo envío 3 meses  
+
+            TITULO:
+        	UNIVERSITARIO - DIGITAL 0€ / FÍSICO 160€ 
+        	PRIVADO – DIGITAL - 75€ / FÍSICO - 100€
+
+                            // Columna derecha con campus y enlace
+                            rightColumn.innerHTML =
+            `<b>Campus:</b> <a href="mylxp.structuralia.com" target="_blank" style="color:#007bff;text-decoration:underline;">mylxp.structuralia.com</a>
+            <b>Condiciones:</b> <a href="https://www.structuralia.com/condiciones-generales" target="_blank" style="color:#007bff;text-decoration:underline;">Condiciones de Matriculación</a>`;
+
+            } else if (selected) {
                 leftColumn.textContent = `Información de la formación: ${selected}\n(Información pendiente de añadir)`;
                 centerColumn.textContent = '';
                 rightColumn.textContent = '';
