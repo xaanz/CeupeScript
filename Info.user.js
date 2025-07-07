@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InfoTutor
 // @namespace    http://tampermonkey.net/
-// @version      0.8
+// @version      0.9
 // @description  Botón "info" en #datosCurso con información CEUP en tres columnas
 // @author       Lois
 // @match        *://innotutor.com/Tutoria/Tutoria.aspx?tutoriaId=*
@@ -242,7 +242,7 @@
              
             Prácticas: NO
              
-            PFM : SI
+            PFM : SI`;
 
                             centerColumn.textContent =
             `👩‍🎓 CERTIFICADOS Y TITULACIONES
@@ -259,7 +259,7 @@
 
             TITULO:
         	UNIVERSITARIO - DIGITAL 0€ / FÍSICO 160€ 
-        	PRIVADO – DIGITAL - 75€ / FÍSICO - 100€
+        	PRIVADO – DIGITAL - 75€ / FÍSICO - 100€`;
 
                             // Columna derecha con campus y enlace
                             rightColumn.innerHTML =
