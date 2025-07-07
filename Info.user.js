@@ -41,7 +41,7 @@
         menu.style.boxShadow = '0 2px 8px rgba(0,0,0,0.07)';
         menu.style.display = 'none';
 
-        const formations = ['CEUP', 'CEUM', 'EURO', 'INES'];
+        const formations = ['CEUP', 'CEUM', 'EURO', 'INES', 'STUC'];
 
         const select = document.createElement('select');
         select.style.fontSize = '15px';
