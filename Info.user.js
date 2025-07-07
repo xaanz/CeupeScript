@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      0.8
 // @description  Botón "info" en #datosCurso con información CEUP en tres columnas
-// @author       ChatGPT
+// @author       Lois
 // @match        *://innotutor.com/Tutoria/Tutoria.aspx?tutoriaId=*
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Info.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Info.user.js
@@ -112,7 +112,7 @@
             PFM : NO`;
 
                             centerColumn.textContent =
-            `👩‍🎓 CERTIFICADOS Y TITULACIONES 👩‍🎓
+            `CERTIFICADOS Y TITULACIONES 👩‍🎓
 
             CERTIFICADO ESTAR CURSANDO
             DIGITAL - DESCARGA DESDE Innotutor
@@ -156,7 +156,7 @@
                             centerColumn.textContent =
 
 
-            `👩‍🎓 CERTIFICADOS Y TITULACIONES 👩‍🎓
+            `👩‍🎓 CERTIFICADOS Y TITULACIONES
 
             CERTIFICADO ESTAR CURSANDO
             DIGITAL - desde innotutor
@@ -181,7 +181,50 @@
 
             <b>Condiciones:</b> <a href="https://cdn.educaedtech.com/welcome/Es/Condiciones_generales_de_matriculacion_EducaEdtech-ES.pdf" target="_blank" style="color:#007bff;text-decoration:underline;">enlace aquí</a>`;
 
-            } else if (selected) {
+            } else if(selected === 'EURO') {
+                leftColumn.textContent =`
+            EXTENSIÓN : 81
+            TELÉFONO : 958948544
+
+            DURACIÓN : 12 meses
+            Prórroga : 3 meses
+            Ampliación : 12 meses + 495 €
+
+            REQUISITOS DE SUPERACIÓN :
+
+            100% visualización contenido
+            100% autoevaluaciones
+            100% exámenes
+            Actividades optativas
+            Nota: 50% autoevaluaciones + 50% exámenes
+
+            PFM : NO`;
+
+                            centerColumn.textContent =
+            `👩‍🎓 CERTIFICADOS Y TITULACIONES
+
+            CERTIFICADO ESTAR CURSANDO
+            DIGITAL - Descarga desde la intranet personalizada de Euroinnova 
+            FÍSICO - 60€
+
+            CERTIFICADO :
+            DIGITAL - 40€ ¿Descarga desde la intranet personalizada de Euroinnova?
+            FÍSICO - 60€
+
+            APOSTILLA DE LA HAYA : 65 €  Tiempo envío 3 meses
+
+            TITULO:
+            DIGITAL 0
+            FÍSICO 100€ (Envío 20 días)`;
+
+                            // Columna derecha con campus y enlace
+                            rightColumn.innerHTML =
+            `<b>Campus:</b> <a href="mylxp.euroinnova.com" target="_blank" style="color:#007bff;text-decoration:underline;">mylxp.euroinnova.com</a>
+            <b>Condiciones:</b> <a href="https://www.euroinnova.com/condiciones-de-matriculacion" target="_blank" style="color:#007bff;text-decoration:underline;">Condiciones de Matriculación</a>`;
+
+            }
+
+        else if (selected) {
                 leftColumn.textContent = `Información de la formación: ${selected}\n(Información pendiente de añadir)`;
                 centerColumn.textContent = '';
                 rightColumn.textContent = '';
