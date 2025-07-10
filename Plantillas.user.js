@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      1.3
+// @version      1.4
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -100,56 +100,8 @@
 
         
 {
-            nombre: 'Bienvenida',
-            contenido: datos => (
-            `${datos.greeting},
 
-            Desde el Departamento Docente, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado.
-
-            Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
-
-            Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación.
-
-            A continuación, le proporcionamos información sobre el funcionamiento de la plataforma para que pueda gestionar su aprendizaje de manera eficiente:
-
-            - Acesso: https://mylxp.ceupe.com. Si no ha generado sus claves o no las que tiene, debe darle a ¿No tiene contraseña o la has olvidado? Inserte el correo con el que se registró. Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos
-            - Al ingresar al campus virtual, en la parte lateral izquierda de la pantalla encontrará las secciones "Inicio" y "Tu aprendizaje".
-            - Para acceder a su curso, puede utilizar el buscador principal o la opción "Continuar con", que lo dirigirá directamente al programa en el que está matriculado y donde podrá visualizar su progreso.
-            - En esta misma pantalla principal, podrá inscribirse en los diferentes MOOCs disponibles dentro de su estudio. Para ello, solo debe seleccionarlos y hacer clic en "Inscribir".
-            - Para cualquier consulta dirigida a tutores o soporte, le recomendamos utilizar siempre el "Centro de Ayuda", ubicado en el lateral inferior izquierdo de la página principal del campus. Es importante siempre usar este recurso para resolver sus dudas, será el contacto más directo para que le puedan atender.
-            - Si necesita modificar sus datos personales (pagos, titulación, suscripción, seguridad, entre otros) o ajustar sus preferencias de navegación, puede hacerlo desde la pestaña "Mi cuenta", situada en la parte superior derecha del campus.
-
-            Le exponemos los requisitos obligatorios que deberá superar:
-
-            - Visualizar el 100% del contenido en su campus virtual.
-            - Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
-            - Realizar la encuesta al finalizar cada módulo de estudio.
-
-            Es importante que esté completamente seguro antes de continuar y finalizar un módulo completo, ya que una vez que complete la encuesta y pulse finalizar el módulo, no podrá realizar más intentos de examen, ni entregar actividades adicionales en el módulo.
-
-            El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
-
-            No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar el examen final del módulo.
-
-            Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses.
-
-            De no finalizar en esta, tendrá la oportunidad de ampliar la misma acogiéndose a las tasas vigentes en ese momento, durante los 12 meses siguientes. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
-
-            Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
-
-            <a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join" target="_blank">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
-
-            Recuerde que estamos a su disposición para cualquier duda o consulta.
-
-            Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
-
-            Atentamente.`.replace(/\r\n|\r|\n/g, "</br>")
-                )
-        },
-
-{
-
-nombre: 'Bienvenida UCAM',
+nombre: 'CEUM Bienvenida',
             contenido: datos => (
             `${datos.greeting},
 
@@ -196,99 +148,7 @@ nombre: 'Bienvenida UCAM',
         },
 
 {
-
-nombre: 'Enlace Bienvenida',
-            contenido: datos => (
-        `${datos.greeting},
-
-        ¡Hola! ¿Cómo va todo?
-
-        ¿No pudiste asistir a la sesión de bienvenida con tu docente?
-
-        ¡No te preocupes! Le remitimos el enlace para que la puedas visualizar cuando tengas disponibilidad:
-
-        <a href="https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1744106764771/capture/" target="_blank">https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1744106764771/capture/</a>
-
-        Recuerda que tienes al equipo docente disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
-
-        Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
-            )
-        },
-
-{
-
-nombre: 'Enlace masterclass grabada',
-            contenido: datos => (
-        `${datos.greeting},
-
-        ¿No pudiste asistir a la masterclass?
-
-        ¡No te preocupes! Te remitimos el enlace para que la puedas visualizar cuando tengas disponibilidad:
-
-        enlace
-
-        Recuerda que tienes al equipo docente disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
-
-        Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
-            )
-        },
-
-{
-
-nombre: 'Seguimiento Base',
-    contenido: datos => (
-    `${datos.greeting},
-
-    ¿Cómo se encuentra? Espero que todo vaya fenomenal.
-
-    Me pongo en contacto con usted porque quiero conocer sus impresiones hasta el momento y conocer si existe alguna duda o dificultad para poderla resolver.
-
-    No olvide que estamos a su disposición para cualquier duda sobre el funcionamiento de su programa de estudio, de la plataforma o sobre su progreso académico.
-
-    Además, si tiene dudas sobre algún materia o actividad, el Departamento de Docencia está listo para apoyarle. Solo necesita crear una tutoría para que nuestros docentes le asesoren, se realiza desde Centro de ayuda escribiendo a 'Gestión Académica' (abajo a la izquierda, en el campus virtual).
-
-    Si quiere revisar qué tiene pendiente, no olvide consultar los requisitos de superación, donde encontrará una vista general de sus actividades y lo necesario para llevar un ritmo de estudio adecuado.
-
-    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, aunque contará con una prórroga gratuita de 3 meses, en caso de no acabar en la fecha indicada. Pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
-
-    Le animamos a finalizar dentro del plazo y si necesita pautas de avance o resolver alguna duda contacte con nosotros.
-
-    Le recordamos también que los requisitos de superación son:
-
-    -Visualizar el 100% del contenido en su campus virtual.
-    -Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
-
-    Aprovecho para recordarle una serie de aclaraciones sobre su programa de estudio:
-
-    El máster está compuesto por módulos y cada módulo tiene diferentes unidades de aprendizaje que se van completando con un check cuando ha logrado el progreso completo en esa unidad. Todas las unidades tienen una autoevaluación final para repasar el contenido.
-
-    Intente ir avanzando en cada módulo por todas las unidades y le irá apareciendo el porcentaje de progreso en la pestaña "Contenido". Al finalizar todas las Unidades que componen un módulo tendrá un examen (cuestionario) final, que decidirá la nota del mismo (puntuación mínima 5).
-
-    Los cuestionarios (exámenes finales) tienen 3 intentos. El sistema siempre le guardará la nota más alta.
-
-    Es importante que esté completamente seguro antes finalizar el módulo, ya que una vez que complete la encuesta, si finalizas el módulo no podrás realizar más intentos de examen, ni entregar actividades adicionales en el módulo. Si eliges "continuar", podrás seguir avanzando y subir el caso práctico sin problemas antes de la fecha de finalización del curso.
-
-    Los casos prácticos no son obligatorios, pero si recomendables, si tiene dudas con los mismos puede dirigirse al centro de ayuda y crear una tutoría seleccionando "abrir tutoría" y docencia.
-
-    Es importante que revise con frecuencia su calendario en el campus para saber cuándo son las masterclass y si se realiza algún cambio de fecha en alguna.
-
-    Aproveche todos los recursos ofrecidos por el centro (materiales de estudio, vídeos, etc.), para llevar a cabo el estudio y un rendimiento óptimo.
-
-    En caso de tener interés en la Semana Internacional y Graduación Final, no dude en contactarnos para ampliar información y aprovechar los descuentos disponibles que se ofrecen como alumno matriculado.
-
-    Si desea que contactemos telefónicamente para trasladarnos cualquier consulta, indíquenos día (de lunes a viernes) y número de teléfono.
-
-    Le enviamos muchos ánimos y suerte con el estudio.
-
-    Encontrándonos a su disposición,
-
-    Reciba un cordial saludo.`
-        ).replace(/\r\n|\r|\n/g, "</br>")
-    },
-
-{
-
-nombre: 'Seguimiento UCAM Base',
+nombre: 'CEUM Seguimiento',
     contenido: datos => (
     `${datos.greeting},
 
@@ -342,49 +202,114 @@ nombre: 'Seguimiento UCAM Base',
     },
 
 {
+            nombre: 'CEUPE Bienvenida',
+            contenido: datos => (
+            `${datos.greeting},
 
-nombre: 'Seguimiento con avance',
-        contenido: datos => (
-        `${datos.greeting},
+            Desde el Departamento Docente, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado.
 
-        Me pongo en contacto contigo de parte del equipo docente de tu formación ${datos.tituloCurso} que estás llevando a cabo.
+            Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
 
-        Según tu informe de progreso en plataforma, he comprobado que vas por 1% del total del contenido.
+            Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación.
 
-        Quería comentar contigo que tal estabas encontrando el temario que llevas ya visualizado por ahora ya que compruebo que tu avance es muy bueno y me gustaría que me dieras tu sincera opinión de lo que hasta el momento has podido visualizar.
+            A continuación, le proporcionamos información sobre el funcionamiento de la plataforma para que pueda gestionar su aprendizaje de manera eficiente:
 
-        Ten en cuenta que esta formación te permite aprender una serie de habilidades que podrás aplicar en una variedad de roles y sectores.
+            - Acesso: https://mylxp.ceupe.com. Si no ha generado sus claves o no las que tiene, debe darle a ¿No tiene contraseña o la has olvidado? Inserte el correo con el que se registró. Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos
+            - Al ingresar al campus virtual, en la parte lateral izquierda de la pantalla encontrará las secciones "Inicio" y "Tu aprendizaje".
+            - Para acceder a su curso, puede utilizar el buscador principal o la opción "Continuar con", que lo dirigirá directamente al programa en el que está matriculado y donde podrá visualizar su progreso.
+            - En esta misma pantalla principal, podrá inscribirse en los diferentes MOOCs disponibles dentro de su estudio. Para ello, solo debe seleccionarlos y hacer clic en "Inscribir".
+            - Para cualquier consulta dirigida a tutores o soporte, le recomendamos utilizar siempre el "Centro de Ayuda", ubicado en el lateral inferior izquierdo de la página principal del campus. Es importante siempre usar este recurso para resolver sus dudas, será el contacto más directo para que le puedan atender.
+            - Si necesita modificar sus datos personales (pagos, titulación, suscripción, seguridad, entre otros) o ajustar sus preferencias de navegación, puede hacerlo desde la pestaña "Mi cuenta", situada en la parte superior derecha del campus.
 
-        Aprovecho para informarte que la fecha fin de tu formación es ${datos.fechaFinP}, la cual puedes revisar en tu área personal del campus o en el correo de Bienvenida.
+            Le exponemos los requisitos obligatorios que deberá superar:
 
-        Para avanzar en tu estudio tienes que tener en cuenta los requisitos para superar tu formación, los cuales son:
+            - Visualizar el 100% del contenido en su campus virtual.
+            - Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
+            - Realizar la encuesta al finalizar cada módulo de estudio.
 
-        -Visualizar el 100% del contenido en su campus virtual.
-        -Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
+            Es importante que esté completamente seguro antes de continuar y finalizar un módulo completo, ya que una vez que complete la encuesta y pulse finalizar el módulo, no podrá realizar más intentos de examen, ni entregar actividades adicionales en el módulo.
 
-        Espero que puedas disfrutar de las masterclass que se están impartiendo en tu formación.
+            El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
 
-        También aprovecho para recordarte que las actividades prácticas que hay a lo largo de la formación son totalmente opcionales. Es decir, aunque te recomiendo que las realices para poner en práctica lo aprendido, su realización es opcional. Por tanto, no es obligatoria su entrega para aprobar y superar la formación al completo.
+            No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar el examen final del módulo.
 
-        Por supuesto, tanto yo como todos mis compañeros docentes estamos a tu disposición para cualquier duda que te surja, tanto del contenido de la formación como de cualquier otra cuestión. Además, también podemos ayudarte si necesitas algún material complementario a la formación o ejercicios extra para practicar.
+            Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses.
 
-        Puedes contactarnos por las vías habituales de consulta de dudas.
+            De no finalizar en esta, tendrá la oportunidad de ampliar la misma acogiéndose a las tasas vigentes en ese momento, durante los 12 meses siguientes. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
 
-        Mucho ánimo, todo paso que des en la formación es un paso en tu aprendizaje.
+            Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 
-        Un saludo.`
+            <a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join" target="_blank">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
+
+            Recuerde que estamos a su disposición para cualquier duda o consulta.
+
+            Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
+
+            Atentamente.`.replace(/\r\n|\r|\n/g, "</br>")
+                )
+        },
+
+{
+
+nombre: 'CEUPE Seguimiento',
+    contenido: datos => (
+    `${datos.greeting},
+
+    ¿Cómo se encuentra? Espero que todo vaya fenomenal.
+
+    Me pongo en contacto con usted porque quiero conocer sus impresiones hasta el momento y conocer si existe alguna duda o dificultad para poderla resolver.
+
+    No olvide que estamos a su disposición para cualquier duda sobre el funcionamiento de su programa de estudio, de la plataforma o sobre su progreso académico.
+
+    Además, si tiene dudas sobre algún materia o actividad, el Departamento de Docencia está listo para apoyarle. Solo necesita crear una tutoría para que nuestros docentes le asesoren, se realiza desde Centro de ayuda escribiendo a 'Gestión Académica' (abajo a la izquierda, en el campus virtual).
+
+    Si quiere revisar qué tiene pendiente, no olvide consultar los requisitos de superación, donde encontrará una vista general de sus actividades y lo necesario para llevar un ritmo de estudio adecuado.
+
+    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, aunque contará con una prórroga gratuita de 3 meses, en caso de no acabar en la fecha indicada. Pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
+
+    Le animamos a finalizar dentro del plazo y si necesita pautas de avance o resolver alguna duda contacte con nosotros.
+
+    Le recordamos también que los requisitos de superación son:
+
+    -Visualizar el 100% del contenido en su campus virtual.
+    -Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
+
+    Aprovecho para recordarle una serie de aclaraciones sobre su programa de estudio:
+
+    El máster está compuesto por módulos y cada módulo tiene diferentes unidades de aprendizaje que se van completando con un check cuando ha logrado el progreso completo en esa unidad. Todas las unidades tienen una autoevaluación final para repasar el contenido.
+
+    Intente ir avanzando en cada módulo por todas las unidades y le irá apareciendo el porcentaje de progreso en la pestaña "Contenido". Al finalizar todas las Unidades que componen un módulo tendrá un examen (cuestionario) final, que decidirá la nota del mismo (puntuación mínima 5).
+
+    Los cuestionarios (exámenes finales) tienen 3 intentos. El sistema siempre le guardará la nota más alta.
+
+    Es importante que esté completamente seguro antes finalizar el módulo, ya que una vez que complete la encuesta, si finalizas el módulo no podrás realizar más intentos de examen, ni entregar actividades adicionales en el módulo. Si eliges "continuar", podrás seguir avanzando y subir el caso práctico sin problemas antes de la fecha de finalización del curso.
+
+    Los casos prácticos no son obligatorios, pero si recomendables, si tiene dudas con los mismos puede dirigirse al centro de ayuda y crear una tutoría seleccionando "abrir tutoría" y docencia.
+
+    Es importante que revise con frecuencia su calendario en el campus para saber cuándo son las masterclass y si se realiza algún cambio de fecha en alguna.
+
+    Aproveche todos los recursos ofrecidos por el centro (materiales de estudio, vídeos, etc.), para llevar a cabo el estudio y un rendimiento óptimo.
+
+    En caso de tener interés en la Semana Internacional y Graduación Final, no dude en contactarnos para ampliar información y aprovechar los descuentos disponibles que se ofrecen como alumno matriculado.
+
+    Si desea que contactemos telefónicamente para trasladarnos cualquier consulta, indíquenos día (de lunes a viernes) y número de teléfono.
+
+    Le enviamos muchos ánimos y suerte con el estudio.
+
+    Encontrándonos a su disposición,
+
+    Reciba un cordial saludo.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
 
 {
-
-nombre: 'Seguimiento no responde ( 3 meses )',
+nombre: 'CEUPE Seguimiento no responde',
     contenido: datos => (
     `${datos.greeting},
 
     He intentado contactarle para conocer sus impresiones, y completar su seguimiento del su ${datos.tituloCurso} empezado el ${datos.fechaMatricula}.
 
-    El motivo de nuestra llamada era simplemente conocer cómo se encuentra en la formación, ya que hemos detectado que han pasado tres meses desde que inició el curso, y queremos ofrecerle nuestro apoyo en caso de que tenga alguna duda.
+    El motivo de nuestra llamada era simplemente conocer cómo se encuentra en la formación, y queremos ofrecerle nuestro apoyo en caso de que tenga alguna duda.
 
     Si desea que contactemos telefónicamente para trasladarnos cualquier consulta, indíquenos día (de lunes a viernes) y número de teléfono.
 
@@ -420,50 +345,7 @@ nombre: 'Seguimiento no responde ( 3 meses )',
 
 {
 
-nombre: 'Seguimiento UCAM no responde ( 3 meses )',
-    contenido: datos => (
-    `${datos.greeting},
-
-    He intentado contactarle para conocer sus impresiones, y completar su seguimiento de su ${datos.tituloCurso} empezado el ${datos.fechaMatricula}.
-
-    El motivo de nuestra llamada era simplemente conocer cómo se encuentra en la formación, ya que hemos detectado que han pasado tres meses desde que inició el curso, y queremos ofrecerle nuestro apoyo en caso de que tenga alguna duda.
-
-    Si desea que contactemos telefónicamente para trasladarnos cualquier consulta, indíquenos día (de lunes a viernes) y número de teléfono.
-
-    Quería recordarle que para nosotros es de vital importancia supervisar su progreso en el curso que realiza con nosotros. Los requisitos para aprobar son:
-
-    - Ver y finalizar al menos el 100% del material en el campus virtual.
-    - Completar y aprobar al menos el 100% de las autoevaluaciones.
-    - Aprobar el examen final o exámenes con una puntuación de al menos 5.
-    - Realizar y aprobar el PFM
-    - Realizar la encuesta al finalizar cada módulo de estudio.
-    - Tener todas las cuotas pagadas.
-
-    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}. Pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
-
-    Le animamos a finalizar dentro del plazo y, si necesita pautas de avance o resolver alguna duda, contacte con nosotros. Si no logra cumplirlos para entonces, le daremos una extensión gratuita de 3 meses. Si necesita más tiempo después de eso, habrá un costo adicional.
-
-    El máster está compuesto por módulos y cada módulo tiene diferentes unidades de aprendizaje que se van completando con un check cuando ha logrado el progreso completo en esa unidad. Todas las unidades tienen una autoevaluación final para repasar el contenido.
-
-    Intente ir avanzando en cada módulo por todas las unidades y le irá apareciendo el porcentaje de progreso en la pestaña "Contenido". Al finalizar todas las unidades que componen un módulo, tendrá un examen (cuestionario) final, que decidirá la nota del mismo (puntuación mínima 5).
-
-    Los cuestionarios (exámenes finales) tienen 3 intentos. El sistema siempre le guardará la nota más alta.
-
-    Es importante que esté completamente seguro antes de finalizar el módulo, ya que, una vez que complete la encuesta, si finaliza el módulo, no podrá realizar más intentos de examen ni entregar actividades adicionales en el módulo. Si eliges "continuar", podrás seguir avanzando y subir el caso práctico sin problemas antes de la fecha de finalización del curso.
-
-    Los casos prácticos no son obligatorios, pero sí recomendables; si tiene dudas con los mismos, puede dirigirse al centro de ayuda y crear una tutoría seleccionando "abrir tutoría" y docencia.
-
-    <span class="NormalTextRun  BCX0 SCXO251414468">En caso de tener interés en la <span style="color: #0000ff;"><strong>Semana Internacional y Graduación Final</strong></span>, no dude en contactarnos para ampliar información y aprovechar los descuentos disponibles que se ofrecen como alumno matriculado.</span>
-
-    Le recordamos que toda la comunicación con el equipo académico, los tutores y la gestión de facturas se realiza a través del canal de ayuda, accesible desde la plataforma. Este canal se encuentra en la esquina inferior del menú lateral izquierdo y está disponible para cualquier consulta que necesite. Estamos aquí para ayudarle con cualquier inquietud.
-
-    ¡Saludos!`
-        ).replace(/\r\n|\r|\n/g, "</br>")
-    },
-
-{
-
-nombre: 'Dificultad de acceso',
+nombre: 'CEUPE Dificultad de acceso',
     contenido: datos => (
     `${datos.greeting},
 
@@ -483,7 +365,7 @@ nombre: 'Dificultad de acceso',
 
 {
 
-nombre: 'Acceso correcto',
+nombre: 'CEUPE Acceso correcto',
         contenido: datos => (
     `${datos.greeting},
 
@@ -504,23 +386,419 @@ nombre: 'Acceso correcto',
     },
 
 {
-
-nombre: 'MC : Calendario No',
-    contenido: datos => (
+            nombre: 'ESIBE Bienvenida',
+            contenido: datos => (
             `${datos.greeting},
 
-    Para ingresar correctamente a las clases, no se tiene que acceder mediante el calendario. En su lugar, debe acceder utilizando el enlace que recibe en el correo de invitación correspondiente a cada clase. Este enlace también se encuentra disponible en el Centro de Ayuda de la plataforma, para más comodidad.
+            Desde el Departamento Docente, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado. 
 
-    En caso de que no haya podido asistir a alguna Masterclass, le informamos que puede solicitar la grabación en el <a href="https://mylxp.ceupe.com/help-center">Centro de Ayuda</a> a Gestión Académica o respondiendo directamente a este correo. Estaremos encantados de asistirle en lo que necesite.
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
 
-    Quedamos atentos a cualquier otra consulta que pudiera tener.,
-    Un saludo.`
-        ).replace(/\r\n|\n/g, "</br>")
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación. 
+
+A continuación le exponemos los requisitos obligatorios que deberá superar:
+
+-Visualizar el 100% del contenido en su campus virtual.
+-Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos. 
+
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
+
+Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+
+Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18:00 hora España, podrá acceder desde el siguiente enlace: 
+
+<a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
+  
+Puede comunicarse con nosotros desde el centro de ayuda, podrá localizarlo en la parte superior derecha, o en el teléfono 958991918.
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación. 
+
+Recuerde que estamos a su disposición para cualquier duda o consulta. 
+
+Un saludo.`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+
+{
+            nombre: 'ESIBE SEGUIMIENTO',
+            contenido: datos => (
+            `${datos.greeting},
+
+            Me pongo en contacto contigo de parte del equipo docente de tu formación ${datos.tituloCurso} que estás llevando a cabo.
+
+Quería comentar contigo que tal estabas encontrando el temario que llevas ya visualizado por ahora ya que compruebo que tu avance puede mejorar y me gustaría que me dieras tu sincera opinión de lo que hasta el momento has podido visualizar.
+
+Ten en cuenta que esta formación te permite aprender una serie de habilidades que podrás aplicar en una variedad de roles y sectores.
+
+Aprovecho para informarte que la fecha fin de tu formación es ${datos.fechaFinP}, la cual puedes revisar en tu área personal del campus o en el correo de Bienvenida. Si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional por 12 meses de ampliación.
+
+Para avanzar en tu estudio tienes que tener en cuenta los requisitos para superar tu formación, los cuales son:
+
+-Visualizar el 100% del contenido en su campus virtual.
+-Completar y superar el 100% de las autoevaluaciones y cada examen final con una puntuación mínima de 5 puntos.
+
+También aprovecho para recordarte que las actividades prácticas que hay a lo largo de la formación son totalmente opcionales. Es decir, aunque te recomiendo que las realices para poner en práctica lo aprendido, su realización es opcional. Por tanto, no es obligatoria su entrega para aprobar y superar la formación al completo.
+
+Por supuesto, tanto yo como todos mis compañeros docentes estamos a tu disposición para cualquier duda que te surja, tanto del contenido de la formación como de cualquier otra cuestión. Además, también podemos ayudarte si necesitas algún material complementario a la formación o ejercicios extra para practicar.
+
+Puedes contactarnos por las vías habituales de consulta de dudas.
+
+Mucho ánimo, todo paso que des en la formación es un paso en tu aprendizaje.
+
+Un saludo.`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+
+{
+
+nombre: 'ESIBE Dificultad de acceso',
+    contenido: datos => (
+    `${datos.greeting},
+
+    Para poder acceder al campus, siga estos pasos o revise este vídeo : <a href="https://cdn.educaedtech.com/welcome/Es/carta_bienvenida_alumnado_es.mp4" target="_blank">https://cdn.educaedtech.com/welcome/Es/carta_bienvenida_alumnado_es.mp4</a>:
+
+    1-Acceso al campus: <a href="https://mylxp.escuelaiberoamericana.com/" target="_blank">https://mylxp.escuelaiberoamericana.com</a>
+    2-Si no ha generado sus claves o no las que tiene, debe darle a ¿No tiene contraseña o la has olvidado?
+    3- Inserte el correo con el que se registró.
+    4- Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos. En caso de no recibirlo comprueba spam o correo no deseado.
+    5- Con su usuario y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
+
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+
+    Saludos cordiales.`
+        ).replace(/\r\n|\r|\n/g, "</br>")
     },
 
 {
 
-nombre: 'Casos prácticos',
+nombre: 'ESIBE Acceso correcto',
+        contenido: datos => (
+    `${datos.greeting},
+
+    Hemos comprobado su acceso y le confirmamos que su estudio aparece de forma correcta. Le adjuntamos capturas de pantalla para que pueda revisar.
+
+    Debe acceder mediante el siguiente enlace: <a href="https://mylxp.escuelaiberoamericana.com" target="_blank">https://mylxp.escuelaiberoamericana.com</a>: introduciendo sus claves de acceso. Buscar la formación y darle a 'continuar por donde lo dejé' para poder iniciar con la misma.
+
+    Si no recuerda su contraseña, debe darle a ¿No tiene contraseña o la has olvidado?
+
+    Después, inserte el correo con el que se registró. Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos.
+
+    Con su usuario y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
+
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+
+    Un saludo y buen día.`
+        ).replace(/\r\n|\r|\n/g, "</br>")
+    },
+
+{
+            nombre: 'EURO BIENVENIDA',
+            contenido: datos => (
+            `${datos.greeting},
+
+            Desde el Departamento Docente, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado. 
+
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
+
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación. 
+
+A continuación le exponemos los requisitos obligatorios que deberá superar:
+
+-Visualizar el 100% del contenido en su campus virtual.
+-Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos. 
+
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
+
+Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+
+Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18:00 hora España, podrá acceder desde el siguiente enlace: 
+
+<a href=">https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1740396793207/capture/</a>
+
+Puede comunicarse con nosotros desde el apartado centro de ayuda o desde la App, o en el teléfono 958948544. 
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación. 
+
+Recuerde que estamos a su disposición para cualquier duda o consulta. 
+
+Un saludo.`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+
+{
+
+nombre: 'EURO Seguimiento Base',
+    contenido: datos => (
+    `${datos.greeting},
+
+    ¿Cómo se encuentra? Espero que todo vaya fenomenal.
+
+    Me pongo en contacto con usted porque quiero conocer sus impresiones hasta el momento y conocer si existe alguna duda o dificultad para poderla resolver.
+
+    No olvide que estamos a su disposición para cualquier duda sobre el funcionamiento de su programa de estudio, de la plataforma o sobre su progreso académico.
+
+    Además, si tiene dudas sobre algún materia o actividad, el Departamento de Docencia está listo para apoyarle. Solo necesita crear una tutoría para que nuestros docentes le asesoren, se realiza desde Centro de ayuda escribiendo a 'Gestión Académica' (abajo a la izquierda, en el campus virtual).
+
+    Si quiere revisar qué tiene pendiente, no olvide consultar los requisitos de superación, donde encontrará una vista general de sus actividades y lo necesario para llevar un ritmo de estudio adecuado.
+
+    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, aunque contará con una prórroga gratuita de 3 meses, en caso de no acabar en la fecha indicada. Pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
+
+    Le animamos a finalizar dentro del plazo y si necesita pautas de avance o resolver alguna duda contacte con nosotros.
+
+    Le recordamos también que los requisitos de superación son:
+
+    -Visualizar el 100% del contenido en su campus virtual.
+    -Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
+
+    Aprovecho para recordarle una serie de aclaraciones sobre su programa de estudio:
+
+    El máster está compuesto por módulos y cada módulo tiene diferentes unidades de aprendizaje que se van completando con un check cuando ha logrado el progreso completo en esa unidad. Todas las unidades tienen una autoevaluación final para repasar el contenido.
+
+    Intente ir avanzando en cada módulo por todas las unidades y le irá apareciendo el porcentaje de progreso en la pestaña "Contenido". Al finalizar todas las Unidades que componen un módulo tendrá un examen (cuestionario) final, que decidirá la nota del mismo (puntuación mínima 5).
+
+    Los cuestionarios (exámenes finales) tienen 3 intentos. El sistema siempre le guardará la nota más alta.
+
+    Es importante que esté completamente seguro antes finalizar el módulo, ya que una vez que complete la encuesta, si finalizas el módulo no podrás realizar más intentos de examen, ni entregar actividades adicionales en el módulo. Si eliges "continuar", podrás seguir avanzando y subir el caso práctico sin problemas antes de la fecha de finalización del curso.
+
+    Los casos prácticos no son obligatorios, pero si recomendables, si tiene dudas con los mismos puede dirigirse al centro de ayuda y crear una tutoría seleccionando "abrir tutoría" y docencia.
+
+    Es importante que revise con frecuencia su calendario en el campus para saber cuándo son las masterclass y si se realiza algún cambio de fecha en alguna.
+
+    Aproveche todos los recursos ofrecidos por el centro (materiales de estudio, vídeos, etc.), para llevar a cabo el estudio y un rendimiento óptimo.
+
+    En caso de tener interés en la Semana Internacional y Graduación Final, no dude en contactarnos para ampliar información y aprovechar los descuentos disponibles que se ofrecen como alumno matriculado.
+
+    Si desea que contactemos telefónicamente para trasladarnos cualquier consulta, indíquenos día (de lunes a viernes) y número de teléfono.
+
+    Le enviamos muchos ánimos y suerte con el estudio.
+
+    Encontrándonos a su disposición,
+
+    Reciba un cordial saludo.`
+        ).replace(/\r\n|\r|\n/g, "</br>")
+    },
+
+{
+
+nombre: 'EURO Dificultad de acceso',
+    contenido: datos => (
+    `${datos.greeting},
+
+    Para poder acceder al campus, siga estos pasos o revise este vídeo : <a href="https://cdn.educaedtech.com/welcome/Es/carta_bienvenida_alumnado_es.mp4" target="_blank">https://cdn.educaedtech.com/welcome/Es/carta_bienvenida_alumnado_es.mp4</a>:
+
+    1-Acceso al campus: <a href="https://mylxp.euroinnova.com" target="_blank">https://mylxp.euroinnova.com</a>
+    2-Si no ha generado sus claves o no las que tiene, debe darle a ¿No tiene contraseña o la has olvidado?
+    3- Inserte el correo con el que se registró.
+    4- Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos. En caso de no recibirlo comprueba spam o correo no deseado.
+    5- Con su usuario y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
+
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+
+    Saludos cordiales.`
+        ).replace(/\r\n|\r|\n/g, "</br>")
+    },
+
+{
+
+nombre: 'EURO Acceso correcto',
+        contenido: datos => (
+    `${datos.greeting},
+
+    Hemos comprobado su acceso y le confirmamos que su estudio aparece de forma correcta. Le adjuntamos capturas de pantalla para que pueda revisar.
+
+    Debe acceder mediante el siguiente enlace: <a href="https://mylxp.euroinnova.com" target="_blank">https://mylxp.euroinnova.com</a>: introduciendo sus claves de acceso. Buscar la formación y darle a 'continuar por donde lo dejé' para poder iniciar con la misma.
+
+    Si no recuerda su contraseña, debe darle a ¿No tiene contraseña o la has olvidado?
+
+    Después, inserte el correo con el que se registró. Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos.
+
+    Con su usuario y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
+
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+
+    Un saludo y buen día.`
+        ).replace(/\r\n|\r|\n/g, "</br>")
+    },
+
+{
+    nombre: 'INESEM BIENVENIDA PRIVADO',
+    contenido: datos => (
+        `${datos.greeting},
+
+Desde el Departamento Docente, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado. 
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
+
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación. 
+A continuación le exponemos los requisitos obligatorios que deberá superar:
+
+        - Visualizar el 100% del contenido en su campus virtual.
+        -Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
+        - Completar y superar el Proyecto final con la nota mínima de un 5
+	- Actividades (no calificables)
+
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica (todos los apartados deberán quedar sombreados en verde en la plataforma en el apartado ÍNDICE). Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
+ 
+Cuando haya superado los requisitos obligatorios, deberá de realizar la encuesta de finalización.
+
+
+Por último, no olvide su fecha fin ${datos.fechaFinP}. Si para dicha fecha no hubiera podido finalizar dispondría de una única prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+
+Puede comunicarse con nosotros a través del chat del campus virtual, en el apartado 'CENTRO DE AYUDA' o en el teléfono 958050242. 
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
+
+Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
+
+<a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join">
+
+Recuerde que estamos a su disposición para cualquier duda o consulta. 
+
+Un saludo.`
+    ).replace(/\r\n|\n/g, "</br>")
+},
+
+{
+
+nombre: 'INESEM Dificultad de acceso',
+    contenido: datos => (
+    `${datos.greeting},
+
+    Para poder acceder al campus, siga estos pasos o revise este vídeo : <a href="https://cdn.educaedtech.com/welcome/Es/carta_bienvenida_alumnado_es.mp4" target="_blank">https://cdn.educaedtech.com/welcome/Es/carta_bienvenida_alumnado_es.mp4</a>:
+
+    1-Acceso al campus: <a href="https://mylxp.inesem.es" target="_blank">https://mylxp.inesem.es</a>
+    2-Si no ha generado sus claves o no las que tiene, debe darle a ¿No tiene contraseña o la has olvidado?
+    3- Inserte el correo con el que se registró.
+    4- Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos. En caso de no recibirlo comprueba spam o correo no deseado.
+    5- Con su usuario y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
+
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+
+    Saludos cordiales.`
+        ).replace(/\r\n|\r|\n/g, "</br>")
+    },
+
+{
+
+nombre: 'INESEM Acceso correcto',
+        contenido: datos => (
+    `${datos.greeting},
+
+    Hemos comprobado su acceso y le confirmamos que su estudio aparece de forma correcta. Le adjuntamos capturas de pantalla para que pueda revisar.
+
+    Debe acceder mediante el siguiente enlace: <a href="https://mylxp.inesem.es" target="_blank">https://mylxp.inesem.es</a>: introduciendo sus claves de acceso. Buscar la formación y darle a 'continuar por donde lo dejé' para poder iniciar con la misma.
+
+    Si no recuerda su contraseña, debe darle a ¿No tiene contraseña o la has olvidado?
+
+    Después, inserte el correo con el que se registró. Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos.
+
+    Con su usuario y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
+
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+
+    Un saludo y buen día.`
+        ).replace(/\r\n|\r|\n/g, "</br>")
+    },
+
+{
+            nombre: 'OPAM BIENVENIDA ',
+            contenido: datos => (
+            `${datos.greeting},
+
+            Desde el Departamento Docente, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado. 
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
+
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación. 
+
+A continuación le exponemos los requisitos obligatorios que deberá superar:
+
+-Visualizar el 100% del contenido en su campus virtual. 
+-Completar y superar el 100% de las autoevaluaciones y los exámenes finales. Las autoevaluaciones suponen un 40% y los exámenes el otro 40% de la nota final.
+-Superar el Proyecto Final con una puntuación mínima de 5 puntos. Supone un 20% de la nota final.
+ 
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica (todos los apartados deberán quedar sombreados en verde en la plataforma en el apartado ÍNDICE). Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
+
+Va a contar con un año lectivo desde la fecha de inicio en su matrícula. La tramitación de su titulación comenzará una vez finalice su convocatoria.
+
+Le recordamos que si no finaliza el máster en la fecha de fin de convocatoria, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación.
+
+Puede comunicarse con nosotros a través del chat del campus virtual, desde el apartado CENTRO DE AYUDA o en el teléfono 958050249. 
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación. 
+
+Recuerde que estamos a su disposición para cualquier duda o consulta. 
+
+Un saludo.`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+
+{
+            nombre: 'OPAM SEGUIMIENTO',
+            contenido: datos => (
+            `${datos.greeting},
+
+            Nos ponemos en contacto con usted para hacerle un seguimiento del ${datos.tituloCurso} que está realizando con nosotros.
+
+Esperamos que todo sea de su agrado y vaya avanzando sin problema
+Recuerde que nos tiene a su disposición para ayudarle en cualquier duda que tenga del contenido del curso. Si alguna unidad le resulta más compleja y desea que le llamemos para tener una tutoría telefónica no dude en contactarnos.
+
+Si necesita completar algún punto por no quedarle claro nos contacta para que le enviemos algún recurso o para orientarle como estudiarlo si es preciso con algún caso práctico.
+
+Le animamos a que realice las actividades que seguro le ayudaran a comprender mejor el contenido del curso. Si para su realización, o para las autoevaluaciones o el examen necesita que le echemos una mano no dude en solicitarnos ayuda.
+
+Le recordamos que la fecha de finalización de su acción formativa la puede consultar en el campus y que los requisitos para su finalización los tiene en su correo de bienvenida.
+
+Sin nada más que añadir, nos despedimos de usted recordándole que para cualquier consulta puede contactar con nosotros y estaremos encantados de atenderle.
+
+Reciba un cordial saludo`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+
+{
+nombre: 'TODOS grabación bienvenida',
+            contenido: datos => (
+        `${datos.greeting},
+
+        ¡Hola! ¿Cómo va todo?
+
+        ¿No pudiste asistir a la sesión de bienvenida con tu docente?
+
+        ¡No te preocupes! Le remitimos el enlace para que la puedas visualizar cuando tengas disponibilidad:
+
+        <a href="https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1744183759657/capture/" target="_blank">https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1744183759657/capture/</a>
+
+        Cualquier duda que tengas, después de ver el video, me puedas preguntar directamente en el centro de ayuda, Soy su coordinador académico de tu ${datos.tituloCurso} y es un placer para mí contar contigo entre mis estudiantes.
+
+        Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
+
+        Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
+            )
+        },
+
+{
+
+nombre: 'TODOS Enlace masterclass',
+            contenido: datos => (
+        `${datos.greeting},
+
+        ¿No pudiste asistir a la masterclass?
+
+        ¡No te preocupes! Te remitimos el enlace para que la puedas visualizar cuando tengas disponibilidad:
+
+        <b> enlace </b>
+
+        Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
+
+        Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
+            )
+        },
+
+{
+
+nombre: 'TODOS Casos prácticos',
         contenido: datos => (
     `${datos.greeting},
 
@@ -544,124 +822,7 @@ nombre: 'Casos prácticos',
 
 {
 
-nombre: 'Finalización Pendiente de cuotas',
-        contenido: datos => (
-    `${datos.greeting},
-
-    Hemos comprobado que ya cumple los requisitos de finalización:
-
-    - Visualizar el 100% del contenido en su campus virtual.
-    - Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
-    - Llegar a la fecha mínima de docencia, en su caso es: ${datos.minimumFinishDate}
-
-    Faltaría el último de los objetivos de consecución:
-
-    - Tener todas las cuotas del estudio pagadas.
-
-    Una vez recibamos la notificación de finalización definitiva, le enviaremos un correo de confirmación y podrá iniciar la gestión de su solicitud de titulación, abriendo una tutoría para solicitar la opción de título que desea.
-
-    A continuación, le adelantamos información sobre las opciones disponibles para la emisión del título:
-
-    <p><span style="color: #3366ff;"><strong><span data-contrast="none">Opciones de emisi&oacute;n del t&iacute;tulo:</span></strong></span></p>
-
-    - Título Digital: 75 €
-    <p><em><span data-contrast="none">Recibir&aacute; su t&iacute;tulo en formato digital, v&aacute;lido para tr&aacute;mites electr&oacute;nicos y de f&aacute;cil acceso desde cualquier lugar.</span></em></p>
-
-    - Título Físico: 100 €
-    <p><em><span data-contrast="none">Recibir&aacute; su t&iacute;tulo impreso en formato f&iacute;sico, ideal para presentaciones oficiales y conservaci&oacute;n personal.</span></em></p>
-
-    <p><span style="color: #3366ff;"><strong><span data-contrast="none">Servicios adicionales disponibles:</span></strong></span></p>
-
-    - Apostilla de La Haya: 65 €
-    <p><em><span data-contrast="none">Servicio necesario para la validaci&oacute;n internacional de su t&iacute;tulo en pa&iacute;ses miembros del convenio de La Haya.</span></em></p>
-
-    - Traducción jurada: 120 €
-    <p><em><span data-contrast="none">Traducci&oacute;n oficial de su t&iacute;tulo o documentos acad&eacute;micos a otro idioma, realizada por un traductor jurado reconocido.</span></em></p>
-
-    - Certificados Digitales (finalización, matriculación, calificaciones, pensum): 40 €
-    <p><em><span data-contrast="none">Certificados en formato digital para facilitar la gesti&oacute;n y presentaci&oacute;n en tr&aacute;mites electr&oacute;nicos.</span></em></p>
-
-    - Certificados Físicos (finalización, matriculación, calificaciones, pensum): 60 €
-    <p><em><span data-contrast="none">Certificados impresos en formato f&iacute;sico para tr&aacute;mites presenciales o archivo personal.</span></em></p>
-
-    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
-
-    Un saludo cordial,`
-        ).replace(/\r\n|\r|\n/g, "</br>")
-    },
-
-{
-
-nombre: 'Titulación y precios',
-        contenido: datos => (
-    `${datos.greeting},
-
-    En primer lugar, queremos felicitarle sinceramente por la exitosa finalización de su máster. Este logro es fruto de su esfuerzo, dedicación y perseverancia, y nos complace enormemente haber formado parte de su trayectoria académica.
-
-    Nos ponemos en contacto con usted para informarle acerca de las opciones disponibles para la emisión de su título y otros servicios adicionales que ponemos a su disposición. A continuación, encontrará el detalle de los valores y modalidades:
-
-    <p><span style="color: #3366ff;"><strong><span data-contrast="none">Opciones de emisi&oacute;n del t&iacute;tulo:</span></strong></span></p>
-
-    - Título Digital: 75 €
-    <p><em><span data-contrast="none">Recibir&aacute; su t&iacute;tulo en formato digital, v&aacute;lido para tr&aacute;mites electr&oacute;nicos y de f&aacute;cil acceso desde cualquier lugar.</span></em></p>
-
-    - Título Físico: 100 €
-    <p><em><span data-contrast="none">Recibir&aacute; su t&iacute;tulo impreso en formato f&iacute;sico, ideal para presentaciones oficiales y conservaci&oacute;n personal.</span></em></p>
-
-    <p><span style="color: #3366ff;"><strong><span data-contrast="none">Servicios adicionales disponibles:</span></strong></span></p>
-
-    - Apostilla de La Haya: 65 €
-    <p><em><span data-contrast="none">Servicio necesario para la validaci&oacute;n internacional de su t&iacute;tulo en pa&iacute;ses miembros del convenio de La Haya.</span></em></p>
-
-    - Traducción jurada: 120 €
-    <p><em><span data-contrast="none">Traducci&oacute;n oficial de su t&iacute;tulo o documentos acad&eacute;micos a otro idioma, realizada por un traductor jurado reconocido.</span></em></p>
-
-    - Certificados Digitales (finalización, matriculación, calificaciones, pensum): 40 €
-    <p><em><span data-contrast="none">Certificados en formato digital para facilitar la gesti&oacute;n y presentaci&oacute;n en tr&aacute;mites electr&oacute;nicos.</span></em></p>
-
-    - Certificados Físicos (finalización, matriculación, calificaciones, pensum): 60 €
-    <p><em><span data-contrast="none">Certificados impresos en formato f&iacute;sico para tr&aacute;mites presenciales o archivo personal.</span></em></p>
-
-    Le agradeceríamos que nos indique, por favor, la opción de título que prefiere (digital o físico), así como los servicios adicionales que desea solicitar. Una vez recibamos su respuesta, le enviaremos las instrucciones para completar el proceso y procederemos con la gestión correspondiente.
-
-    Quedamos a su entera disposición para cualquier consulta o aclaración que requiera. No dude en contactarnos si necesita información adicional o asesoramiento personalizado.
-
-    Agradeciéndole de antemano su atención, le enviamos un cordial saludo y nuestras más sinceras felicitaciones nuevamente.`
-        ).replace(/\r\n|\r|\n/g, "</br>")
-    },
-
-{
-            nombre: 'SIM - Octubre 2025 ',
-            contenido: datos => (
-            `${datos.greeting},
-
-            La Semana Internacional de Madrid de CEUPE es mucho más que un curso: es tu pasaporte al futuro profesional.
-
-En caso de tener interés en la Semana Internacional y Graduación Final, no dude en contactarnos para ampliar información y aprovechar los descuentos disponibles que se ofrecen como alumno matriculado.
-
-Durante una semana inmersiva en el corazón de Madrid, vivirás una combinación perfecta de aprendizaje de alto nivel, networking internacional y experiencias culturales. Asistirás a clases magistrales con expertos de primer nivel en liderazgo, gestión de proyectos, negociación, emprendimiento digital, ciberseguridad, y muchos mas.
-
-Aprenderás con casos reales de empresas multinacionales y tendrás la oportunidad de visitar sus sedes, además de descubrir los rincones más emblemáticos de Madrid.
-
-Este programa es ideal tanto si eres estudiante como profesional, ya que te permitirá conectar con personas de todo el mundo, especialmente de América Latina, y construir relaciones que durarán toda la vida. Al finalizar, recibirás un título avalado por CEUPE, reconocido en el mercado laboral internacional.
-
-Si participas en la semana internacional de Madrid, recibirás el título de manera gratuita, además de recibir también el segundo título PDD (Programa de Desarrollo Directivo) de la Semana internacional.
-
-Si formalizas tu inscripción ahora, mientras aún estás estudiando, podrás beneficiarte de una reducción del 20% sobre el precio completo. El precio habitual del programa es de 1.000€, pero con el descuento exclusivo para alumnos en curso, el coste final será de 800€, lo que supone un ahorro de 200€.
-
-Adjunto la infografía con toda la información sobre la Semana Internacional de Madrid, que tendrá lugar del 6 al 10 de octubre de 2025.
-
-No dejes pasar esta oportunidad para destacar, aprender y crecer. ¡La Semana Internacional de Madrid de CEUPE es tu puente hacia el éxito global!
-
-Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
-
-Un saludo cordial,`
-            ).replace(/\r\n|\n/g, "</br>")
-            },
-
-{
-
-nombre: 'Cancelación formación',
+nombre: 'TODOS No baja',
         contenido: datos => (
     `${datos.greeting},
 
@@ -674,47 +835,6 @@ nombre: 'Cancelación formación',
     En el caso de que, tampoco pueda finalizar la formación, puede ampliar el tiempo por un año, realizando un pago adicional.
 
     Un saludo.`
-        ).replace(/\r\n|\r|\n/g, "</br>")
-    },
-
-{
-
-nombre: 'Paralizar o congelar formación',
-        contenido: datos => (
-    `${datos.greeting},
-
-    Espero que esté muy bien.
-
-    Contactamos con usted para informarle que lamentablemente no se permite paralizar o congelar el estudio, dado que dispone de un año para poder realizar el máster, siendo la fecha fin el ${datos.fechaFinP}. Por tanto, no debe preocuparse por los tiempos, cuando le sea posible, vaya avanzando con el estudio del máster con cada módulo y sus unidades.
-
-    Desde CEUPE no se miden los tiempos de conexión. Céntrese en las asignaciones obligatorias:
-
-    - Visualizar el 100% del contenido en su campus virtual.
-    - Completar y superar el 100% de las autoevaluaciones con una puntuación mínima de 5 puntos.
-    - Realizar la encuesta al finalizar cada módulo de estudio.
-
-    Y si dispone de tiempo, asista a las sesiones en directo y complete los casos prácticos, los cuales no son obligatorios, aunque sí recomendables.
-
-    Si llegada su fecha fin y no ha podido finalizar la formación, tendrá una prórroga de 3 meses más para poder finalizar. En el caso de que, tampoco pueda finalizar la formación, puede ampliar el tiempo por un año, realizando un pago adicional.
-
-    Ánimo con el estudio. Estamos seguros que podrá reconducir la situación que está viviendo y podrá alcanzar los objetivos del máster.
-
-    Saludos cordiales.`
-        ).replace(/\r\n|\r|\n/g, "</br>")
-    },
-
-{
-
-nombre: 'verficacion violent monkey',
-        contenido: datos => (
-    `${datos.greeting},
-    Fecha minima : ${datos.minimumFinishDate}
-    Fecha Fin :         ${datos.fechaFinP}
-    Fecha inicio :     ${datos.fechaMatricula}
-    Nombre master: ${datos.tituloCurso}
-    Telefono según la empresa: ${datos.telefono}
-    Proximo lunes : ${datos.nextMondayStr}
-    `
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
     ];
