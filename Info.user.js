@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         InfoTutor
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Botón "info" en #datosCurso con información CEUP en tres columnas
 // @author       Lois
-// @match        *://innotutor.com/Tutoria/Tutoria.aspx?tutoriaId=*
+// @match        *://innotutor.com/Tutoria/*
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Info.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Info.user.js
 // @grant        none
