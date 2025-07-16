@@ -157,31 +157,36 @@
     }
 
     async function addCountryColumn() {
-        const table = document.getElementById('tutorshipsTable');
-        if (!table) return;
+    const table = document.getElementById('tutorshipsTable');
+    if (!table) return;
 
-        // Corrección: Eliminar declaración duplicada de 'rows'
-        const rows = Array.from(table.querySelectorAll('tbody tr'))
-            .filter(row => isVisible(row));
+    const rows = Array.from(table.querySelectorAll('tbody tr'))
+        .filter(row => isVisible(row));
 
-        const headerRow = table.querySelector('tr');
-        if (headerRow && !headerRow.innerHTML.includes('País')) {
-            headerRow.innerHTML += '<th>País</th>';
-        }
+    // Añadir <th> solo si no existe
+    const headerRow = table.querySelector('thead tr') || table.querySelector('tr');
+    if (headerRow && !headerRow.querySelector('th[data-country-header]')) {
+        const th = document.createElement('th');
+        th.textContent = 'País';
+        th.setAttribute('data-country-header', 'true');
+        headerRow.appendChild(th);
+    }
 
-        for (const row of rows) {
-            if (stopRequested) break; // 🚨 Detener si se solicitó
+    for (const row of rows) {
+        if (stopRequested) break;
 
-            const matriculaCell = row.querySelector('td:nth-child(2)');
-            if (!matriculaCell || row.querySelector('td:last-child').hasAttribute('data-country')) continue;
+        const matriculaCell = row.querySelector('td:nth-child(2)');
+        // Evita añadir dos veces la celda de país
+        if (!matriculaCell || row.querySelector('td[data-country]')) continue;
 
-            const matriculaId = matriculaCell.textContent.trim();
-            const countryCell = document.createElement('td');
-            countryCell.textContent = '...';
-            row.appendChild(countryCell);
+        const matriculaId = matriculaCell.textContent.trim();
+        const countryCell = document.createElement('td');
+        countryCell.textContent = '...';
+        countryCell.setAttribute('data-country', 'true');
+        row.appendChild(countryCell);
 
-                try {
-                const pais = await fetchCountry(matriculaId);
+        try {
+            const pais = await fetchCountry(matriculaId);
             if (isEspania(pais)) {
                 countryCell.textContent = '🟥🟨🟥';
             } else if (isAML(pais)) {
@@ -189,12 +194,11 @@
             } else {
                 countryCell.textContent = `🗺 RDM 🗺 (${pais})`;
             }
-            countryCell.setAttribute('data-country', 'true');
-            } catch (error) {
+        } catch (error) {
             countryCell.textContent = 'Error';
         }
-      }
     }
+}
 
     function createTableObserver() {
         return new MutationObserver(mutations => {
