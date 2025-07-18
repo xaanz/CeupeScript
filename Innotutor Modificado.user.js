@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InnoTutor Modificado GitHub version
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.3
 // @description  Modifica elementos en la página de respuesta de tutorías y muestra país, bandera y código telefónico por matrícula
 // @author       Lois
 // @grant        none
