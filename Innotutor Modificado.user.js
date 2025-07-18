@@ -18,15 +18,26 @@
     // PARTE 1: Modificaciones InnoTutor (Firma, editor, espaciado)
     // =========================
 
-    // 1. Firma automática no editable
-    const NUEVO_TEXTO = "\n\nLOIS DE LA VAISSIÈRE DE LAVERGNE";
-    const textarea = document.getElementById("txtRemitente");
-    if (textarea) {
-        textarea.value = NUEVO_TEXTO;
-        const enforceText = () => textarea.value = NUEVO_TEXTO;
-        textarea.addEventListener('input', enforceText);
-        textarea.addEventListener('blur', enforceText);
-    }
+   // 1. Firma automática no editable
+const spanUsuario = document.getElementById("headerTutorizacion_usuarioSesion_lblUsuario");
+const nombreUsuario = spanUsuario ? spanUsuario.textContent.trim() : "Su coordinador";
+const NUEVO_TEXTO = "\n\n" + nombreUsuario;
+const textarea = document.getElementById("txtRemitente");
+if (textarea) {
+    textarea.value = NUEVO_TEXTO;
+    const enforceText = () => textarea.value = NUEVO_TEXTO;
+    textarea.addEventListener('input', enforceText);
+    textarea.addEventListener('blur', enforceText);
+    textarea.style.width = "360px";
+    textarea.style.height = "60px";
+}
+
+    // Ajustar campo de puesto
+    const textareaPuesto = document.getElementById('txtPuesto');
+      if (textareaPuesto) {
+          textareaPuesto.style.width = '390px';
+          textareaPuesto.style.height = '20px';
+      }
 
     // 2. Editor redimensionable
     const makeResizable = () => {
