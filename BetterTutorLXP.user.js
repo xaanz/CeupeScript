@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         TutorLXP Enhancer Combinado
+// @name         Better TutorLXP
 // @namespace    Violentmonkey Scripts
 // @version      2.0
-// @description  Fusiona mejoras: coloreo, botones de asignación, buscador Innotutor y desactiva filtro
+// @description  mejoras: coloreo, botones de asignación, buscador Innotutor
 // @author       Lois
 // @match        *://prod.tutorlxp.ai/*
 // @match        http://innotutor.com/Tutoria/Alumnos.aspx*
