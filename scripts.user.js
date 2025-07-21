@@ -61,9 +61,9 @@
             url: "https://github.com/xaanz/CeupeScript/raw/main/BetterTutorLXP.user.js"
         },
         {
-            categoria: "Otros", nombre: "in development",
-            descripcion: "Próximamente",
-            url: "#"
+            categoria: "Otros", nombre: "Educalab auto codigo",
+            descripcion: "Rellena automáticamente el campo de búsqueda en EducaProject",
+            url: "https://github.com/xaanz/CeupeScript/raw/main/Educalab.user.js"
         },
     ];
 
