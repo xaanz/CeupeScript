@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      1.4
+// @version      1.5
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -515,18 +515,14 @@ Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18:00 hora España, podrá acceder desde el siguiente enlace: 
 
-<a href=">https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1740396793207/capture/</a>
+<a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join" target="_blank">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
 
-Puede comunicarse con nosotros desde el apartado centro de ayuda o desde la App, o en el teléfono 958948544. 
+Recuerde que estamos a su disposición para cualquier duda o consulta.
 
-Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación. 
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
 
-Recuerde que estamos a su disposición para cualquier duda o consulta. 
-
-Un saludo.`
-            ).replace(/\r\n|\n/g, "</br>")
-            },
-
+Atentamente.`).replace(/\r\n|\n/g, "</br>")
+},
 {
 
 nombre: 'EURO Seguimiento Base',
