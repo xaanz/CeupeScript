@@ -100,26 +100,26 @@
                             <th style="border-bottom:2px solid #264273;padding:8px 0;min-width:110px;">Enlace</th>
                         </tr>`;
             categorias[cat].forEach(script => {
-                let nombreHtml = script.nombre;
-                // Badge NUEVO para Better TutorLXP
-                if (script.nombre === "Better TutorLXP, Mejor Matricula") {
-                    nombreHtml +=
-                        ' <span style="background:#e91e63;color:#fff;font-weight:600;font-size:0.78em;padding:3px 10px;border-radius:11px;margin-left:6px;vertical-align:middle;box-shadow:0 1px 3px #e91e6375;letter-spacing:1px;">NUEVO</span>';
-                }
-                html += `<tr>
-                  <td style="padding:8px 10px 8px 0;">${nombreHtml}</td>
-                  <td style="padding:8px 0;">${script.descripcion}</td>
-                  <td style="padding:8px 0;text-align:center;">
-                    ${script.url === "#" ? "<em>Próximamente</em>" :
-                        `<a href="${script.url}" target="_blank"
-                          style="background:#2163b1;color:#fff;font-weight:bold;
-                          padding:8px 20px 8px 20px;border:none;
-                          border-radius:9px;text-decoration:none;display:inline-block;box-shadow:0 1px 2px #183b6699;">
-                          Instalar
-                        </a>`
-                    }
-                  </td>
-                </tr>`;
+    let nombreHtml = script.nombre;
+    // Badge NUEVO para Better TutorLXP y Mejor Matricula
+    if (script.nombre === "Better TutorLXP" || script.nombre === "Mejor Matricula") {
+        nombreHtml +=
+            ' <span style="background:#e91e63;color:#fff;font-weight:600;font-size:0.78em;padding:3px 10px;border-radius:11px;margin-left:6px;vertical-align:middle;box-shadow:0 1px 3px #e91e6375;letter-spacing:1px;">NUEVO</span>';
+    }
+    html += `<tr>
+      <td style="padding:8px 10px 8px 0;">${nombreHtml}</td>
+      <td style="padding:8px 0;">${script.descripcion}</td>
+      <td style="padding:8px 0;text-align:center;">
+        ${script.url === "#" ? "<em>Próximamente</em>" :
+            `<a href="${script.url}" target="_blank"
+              style="background:#2163b1;color:#fff;font-weight:bold;
+              padding:8px 20px 8px 20px;border:none;
+              border-radius:9px;text-decoration:none;display:inline-block;box-shadow:0 1px 2px #183b6699;">
+              Instalar
+            </a>`
+        }
+      </td>
+    </tr>`;
             });
             html += `</table></div>`;
         }
