@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      1.7
+// @version      1.8
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -495,6 +495,27 @@ nombre: 'ESIBE Acceso correcto',
     Un saludo y buen día.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
+
+{
+            nombre: 'EUCA Seguimiento',
+            contenido: datos => (
+            `${datos.greeting},
+
+            Me dirijo a usted, como parte del equipo docente, para realizar un seguimiento de tu progreso en la formación de ${datos.tituloCurso}.
+ 
+Recuerda que sus requisitos consisten en completar el 100% del contenido en la plataforma y realizar el proyecto final con una puntuación mínima de 3 sobre 6 antes del ${datos.fechaFinP}. Cuenta con tiempo suficiente, pero es preferible ir avanzando por a poco.
+ 
+Referente al Proyecto final, recomendamos que hasta que no se haya visualizado el 85% del contenido no comenzar su realización, para que así podáis centraros en estudiar el temario e indagar en todas las temáticas posibles.
+ 
+Tanto yo como todos/as mis compañeros/as de coordinación y docencía estamos a su disposición para cualquier duda que le surja, tanto del contenido de la formación como del uso de la plataforma o cualquier otra cuestión. Además, también podemos ayudarle si necesita algún material complementario a la formación o ejercicios extra para practicar.
+ 
+Puede contactar a través del campus virtual en Centro de ayuda o mediante llamada telefónica ${datos.telefono}.
+ 
+Mucho ánimo, todo paso que des en la formación es un paso en tu aprendizaje.
+ 
+Un saludo.`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
 
 {
             nombre: 'EURO BIENVENIDA',
