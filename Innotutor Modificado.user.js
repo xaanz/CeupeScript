@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InnoTutor Modificado GitHub version
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.4
 // @description  Modifica elementos en la página de respuesta de tutorías y muestra país, bandera y código telefónico por matrícula
 // @author       Lois
 // @grant        none
@@ -344,20 +344,171 @@ function getCountryTime(tz) {
         });
     }
 
-    // =========================
-    // EJECUCIÓN DE AMBOS BLOQUES
-    // =========================
+   // === BLOQUE 2: Popup <div> & CSS mejoras ===
 
-   setTimeout(() => {
-    makeResizable();
-    addSpacer();
-    setupListener();
-    // Si ya hay matrícula cargada, mostrar país/bandera/código
-    let input = document.getElementById("datosAlumnoCurso_txtNumeroMatricula");
-    if (input && input.value.trim()) {
-        fetchCountryFromEnrollment(input.value.trim());
+    // Separar <div> con <br> internos en <div> y <br>
+    function splitDivByBr(element) {
+        if (!element || element.dataset.splitted === "1") return;
+        let hijos = Array.from(element.children);
+        for (let i = 0; i < hijos.length; i++) {
+            let d = hijos[i];
+            if (d.tagName === "DIV" && d.innerHTML.includes("<br")) {
+                let trozos = d.innerHTML.split(/<br\s*\/?>/i);
+                let nuevos = [];
+                trozos.forEach((frag, idx) => {
+                    if (frag.trim().length > 0) {
+                        let nuevoDiv = document.createElement('div');
+                        nuevoDiv.innerHTML = frag.trim();
+                        nuevos.push(nuevoDiv);
+                    }
+                    if (idx < trozos.length - 1) {
+                        nuevos.push(document.createElement('br'));
+                    }
+                });
+                nuevos.reverse().forEach(node => d.after(node));
+                d.remove();
+            }
+        }
+        element.dataset.splitted = "1";
     }
-    setTimeout(scrollToCheckbox, 200);
-  }, 100);
+
+    // Parte el contenido por <br> y crea <div> por bloque
+    function brToDivs(element) {
+        if (!element || element.dataset.brtodivs === "1") return;
+        let partes = element.innerHTML.split(/<br\s*\/?>/i).map(t => t.trim()).filter(Boolean);
+        element.innerHTML = partes.map(txt => `<div>${txt}</div>`).join('');
+        element.dataset.brtodivs = "1";
+    }
+
+    // Inserta <br> entre <div> consecutivos con texto
+    function insertarBRs(element) {
+        if (!element) return;
+        const hijos = Array.from(element.children);
+        let indices = [];
+        for (let i = 0; i < hijos.length - 1; i++) {
+            const divActual = hijos[i];
+            const divSiguiente = hijos[i + 1];
+            if (
+                divActual.tagName === "DIV" &&
+                divSiguiente.tagName === "DIV" &&
+                divActual.textContent.trim().length > 0 &&
+                divSiguiente.textContent.trim().length > 0
+            ) {
+                indices.push(i + 1);
+            }
+        }
+        for (let j = indices.length - 1; j >= 0; j--) {
+            let br = document.createElement('br');
+            br.className = 'texto-separador-br';
+            element.insertBefore(br, hijos[indices[j]]);
+        }
+    }
+
+    // MutationObserver para el popup
+    const observer = new MutationObserver(() => {
+        const contenido = document.querySelector('#win1_content');
+        if (contenido) {
+            brToDivs(contenido);
+            splitDivByBr(contenido);
+            insertarBRs(contenido);
+        }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // CSS de popup
+    const css = `
+#win1 {
+ background: #6f88e8 !important;
+ border: 2px solid #6f88e8 !important;
+ border-radius: 14px !important;
+ overflow: visible !important;
+}
+#win1 .alphacube_title {
+ background: #6f88e8 !important;
+ color: #ffffff !important;
+ font-size: 1.36em !important;
+}
+#win1 #win1_content {
+ color: #353b48 !important;
+ background: #fff !important;
+ font-size: 1.22em !important;
+}
+#win1 #win1_top,
+#win1 .alphacube_nw,
+#win1 .alphacube_ne,
+#win1 .alphacube_n,
+#win1 .alphacube_title,
+#win1 #win1_top.alphacube_title {
+ background: #6f88e8 !important;
+ color: #6f88e8 !important;
+ height: 20px !important;
+}
+#win1_close.alphacube_close {
+ position: absolute !important;
+ top: 2px !important;
+ right: 10px !important;
+ width: 22px !important;
+ height: 22px !important;
+ padding: 0 !important;
+ border-radius: 50% !important;
+ background: #fff !important;
+ border: 2px solid #dcdde1 !important;
+ box-shadow: 0 2px 6px rgba(55,60,85,0.14) !important;
+ display: flex !important;
+ align-items: center !important;
+ justify-content: center !important;
+ color: #6f88e8 !important;
+ font-size: 1em !important;
+ font-weight: bold;
+ cursor: pointer !important;
+ z-index: 10 !important;
+ transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+ overflow: hidden !important;
+}
+#win1_close.alphacube_close::before {
+ content: "×";
+ font-size: 1.12em !important;
+ width: 100%;
+ text-align: center;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ line-height: 1 !important;
+ height: 100%;
+ font-family: Arial,Segoe UI,sans-serif;
+ pointer-events: none;
+}
+#win1_close.alphacube_close:hover {
+ background: #4e7bf5 !important;
+ color: #fff !important;
+ border-color: #4e7bf5 !important;
+ box-shadow: 0 4px 14px rgba(38,24,232,0.17) !important;
+}
+#win1 .alphacube_w, #win1 .alphacube_e { background: #fff !important; }
+#win1 .alphacube_sizer.bottom_draggable,
+#win1 .alphacube_sw,
+#win1 .alphacube_s,
+#win1 .alphacube_se { background: #6f88e8 !important; }
+#win1 .alphacube_ne.top_draggable { border-top-right-radius: 12px !important; }
+#win1 .alphacube_sw { border-bottom-left-radius: 12px !important; }
+#win1 .alphacube_sizer.bottom_draggable { border-bottom-right-radius: 12px !important; }
+`;
+
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+
+    // === EJECUCIÓN DE BLOQUES === //
+
+    setTimeout(() => {
+        makeResizable();
+        addSpacer();
+        setupListener();
+        let input = document.getElementById("datosAlumnoCurso_txtNumeroMatricula");
+        if (input && input.value.trim()) {
+            fetchCountryFromEnrollment(input.value.trim());
+        }
+        setTimeout(scrollToCheckbox, 200);
+    }, 100);
 
 })();
