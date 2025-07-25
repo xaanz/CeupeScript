@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      1.5
+// @version      1.6
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -72,6 +72,10 @@
         if (companyName.includes("ceupe")) {
             formacion = "CEUPE";
             telef = "911979567";
+        }
+	if (companyName.includes("structuralia")) {
+            formacion = "STRUCTURALIA";
+            telef = "914904200";
         }
 
         const finishDateStr = val("datosAlumnoCurso_txtFechaFin");
@@ -754,6 +758,52 @@ Reciba un cordial saludo`
             },
 
 {
+            nombre: 'STRUC Bienvenida',
+            contenido: datos => (
+            `${datos.greeting},
+
+            Desde el Departamento de coordinacion, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado. 
+
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
+
+- Acesso: <a href="https://mylxp.structuralia.com" target="_blank">mylxp.structuralia.com</a>. Si no ha generado sus claves o no las que tiene, debe darle a ¿No tiene contraseña o la has olvidado? Inserte el correo con el que se registró. Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos
+- Al ingresar al campus virtual, en la parte lateral izquierda de la pantalla encontrará las secciones "Inicio" y "Tu aprendizaje".
+- Para acceder a su curso, puede utilizar el buscador principal o la opción "Continuar con", que lo dirigirá directamente al programa en el que está matriculado y donde podrá visualizar su progreso.
+- En esta misma pantalla principal, podrá inscribirse en los diferentes MOOCs disponibles dentro de su estudio. Para ello, solo debe seleccionarlos y hacer clic en "Inscribir".
+- Para cualquier consulta dirigida a tutores o soporte, le recomendamos utilizar siempre el "Centro de Ayuda", ubicado en el lateral inferior izquierdo de la página principal del campus. Es importante siempre usar este recurso para resolver sus dudas, será el contacto más directo para que le puedan atender.
+- Si necesita modificar sus datos personales (pagos, titulación, suscripción, seguridad, entre otros) o ajustar sus preferencias de navegación, puede hacerlo desde la pestaña "Mi cuenta", situada en la parte superior derecha del campus.
+ 
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación.
+ 
+A continuación le exponemos los requisitos obligatorios que deberá superar:
+ 
+-Visualizar el 100% del contenido en su campus virtual.
+ 
+-Completar y superar el 100% de las autoevaluaciones y los exámenes finales. Las autoevaluaciones suponen un 40% y los exámenes el otro 40% de la nota final.
+ 
+-Superar el Proyecto Final con una puntuación mínima de 5 puntos. Supone un 20% de la nota final.
+
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 10 preguntas tipo test) y completar el examen final.
+ 
+Va a contar con un año lectivo desde la fecha de inicio en su matrícula. La tramitación de su titulación comenzará una vez finalice su convocatoria universitaria. Tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}.
+ 
+Puede comunicarse con nosotros desde el centro de ayuda, el mismo lo tiene habilitado en la parte superior derecha del campus o en el teléfono ${datos.telefono}.
+
+Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
+
+<a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join" target="_blank">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
+ 
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
+ 
+Recuerde que estamos a su disposición para cualquier duda o consulta.
+ 
+Un saludo.`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+
+{
 nombre: 'TODOS grabación bienvenida',
             contenido: datos => (
         `${datos.greeting},
@@ -766,7 +816,7 @@ nombre: 'TODOS grabación bienvenida',
 
         <a href="https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1744183759657/capture/" target="_blank">https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1744183759657/capture/</a>
 
-        Cualquier duda que tengas, después de ver el video, me puedas preguntar directamente en el centro de ayuda, Soy su coordinador académico de tu ${datos.tituloCurso} y es un placer para mí contar contigo entre mis estudiantes.
+        Cualquier duda que tengas, después de ver el video, me puedes preguntar directamente en el centro de ayuda, Soy su coordinador académico de tu ${datos.tituloCurso} y es un placer para mí contar contigo entre mis estudiantes.
 
         Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
 
