@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      1.8
+// @version      1.9
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -189,7 +189,7 @@ nombre: 'CEUM Seguimiento',
 
     Recuerde que siempre puede acudir al profesorado a través de las tutoría.
 
-    Es importante que con frecuencia revise su calendario en el campus para saber cuándo son las masterclass y si se realiza algún cambio  de fecha en alguna.
+    Respecto a las masterclass, les llegará un aviso con antelación a su correo electrónico para que puedan participar en las mismas, recordarles que no son obligatorias y que en caso de no poder ir, no debe preocuparse nos podrá solicitar la grabación, indicándonos el día o el nombre de la masterclass que desea que le enviemos.
 
     Aproveche todos los recursos ofrecidos por el centro (materiales de estudio, vídeos, etc.), para llevar a cabo el estudio y un rendimiento óptimo.
 
@@ -290,7 +290,7 @@ nombre: 'CEUPE Seguimiento',
 
     Los casos prácticos no son obligatorios, pero si recomendables, si tiene dudas con los mismos puede dirigirse al centro de ayuda y crear una tutoría seleccionando "abrir tutoría" y docencia.
 
-    Es importante que revise con frecuencia su calendario en el campus para saber cuándo son las masterclass y si se realiza algún cambio de fecha en alguna.
+Respecto a las masterclass, les llegará un aviso con antelación a su correo electrónico para que puedan participar en las mismas, recordarles que no son obligatorias y que en caso de no poder ir, no debe preocuparse nos podrá solicitar la grabación, indicándonos el día o el nombre de la masterclass que desea que le enviemos.
 
     Aproveche todos los recursos ofrecidos por el centro (materiales de estudio, vídeos, etc.), para llevar a cabo el estudio y un rendimiento óptimo.
 
@@ -585,7 +585,7 @@ nombre: 'EURO Seguimiento Base',
 
     Los casos prácticos no son obligatorios, pero si recomendables, si tiene dudas con los mismos puede dirigirse al centro de ayuda y crear una tutoría seleccionando "abrir tutoría" y docencia.
 
-    Es importante que revise con frecuencia su calendario en el campus para saber cuándo son las masterclass y si se realiza algún cambio de fecha en alguna.
+Respecto a las masterclass, les llegará un aviso con antelación a su correo electrónico para que puedan participar en las mismas, recordarles que no son obligatorias y que en caso de no poder ir, no debe preocuparse nos podrá solicitar la grabación, indicándonos el día o el nombre de la masterclass que desea que le enviemos.
 
     Aproveche todos los recursos ofrecidos por el centro (materiales de estudio, vídeos, etc.), para llevar a cabo el estudio y un rendimiento óptimo.
 
