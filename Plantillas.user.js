@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      1.9
+// @version      2.0
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -584,8 +584,6 @@ nombre: 'EURO Seguimiento Base',
     Es importante que esté completamente seguro antes finalizar el módulo, ya que una vez que complete la encuesta, si finalizas el módulo no podrás realizar más intentos de examen, ni entregar actividades adicionales en el módulo. Si eliges "continuar", podrás seguir avanzando y subir el caso práctico sin problemas antes de la fecha de finalización del curso.
 
     Los casos prácticos no son obligatorios, pero si recomendables, si tiene dudas con los mismos puede dirigirse al centro de ayuda y crear una tutoría seleccionando "abrir tutoría" y docencia.
-
-Respecto a las masterclass, les llegará un aviso con antelación a su correo electrónico para que puedan participar en las mismas, recordarles que no son obligatorias y que en caso de no poder ir, no debe preocuparse nos podrá solicitar la grabación, indicándonos el día o el nombre de la masterclass que desea que le enviemos.
 
     Aproveche todos los recursos ofrecidos por el centro (materiales de estudio, vídeos, etc.), para llevar a cabo el estudio y un rendimiento óptimo.
 
