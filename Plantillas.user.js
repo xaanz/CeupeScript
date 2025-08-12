@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      2.0
+// @version      2.1
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -857,6 +857,27 @@ nombre: 'TODOS Enlace masterclass',
 
         Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
 
+        Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
+            )
+        },
+{
+
+nombre: ' TODOS Finalización Pendiente de cuotas',
+        contenido: datos => (
+    `${datos.greeting},
+
+    Hemos comprobado que ya cumple los requisitos de finalización:
+
+    - Visualizar el 100% del contenido en su campus virtual.
+    - Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
+    - Llegar a la fecha mínima de docencia, en su caso es: ${datos.minimumFinishDate}
+
+    Faltaría el último de los objetivos de consecución:
+
+    - Tener todas las cuotas del estudio pagadas.
+
+    Una vez recibamos la notificación de finalización definitiva, le enviaremos un correo de y podrá iniciar la gestión de su solicitud de titulación.
+ 
         Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
             )
         },
