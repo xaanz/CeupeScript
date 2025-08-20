@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         InnoTutor País y Escuela en Tutorías
+// @name         InnoTutor País en Tutorías Github version
 // @version      1.3
 // @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
 // @author       Lois
