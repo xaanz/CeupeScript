@@ -1090,7 +1090,12 @@ ready(() => {
         const dni = getValue('txtDni');
         const master = getValue('txtNombreCurso');
         const pais = getValue('txtPais');
-        const entidadDocente = (getValue('txtEntidadDocente').split(' ')[0] || 'innovalida').toLowerCase();
+        let entidadDocente = (getValue('txtEntidadDocente').split(' ')[0] || 'innovalida').toLowerCase();
+
+// 👉 Reemplazo "estudios" por "CEUPE"
+if (entidadDocente === "estudios") {
+    entidadDocente = "CEUPE";
+}
 
         const info = `
           Teléfono: ${telefono}
