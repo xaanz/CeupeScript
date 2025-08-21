@@ -70,6 +70,11 @@
             descripcion: "Rellena automáticamente el campo de búsqueda en EducaProject",
             url: "https://github.com/xaanz/CeupeScript/raw/main/Educalab.user.js"
         },
+        {
+            categoria: "Otros", nombre: "EducaPay",
+            descripcion: "Rellena automáticamente los enlaces de pago",
+            url: "https://github.com/xaanz/CeupeScript/raw/main/EducaPay.user.js"
+        },
     ];
 
     // ------ TABLA HTML ------
@@ -102,7 +107,7 @@
             categorias[cat].forEach(script => {
     let nombreHtml = script.nombre;
     // Badge NUEVO para Better TutorLXP y Mejor Matricula
-    if (script.nombre === "Better TutorLXP" || script.nombre === "Mejor Matricula") {
+    if (script.nombre === "EducaPay" || script.nombre === "Mejor Matricula") {
         nombreHtml +=
             ' <span style="background:#e91e63;color:#fff;font-weight:600;font-size:0.78em;padding:3px 10px;border-radius:11px;margin-left:6px;vertical-align:middle;box-shadow:0 1px 3px #e91e6375;letter-spacing:1px;">NUEVO</span>';
     }
