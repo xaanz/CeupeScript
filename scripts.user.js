@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Scripts Ceupe Panel
 // @namespace    http://tampermonkey.net/
-// @version      2.5
+// @version      2.6
 // @description  Panel flotante con scripts Ceupe, botón solo con logo Violentmonkey, NUEVO para Better TutorLXP. Modal cerrado al cargar.
 // @author       Loïs
 // @match        https://talent.educaedtech.com/*
