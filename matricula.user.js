@@ -1093,7 +1093,7 @@ ready(() => {
         let entidadDocente = (getValue('txtEntidadGestora').split(' ')[0] || 'innovalida').toLowerCase();
 
 // 👉 Reemplazo "estudios" por "CEUPE"
-if (entidadDocente === "EF") {
+if (entidadDocente === "ef") {
     entidadDocente = "ESIBE";
 }
 
