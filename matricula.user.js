@@ -1090,11 +1090,29 @@ ready(() => {
         const dni = getValue('txtDni');
         const master = getValue('txtNombreCurso');
         const pais = getValue('txtPais');
-        let entidadDocente = (getValue('txtEntidadGestora').split(' ')[0] || 'innovalida').toLowerCase();
 
-// 👉 Reemplazo "estudios" por "CEUPE"
-if (entidadDocente === "ef") {
-    entidadDocente = "ESIBE";
+let programa = getValue('txtProgramaFormacion').toLowerCase();
+
+// Lista de entidades posibles
+const entidades = [
+    "ceupe",
+    "ineaf",
+    "structuralia",
+    "capman",
+    "udavinci",
+    "educa",
+    "esibe",
+    "euroinnova",
+    "inesalud"
+];
+
+// Buscar coincidencia
+let entidadDocente = "INNOVALIDA";  // valor por defecto en mayúscula
+for (const entidad of entidades) {
+    if (programa.includes(entidad.toLowerCase())) {
+        entidadDocente = entidad.toUpperCase(); // convertir a mayúsculas
+        break;
+    }
 }
 
         const info = `
