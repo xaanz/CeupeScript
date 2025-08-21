@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better matricula
 // @namespace    Violentmonkey Scripts
-// @version      2.3
+// @version      2.4
 // @description  Visual moderno, paneles secundarios desplegables y limpieza total en Alumno, Matrícula, Grupo y Facturación. Añade separación entre columnas.
 // @match        *://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx*
 // @author      Loïs
@@ -1019,4 +1019,157 @@ ready(() => {
   const observer = new MutationObserver(limpiarDivClearYSeparadores);
   observer.observe(document.body, { childList: true, subtree: true });
 
+})();
+
+
+(function() {
+    'use strict';
+
+    const container = document.getElementById('general');
+    if (!container) return;
+
+    // Asegurar que el contenedor tiene position relativa para que los absolute hijos funcionen
+    const computedStyle = window.getComputedStyle(container);
+    if (computedStyle.position === 'static') {
+        container.style.position = 'relative';
+    }
+
+
+    const btn = document.createElement('button');
+    btn.textContent = "Crear un enlace de pago";
+    btn.style.cssText = `
+        position: absolute !important;
+        top: 120px !important;
+        right: 30px !important;
+        z-index: 2000 !important;
+        padding: 16px 38px !important;
+        background: linear-gradient(90deg,#c17cff 0%,#8364e8 100%) !important; /* Violet corporate */
+        color: #fff !important;
+        font-family: 'Segoe UI', Arial, Helvetica, sans-serif !important;
+        font-weight: 900 !important;
+        font-size: 22px !important;
+        letter-spacing: 1px !important;
+        border: none !important;
+        border-radius: 40px !important;
+        cursor: pointer !important;
+        box-shadow: 0 10px 32px rgba(130, 100, 232, 0.18) !important;
+        outline: none !important;
+        user-select: none !important;
+        transition: background 0.3s, transform 0.15s, box-shadow 0.3s !important;
+        text-shadow: 0px 2px 10px rgba(0,0,0,0.15) !important;
+    `;
+    btn.addEventListener('mouseenter', () => {
+        btn.style.background = 'linear-gradient(90deg,#8364e8 0%,#7b2ff2 100%)'; // Violet plus foncé
+        btn.style.transform = 'scale(1.09)';
+        btn.style.boxShadow = '0 16px 52px rgba(123, 47, 242, 0.29)';
+    });
+    btn.addEventListener('mouseleave', () => {
+        btn.style.background = 'linear-gradient(90deg,#c17cff 0%,#8364e8 100%)';
+        btn.style.transform = 'scale(1)';
+        btn.style.boxShadow = '0 10px 32px rgba(130, 100, 232, 0.18)';
+    });
+    btn.addEventListener('mousedown', () => {
+        btn.style.transform = 'scale(0.96)';
+    });
+    btn.addEventListener('mouseup', () => {
+        btn.style.transform = 'scale(1.09)';
+    });
+    document.body.appendChild(btn);
+
+
+    btn.addEventListener('click', () => {
+        function getValue(id) {
+            const el = document.getElementById(id);
+            return el ? el.value.trim() : '';
+        }
+        const telefono = getValue('txtTelefono');
+        const email = getValue('txtEmail');
+        const nombre = getValue('txtNombre');
+        const apellido1 = getValue('txtApellido1');
+        const apellido2 = getValue('txtApellido2');
+        const dni = getValue('txtDni');
+        const master = getValue('txtNombreCurso');
+        const pais = getValue('txtPais');
+        const entidadDocente = (getValue('txtEntidadDocente').split(' ')[0] || 'innovalida').toLowerCase();
+
+        const info = `
+          Teléfono: ${telefono}
+          E-mail: ${email}
+          Nombre: ${nombre}
+          Apellidos: ${apellido1} ${apellido2}
+          DNI: ${dni}
+          Máster: ${master}
+          País: ${pais}
+          Entidad Docente (1ra palabra): ${entidadDocente}
+                  `.trim();
+
+        // Crear modal y overlay
+        const overlay = document.createElement('div');
+        Object.assign(overlay.style, {
+            position: 'fixed', top: '0', left: '0', width: '100%', height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 9998
+        });
+
+        const modal = document.createElement('div');
+        Object.assign(modal.style, {
+            position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+            backgroundColor: '#fff', padding: '20px',
+            borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.3)',
+            zIndex: 9999, width: '320px', maxWidth: '90%'
+        });
+
+        const textarea = document.createElement('textarea');
+        Object.assign(textarea.style, {
+            width: '100%', height: '150px',
+            fontSize: '14px', padding: '10px', borderRadius: '5px'
+        });
+        textarea.value = info;
+        textarea.readOnly = true;
+
+        // Botón cerrar (opcional)
+        const closeBtn = document.createElement('button');
+        closeBtn.textContent = 'Cerrar';
+        Object.assign(closeBtn.style, {
+            marginTop: '10px', padding: '8px 15px',
+            backgroundColor: '#007bff', color: 'white',
+            border: 'none', borderRadius: '5px', cursor: 'pointer'
+        });
+        closeBtn.onclick = () => {
+            modal.remove();
+            overlay.remove();
+        };
+
+        function copiarAlPortapapeles(texto) {
+            if (navigator.clipboard?.writeText) {
+                return navigator.clipboard.writeText(texto);
+            }
+            return new Promise((resolve, reject) => {
+                const temp = document.createElement('textarea');
+                temp.value = texto;
+                document.body.appendChild(temp);
+                temp.select();
+                try {
+                    document.execCommand('copy') ? resolve() : reject();
+                } catch { reject(); }
+                document.body.removeChild(temp);
+            });
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === "Escape") closeBtn.click(); });
+
+        modal.appendChild(textarea);
+        modal.appendChild(closeBtn);
+        document.body.append(overlay, modal);
+        textarea.select();
+
+        // Cierre automático después de un breve retraso (100 ms)
+        setTimeout(() => {
+            copiarAlPortapapeles(info).finally(() => {
+                modal.remove();
+                overlay.remove();
+                window.open(`https://pgw.educapay.ai/es/debt-recovery-request/add/innovalida`, '_blank');
+            });
+        }, 100);
+
+    });
 })();
