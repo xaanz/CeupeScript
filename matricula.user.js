@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better matricula
 // @namespace    Violentmonkey Scripts
-// @version      2.4
+// @version      2.5
 // @description  Visual moderno, paneles secundarios desplegables y limpieza total en Alumno, Matrícula, Grupo y Facturación. Añade separación entre columnas.
 // @match        *://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx*
 // @author      Loïs
@@ -1090,11 +1090,11 @@ ready(() => {
         const dni = getValue('txtDni');
         const master = getValue('txtNombreCurso');
         const pais = getValue('txtPais');
-        let entidadDocente = (getValue('txtEntidadDocente').split(' ')[0] || 'innovalida').toLowerCase();
+        let entidadDocente = (getValue('txtEntidadGestora').split(' ')[0] || 'innovalida').toLowerCase();
 
 // 👉 Reemplazo "estudios" por "CEUPE"
-if (entidadDocente === "estudios") {
-    entidadDocente = "CEUPE";
+if (entidadDocente === "EF") {
+    entidadDocente = "ESIBE";
 }
 
         const info = `
@@ -1105,7 +1105,7 @@ if (entidadDocente === "estudios") {
           DNI: ${dni}
           Máster: ${master}
           País: ${pais}
-          Entidad Docente (1ra palabra): ${entidadDocente}
+          Entidad Docente: ${entidadDocente}
                   `.trim();
 
         // Crear modal y overlay
