@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      2.1
+// @version      2.2
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -141,7 +141,7 @@ nombre: 'CEUM Bienvenida',
 
             Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 
-             <a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join" target="_blank">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
+             <a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
 
             Recuerde que estamos a su disposición para cualquier duda o consulta.
 
@@ -243,7 +243,7 @@ nombre: 'CEUM Seguimiento',
 
             Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 
-            <a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join" target="_blank">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
+            <a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
 
             Recuerde que estamos a su disposición para cualquier duda o consulta.
 
@@ -412,7 +412,7 @@ Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18:00 hora España, podrá acceder desde el siguiente enlace: 
 
-<a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
+<a href="https://meet.google.com/sxv-svxk-jgk">https://meet.google.com/sxv-svxk-jgk</a>
   
 Puede comunicarse con nosotros desde el centro de ayuda, podrá localizarlo en la parte superior derecha, o en el teléfono 958991918.
 
@@ -540,7 +540,7 @@ Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18:00 hora España, podrá acceder desde el siguiente enlace: 
 
-<a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join" target="_blank">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
+<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
 
 Recuerde que estamos a su disposición para cualquier duda o consulta.
 
@@ -671,7 +671,7 @@ Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 
-<a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join">
+<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
 
 Recuerde que estamos a su disposición para cualquier duda o consulta. 
 
@@ -812,7 +812,7 @@ Puede comunicarse con nosotros desde el centro de ayuda, el mismo lo tiene habil
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 
-<a href="https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join" target="_blank">https://educaedtech.gl.reu1.blindsidenetworks.com/rooms/2fy-k9c-drq-lv2/join</a>
+<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
  
 Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
  
