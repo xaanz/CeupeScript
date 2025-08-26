@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         InnoTutor País en Tutorías Github version
-// @version      1.3
+// @version      1.4
 // @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
 // @author       Lois
 // @grant        GM.xmlHttpRequest
@@ -150,7 +150,10 @@
                 const {pais, escuela} = await fetchData(matriculaId);
 
                 // País
-                if (isEspania(pais)) {
+                if (!pais) {
+                    // Sin país => asumir España
+                    countryCell.textContent = '🟥🟨🟥';
+                } else if (isEspania(pais)) {
                     countryCell.textContent = '🟥🟨🟥';
                 } else if (isAML(pais)) {
                     countryCell.textContent = `🌎 AML 🌎 (${pais})`;
@@ -245,3 +248,81 @@
         new MutationObserver(init).observe(document.body, { childList: true, subtree: true });
     });
 })();
+
+const mainFunction = () => {
+    let hidden = true; // Ocultar filas inicialmente
+    let observer;
+
+    const toggleRows = (table, button) => {
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            if (text.includes('españa') || text.includes('🟥🟨🟥')) {
+                row.style.display = hidden ? 'none' : '';
+            }
+        });
+        button.textContent = hidden ? 'Ocultar filas España' : 'Ocultar filas España';
+        hidden = !hidden;
+    };
+
+ const addToggleButton = (table) => {
+        let button = document.getElementById('toggleEsButton');
+        if (!button) {
+            button = document.createElement('button');
+            button.id = 'toggleEsButton';
+            button.type = 'button';
+            button.className = 'btn btn-primary btn-sm';
+
+            // Estilo mejorado del botón
+            button.style.margin = '10px 8px 10px 10px';
+            button.style.padding = '8px 20px';
+            button.style.fontSize = '1rem';
+            button.style.fontWeight = '700';
+            button.style.fontFamily = '"Roboto", sans-serif';
+            button.style.borderRadius = '8px';
+            button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
+            button.style.transition = 'background-color 0.3s ease, box-shadow 0.3s ease';
+            button.style.backgroundColor = '#007bff';
+            button.style.color = '#ffffff';
+            button.style.border = 'none';
+            button.style.cursor = 'pointer';
+            button.style.userSelect = 'none';
+
+            // Efecto hover
+            button.addEventListener('mouseenter', () => {
+                button.style.backgroundColor = '#0056b3';
+                button.style.boxShadow = '0 6px 12px rgba(0, 86, 179, 0.5)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.backgroundColor = '#007bff';
+                button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
+            });
+
+            table.parentNode.insertBefore(button, table);
+
+            button.addEventListener('click', e => {
+                e.preventDefault();
+                toggleRows(table, button);
+            });
+        }
+
+        // Aplicar la ocultación inicialmente
+        if (hidden) {
+            toggleRows(table, button);
+        }
+    };
+
+    const observeTable = () => {
+        observer = new MutationObserver(() => {
+            const table = document.getElementById('tutorshipsTable');
+            if (table) {
+                addToggleButton(table);
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    };
+
+    observeTable();
+};
+
+mainFunction();
