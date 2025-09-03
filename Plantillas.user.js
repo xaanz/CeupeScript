@@ -434,7 +434,7 @@ nombre: 'CEUPE Acceso correcto',
             },
         
 			{
-            nombre: 'STRUC - Bienvenida /STUC STISA STUDA/ ES',
+            nombre: 'STRUC Bienvenida STUC/STISA/STUDA ES',
             contenido: datos => (
             `${datos.greeting},
 
@@ -472,7 +472,7 @@ nombre: 'CEUPE Acceso correcto',
             },
         
 			{
-            nombre: 'STRUC - Seguimiento ES',
+            nombre: 'STRUC Seguimiento ES',
             contenido: datos => (
             `${datos.greeting},
 
@@ -491,8 +491,47 @@ nombre: 'CEUPE Acceso correcto',
             ).replace(/\r\n|\n/g, "</br>")
             },
 
+{
+            nombre: 'STRUC Bienvenida STRUP/STEDU/STURC ENG',
+            contenido: datos => (
+            `${datos.greeting},
+
+            From the Academic Department, we thank you for the trust you have placed in us during your training process and we want to get in touch with you to welcome you to the ${datos.tituloCurso} that has just started. 
+
+			As you know, you can count on a highly qualified team of specialists in different fields who are at your disposal to answer any questions you may have. 
+			
+			In case you have not done so or you have had difficulty, remember you can change the language on our platform in the following way: on the pre-training platform, open Preferences and change the language. In the CONTENT section, there is a menu which allows you to change the language (next to DEMO).
+			
+			As for the methodology, it is ONLINE through our virtual platform, where you can find all the information related to your courses.
+			
+			The following are the mandatory requirements that must be met:
+			
+			-View 100% of the course content in your virtual campus.  
+			-Complete 100% of self-evaluations and final exams successfully. All self-evaluations count for 40% of the total score, while the exams another 40%.
+			-Successfully submit and defend the final project with a minimum score of 5 points, which represents 20% of the final score.
+			
+			The connection time is a recommendation, which means you are not obliged to accumulate a certain number of connection hours. 
+			
+			You will not be able to complete the self-evaluation before viewing the entire content of the unit. Once all the sections have been viewed, you will be granted access to complete the self-evaluation of each unit and take the final exam (multiple-choice questions).  
+			
+			Please bear in mind that you have 12 months to complete the course with the end date being ${datos.fechaFinP}. If you are not able to complete the course before the deadline, a free 3 month extension will be automatically activated. If the course is not completed by the end of this period, you may apply for a 12 month extension, which has an additional cost.
+			
+			We would like to invite you to attend the online welcome session that will take place on Wenesday ${datos.nextWednesdayStr} at 19:00 (Central European Summer Time). You can access from the following link:
+			
+			<a href="https://meet.google.com/asb-qnfh-hih">meet.google.com/asb-qnfh-hih</a>
+			  
+			You may contact us by accessing the student assistance center in the lower left part of your virtual campus, or at the following phone number: +34 ${datos.telefono}.
+			
+			We truly hope that our programs fully meet your academic needs.
+			 
+			As always, we are at your disposal to assist you, should you have any questions.
+			 
+			Best regards,`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+
 			{
-            nombre: 'STRUC Bienvenida /STUC STISA STUDA/ EN',
+            nombre: 'STRUC Bienvenida STUC/STISA/STUDA ENG',
             contenido: datos => (
             `Hello,
 
@@ -533,7 +572,7 @@ nombre: 'CEUPE Acceso correcto',
 			            },
 
 {
-            nombre: 'STRUC - Seguimiento EN',
+            nombre: 'STRUC Seguimiento ENG',
             contenido: datos => (
             `Hello,
 
@@ -543,7 +582,7 @@ nombre: 'CEUPE Acceso correcto',
 			 
 			Remember that we are at your disposal to help you with any questions you may have about the course content. If any unit is more complex for you and you would like us to call you for a telephone tutorial, please don't hesitate to contact us. If you need to complete any point because it's not clear to you, contact us so we can send you some resources or guide you on how to study it, if necessary with a practical case.
 			
-			We also remind you that the completion date of your fomation is ${datos.fechaFinP} and can be consulted on the campus and that the requirements for completion are in the welcome mail.
+			We also remind you that the completion date of your formation is ${datos.fechaFinP} and can be consulted on the campus and that the requirements for completion are in the welcome mail.
 			
 			We encourage you to complete the activities, which will surely help you better understand the course content. If you need a hand with completing them, or with the self-assessments or the exam, don't hesitate to ask us for help.
 			
