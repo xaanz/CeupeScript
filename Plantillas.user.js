@@ -101,6 +101,7 @@
             formacion: formacion,
             telefono: telef,
             nextMondayStr: getNextMondayStr(),
+			nextWednesdayStr: getNextWednesdayStr(),
             greeting: getGreeting(),
             finishDate: finishDate,
             minimumFinishDate: minimumFinishDate
@@ -431,7 +432,7 @@ nombre: 'CEUPE Acceso correcto',
 			 
 			Puede comunicarse con nosotros desde el centro de ayuda, el mismo lo tiene habilitado en la parte superior derecha del campus o en el teléfono ${datos.telefono}.
 			
-			Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
+			Le invitamos a participar en la sesión de bienvenida online que se realizará el lunes ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 			
 			<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
 			 
@@ -444,33 +445,33 @@ nombre: 'CEUPE Acceso correcto',
             },
 
 			{
-            nombre: 'STRUC - Bienvenida //STUC STISA STUDA// EN',
+            nombre: 'STRUC Bienvenida /STUC STISA STUDA/ EN',
             contenido: datos => (
-            `${datos.greeting},
+            `Hello,
 
-            From the Academic Department, we thank you for the trust you have placed in us during your training process and we want to get in touch with you to welcome you to the program that has just started. 
-
-			As you know, you can count on a highly qualified team of specialists in different fields who are at your disposal to answer any questions you may have.  
-			 
-			In case you have not done so or you have had difficulty, remember you can change the language on our platform in the following way: on the pre-training platform, open Preferences and change the language. In the CONTENT section, there is a menu which allows you to change the language (next to DEMO).
+			From the Academic Department, we thank you for the trust you have placed in us during your training process, and we want to get in touch with you to welcome you to the program that has just started.
+			
+			As you know, you can count on a highly qualified team of specialists in different fields who are at your disposal to answer any questions you may have.
+			
+			In case you have not done so or you have had difficulty, remember you can change the language on our platform in the following way: on the pre-training platform, open Preferences and change the language. In the CONTENT section, there is a menu that allows you to change the language (next to DEMO).
 			
 			As for the methodology, it is ONLINE through our virtual platform, where you can find all the information related to your courses.
-			 
+			
 			The following are the mandatory requirements that must be met:
-			 
-			-View 100% of the course content in your virtual campus.  
-			-Complete 100% of self-evaluations and final exams successfully. All self-evaluations count for 40% of the total score, while the exams another 40%.
-			-Successfully submit and defend the final project with a minimum score of 5 points, which represents 20% of the final score.
 			
-			The connection time is a recommendation, which means you are not obliged to accumulate a certain number of connection hours. 
+			-View 100% of the course content in your virtual campus.
+			-Complete 100% of self-evaluations and final exams successfully. All self-evaluations count for 40% of the total score, while the exams count for another 40%.
+			- Successfully submit and defend the final project with a minimum score of 5 points, which represents 20% of the final score.
 			
-			You will not be able to complete the self-evaluation before viewing the entire content of the unit (all the unit sections that have been read will be shaded green in the INDEX section of the platform). Once all the sections have been viewed, you will be granted access to complete the self-evaluation of each unit (10 multiple-choice questions) and take the final exam.  
+			The connection time is a recommendation, which means you are not obliged to accumulate a certain number of connection hours.
 			
-			You will also have one year from the starting date to complete the program, after which the respective certificate will be issued accordingly.  
-			 
-			Please bear in mind that if you are not able to complete the program before the deadline, you may apply for an extension, which has an additional cost. 
+			You will not be able to complete the self-evaluation before viewing the entire content of the unit (all the unit sections that have been read will be shaded green in the INDEX section of the platform). Once all the sections have been viewed, you will be granted access to complete the self-evaluation of each unit (10 multiple-choice questions) and take the final exam.
 			
-			We would like to invite you to attend the online welcome session that will take place on ${datos.nextWednesdayStr} at 19:00 (Central European Summer Time). You can access from the following link:
+			You will also have one year from the starting date to complete the program, after which the respective certificate will be issued accordingly.
+			
+			Please bear in mind that if you are not able to complete the program before the deadline, you may apply for an extension, which has an additional cost.
+			
+			We would like to invite you to attend the online welcome session that will take place on wednesday ${datos.nextWednesdayStr} at 19:00 (Central European Summer Time). You can access from the following link:
 			
 			<a href="https://meet.google.com/asb-qnfh-hih">meet.google.com/asb-qnfh-hih</a>
 			 
