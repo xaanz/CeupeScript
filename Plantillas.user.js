@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas 
-// @version      2.4
+// @version      2.5
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
@@ -399,48 +399,95 @@ nombre: 'CEUPE Acceso correcto',
     },
 
 {
-            nombre: 'STRUC Bienvenida',
+            nombre: 'STRUC Bienvenida STRUP/STEDU/STURC ES',
             contenido: datos => (
             `${datos.greeting},
 
-            Desde el Departamento de coordinación, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado. 
+            Desde el Departamento Docente, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al ${datos.tituloCurso} que ha iniciado. 
 
 			Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
 			
-			- Acesso: <a href="https://mylxp.structuralia.com" target="_blank">mylxp.structuralia.com</a>. Si no ha generado sus claves o no las que tiene, debe darle a ¿No tiene contraseña o la has olvidado? Inserte el correo con el que se registró. Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos
-			- Al ingresar al campus virtual, en la parte lateral izquierda de la pantalla encontrará las secciones "Inicio" y "Tu aprendizaje".
-			- Para acceder a su curso, puede utilizar el buscador principal o la opción "Continuar con", que lo dirigirá directamente al programa en el que está matriculado y donde podrá visualizar su progreso.
-			- En esta misma pantalla principal, podrá inscribirse en los diferentes MOOCs disponibles dentro de su estudio. Para ello, solo debe seleccionarlos y hacer clic en "Inscribir".
-			- Para cualquier consulta dirigida a tutores o soporte, le recomendamos utilizar siempre el "Centro de Ayuda", ubicado en el lateral inferior izquierdo de la página principal del campus. Es importante siempre usar este recurso para resolver sus dudas, será el contacto más directo para que le puedan atender.
-			- Si necesita modificar sus datos personales (pagos, titulación, suscripción, seguridad, entre otros) o ajustar sus preferencias de navegación, puede hacerlo desde la pestaña "Mi cuenta", situada en la parte superior derecha del campus.
+			Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación. 
+			
+			A continuación le exponemos los requisitos obligatorios que deberá superar:
+			
+			-Visualizar el 100% del contenido en su campus virtual.
+			-Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos. 
+			
+			El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+			No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
+			
+			Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+			
+			Le invitamos a participar en la sesión de bienvenida online que se realizará el próximo lunes ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
+			
+			<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">meet.google.com/sxv-svxk-jgk</a>
+			
+			Puede comunicarse con nosotros desde el centro de ayuda, podrá localizarlo en la parte superior derecha, o en el teléfono +34 ${datos.telefono}.
+			
+			Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación. 
+			
+			Recuerde que estamos a su disposición para cualquier duda o consulta. 
+			
+			Un saludo.`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+        
+			{
+            nombre: 'STRUC - Bienvenida /STUC STISA STUDA/ ES',
+            contenido: datos => (
+            `${datos.greeting},
+
+            Desde el Departamento Docente le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al ${datos.tituloCurso} que ha iniciado. 
+
+			Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
 			 
-			Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación.
+			Le indicamos que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación.
 			 
 			A continuación le exponemos los requisitos obligatorios que deberá superar:
 			 
 			-Visualizar el 100% del contenido en su campus virtual.
-			 
 			-Completar y superar el 100% de las autoevaluaciones y los exámenes finales. Las autoevaluaciones suponen un 40% y los exámenes el otro 40% de la nota final.
-			 
 			-Superar el Proyecto Final con una puntuación mínima de 5 puntos. Supone un 20% de la nota final.
 			
 			El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
-			
-			No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 10 preguntas tipo test) y completar el examen final.
+			No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica (todos los apartados deberán quedar sombreados en verde en la plataforma en el apartado ÍNDICE). Después podrá realizar la autoevaluación de cada unidad (son 10 preguntas tipo test) y completar el examen final.
 			 
-			Va a contar con un año lectivo desde la fecha de inicio en su matrícula. La tramitación de su titulación comenzará una vez finalice su convocatoria universitaria. Tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}.
+			Va a contar con un año lectivo desde la fecha de inicio en su matrícula (${datos.fechaMatricula}). La tramitación de su titulación comenzará una vez finalice su convocatoria universitaria.
 			 
-			Puede comunicarse con nosotros desde el centro de ayuda, el mismo lo tiene habilitado en la parte superior derecha del campus o en el teléfono ${datos.telefono}.
+			Le recordamos que si no finaliza el máster en la fecha de fin de convocatoria (${datos.fechaFinP}), podrá realizar una ampliación con un coste adicional de tasas universitarias. Así será matriculado en una nueva convocatoria, por lo que tendría un año más para terminar su formación.
 			
-			Le invitamos a participar en la sesión de bienvenida online que se realizará el lunes ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
+			Le invitamos a participar en la sesión de bienvenida online que se realizará el lunes ${datos.nextMondayStr} a las 18:00 (hora española), podrá acceder desde el siguiente enlace:
 			
-			<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
+			<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">meet.google.com/sxv-svxk-jgk</a>
+			
+			Puede comunicarse con nosotros desde el centro de ayuda que tiene habilitado en la parte inferior izquierda del campus o en el teléfono +34 ${datos.telefono}.
 			 
 			Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
 			 
 			Recuerde que estamos a su disposición para cualquier duda o consulta.
 			 
 			Un saludo.`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+        
+			{
+            nombre: 'STRUC - Seguimiento ES',
+            contenido: datos => (
+            `${datos.greeting},
+
+            Nos ponemos en contacto contigo para hacerte un seguimiento del ${datos.tituloCurso} que estás realizando con nosotros.
+			Esperamos que todo sea de tu agrado y vayas avanzando sin problema.
+			 
+			Recuerda que nos tienes a tu disposición para ayudarte en cualquier duda que tengas del contenido del curso. Si alguna unidad te resulta más compleja y deseas que te llamemos para tener una tutoría telefónica no dudes en contactarnos o contactarnos al ${datos.telefono}. Si necesitas completar algún punto por no quedarte claro puedes contactarnos para que te enviemos algún recurso o para orientarte como estudiarlo si es preciso con algún caso práctico.
+			 
+			Te animamos a que realices las actividades que seguro te ayudaran a comprender mejor el contenido del curso. Si para su realización, o para las autoevaluaciones o el examen necesitas que te echemos una mano no dudes en solicitarnos ayuda.
+			 
+			Te recordamos que la fecha de finalización de tu acción formativa es el ${datos.fechaFinP}, tambien la puedes consultar en el campus y que los requisitos para la finalización los tienes en el correo de bienvenida.
+			 
+			Sin nada más que añadir, nos despedimos recordándote que para cualquier consulta puedes contactar con nosotros y estaremos encantados de atenderte.
+			
+			Un saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
 
@@ -484,26 +531,6 @@ nombre: 'CEUPE Acceso correcto',
 			Best regards,`
 			            ).replace(/\r\n|\n/g, "</br>")
 			            },
-
-{
-            nombre: 'STRUC - Seguimiento ES',
-            contenido: datos => (
-            `${datos.greeting},
-
-            Nos ponemos en contacto contigo para hacerte un seguimiento del ${datos.tituloCurso} que estás realizando con nosotros.
-Esperamos que todo sea de tu agrado y vayas avanzando sin problema.
- 
-Recuerda que nos tienes a tu disposición para ayudarte en cualquier duda que tengas del contenido del curso. Si alguna unidad te resulta más compleja y deseas que te llamemos para tener una tutoría telefónica no dudes en contactarnos o contactarnos al ${datos.telefono}. Si necesitas completar algún punto por no quedarte claro puedes contactarnos para que te enviemos algún recurso o para orientarte como estudiarlo si es preciso con algún caso práctico.
- 
-Te animamos a que realices las actividades que seguro te ayudaran a comprender mejor el contenido del curso. Si para su realización, o para las autoevaluaciones o el examen necesitas que te echemos una mano no dudes en solicitarnos ayuda.
- 
-Te recordamos que la fecha de finalización de tu acción formativa es el ${datos.fechaFinP}, tambien la puedes consultar en el campus y que los requisitos para la finalización los tienes en el correo de bienvenida.
- 
-Sin nada más que añadir, nos despedimos recordándote que para cualquier consulta puedes contactar con nosotros y estaremos encantados de atenderte.
-
-Un saludo`
-            ).replace(/\r\n|\n/g, "</br>")
-            },
 
 {
             nombre: 'STRUC - Seguimiento EN',
