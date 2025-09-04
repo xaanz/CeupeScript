@@ -1,8 +1,11 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      2.7
+// @version      2.8
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
+// @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
+// @match        *://innotutor.com/Tutoria/ResponderIncidenciaMatriculaEmail.aspx?incidenciaMatriculaId=*
+// @match        *://http://innotutor.com/Tutoria/EditarEvento.aspx?eventoId=*
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
 // ==/UserScript==
