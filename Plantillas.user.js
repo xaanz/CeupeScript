@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      2.8
+// @version      2.9
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -991,7 +991,7 @@ nombre: 'TODOS grabación bienvenida',
 
         ¡No te preocupes! Le remitimos el enlace para que la puedas visualizar cuando tengas disponibilidad:
 
-        <a href="https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1744183759657/capture/" target="_blank">https://recordings.reu1.blindsidenetworks.com/educaedtech/5f459cd8eb77e0989dd2b7b017f1d9b2c88277db-1744183759657/capture/</a>
+        <a href="https://youtu.be/spnf7-bZRNQ" target="_blank">Visionar el video en Youtube</a>
 
         Cualquier duda que tengas, después de ver el video, me puedes preguntar directamente en el centro de ayuda, Soy su coordinador académico de tu ${datos.tituloCurso} y es un placer para mí contar contigo entre mis estudiantes.
 
@@ -1011,7 +1011,7 @@ nombre: 'TODOS Enlace masterclass',
 
         ¡No te preocupes! Te remitimos el enlace para que la puedas visualizar cuando tengas disponibilidad:
 
-        <b> enlace </b>
+        enlace
 
         Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
 
@@ -1020,7 +1020,7 @@ nombre: 'TODOS Enlace masterclass',
         },
 {
 
-nombre: ' TODOS Finalización Pendiente de cuotas',
+nombre: 'TODOS Finalización Pendiente de cuotas',
         contenido: datos => (
     `${datos.greeting},
 
