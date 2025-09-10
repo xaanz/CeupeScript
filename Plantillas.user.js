@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      2.10
+// @version      2.11
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
 // @match        *://innotutor.com/Tutoria/ResponderIncidenciaMatriculaEmail.aspx?incidenciaMatriculaId=*
 // @match        *://innotutor.com/Tutoria/EditarEvento.aspx?eventoId=*
-// @match        *://innotutor.com/Tutoria/ResponderIncidenciaMatriculaEmail.aspx?incidenciaMatriculaId=*
+// @match        *://innotutor.com/Tutoria/EditarEvento.aspx?incidenciaId=*
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
 // ==/UserScript==
@@ -47,47 +47,47 @@
 
         if (companyName.includes("inesem")) {
             formacion = "INESEM";
-            telef = "958050242";
+            telef = "+34 958050242";
         }
         if (companyName.includes("euro")) {
             formacion = "EUROINNOVA";
-            telef = "958948544";
+            telef = "+34 958948544";
         }
         if (companyName.includes("fiscal")) {
             formacion = "INEAF";
-            telef = "958050236";
+            telef = "+34 958050236";
         }
         if (companyName.includes("ineaf")) {
             formacion = "INEAF";
-            telef = "958050236";
+            telef = "+34 958050236";
         }
         if (companyName.includes("profesorado")) {
             formacion = "REDEDUCA";
-            telef = "958808651";
+            telef = "+34 958808651";
         }
         if (companyName.includes("educa")) {
             formacion = "EDUCA";
-            telef = "958538300";
+            telef = "+34 958538300";
         }
         if (companyName.includes("lica")) {
             formacion = "EUROINNOVA";
-            telef = "958948544";
+            telef = "+34 958948544";
         }
         if (companyName.includes("cervantes")) {
             formacion = "EUROINNOVA";
-            telef = "958948544";
+            telef = "+34 958948544";
         }
         if (companyName.includes("esibe")) {
             formacion = "ESIBE";
-            telef = "958991918";
+            telef = "+34 958991918";
         }
         if (companyName.includes("ceupe")) {
             formacion = "CEUPE";
-            telef = "911979567";
+            telef = "+34 911979567";
         }
 	if (companyName.includes("structuralia")) {
             formacion = "STRUCTURALIA";
-            telef = "914904200";
+            telef = "+34 914904200";
         }
 
         const finishDateStr = val("datosAlumnoCurso_txtFechaFin");
