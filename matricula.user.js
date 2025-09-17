@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better matricula
 // @namespace    Violentmonkey Scripts
-// @version      2.5
+// @version      2.6
 // @description  Visual moderno, paneles secundarios desplegables y limpieza total en Alumno, Matrícula, Grupo y Facturación. Añade separación entre columnas.
 // @match        *://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx*
 // @author      Loïs
@@ -1007,10 +1007,11 @@ ready(() => {
     ].forEach(selector => {
       const contenedor = document.querySelector(selector);
       if (contenedor) {
-        contenedor.querySelectorAll('.clear, .separadorFormulario2pc').forEach(div => {
-          if (!div.textContent.trim() && div.children.length === 0) {
-            div.remove();
-          }
+contenedor.querySelectorAll('.clear, .separadorFormulario2pc').forEach(div => {
+  if (div.id === 'lblTituloEducaSign') return; // excluye este elemento
+  if (!div.textContent.trim() && div.children.length === 0) {
+    div.remove();
+  }
         });
       }
     });
