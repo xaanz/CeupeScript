@@ -57,6 +57,31 @@
     'horario'
   ];
 
+  function copiarIconoCuandoAparezca() {
+    const destino = document.getElementById('tituloControlEnvioTitulos');
+    if (!destino) return;
+
+    const observer = new MutationObserver((mutations, obs) => {
+      const icono = document.querySelector("div.iconoDescargar-16.margenIzquierda5.flotanteDerecha[onclick*='descargarArchivoEducaSign']");
+      if (icono) {
+        const clonIcono = icono.cloneNode(true);
+        destino.appendChild(clonIcono); // Añadir sin borrar contenido previo
+        obs.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  if (document.readyState !== 'loading') {
+    copiarIconoCuandoAparezca();
+  } else {
+    document.addEventListener('DOMContentLoaded', copiarIconoCuandoAparezca);
+  }
+
   function ready(fn) {
     if (document.readyState !== 'loading') {
       fn();
@@ -493,6 +518,17 @@ ready(() => {
       display: inline-block;
       margin-right: 20px;
     }
+    .iconoDescargar-16 {
+      background-image: url('https://cdn-icons-png.flaticon.com/128/5558/5558322.png') !important;
+      background-size: contain !important;
+      background-repeat: no-repeat !important;
+      background-position: center !important;
+      margin-left: 100px;
+      width: 40px !important;
+      height: 40px !important;
+      display: inline-block;
+    }
+
 
     #datosAlumno {
       background-color: #f9fbff;
