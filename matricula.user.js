@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better matricula
 // @namespace    Violentmonkey Scripts
-// @version      2.6
+// @version      2.7
 // @description  Visual moderno, paneles secundarios desplegables y limpieza total en Alumno, Matrícula, Grupo y Facturación. Añade separación entre columnas.
 // @match        *://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx*
 // @author      Loïs
@@ -89,6 +89,143 @@
       document.addEventListener('DOMContentLoaded', fn);
     }
   }
+
+  ready(() => {
+    const contenedor = document.getElementById('datosControlEnvioTitulos');
+    if (!contenedor) return;
+
+    // Crear bloques contenedores
+    function crearBloque(id, clase, titulo) {
+      const div = document.createElement('div');
+      div.id = id;
+      div.className = `bloque-titulacion ${clase} margeninferior10`;
+      if (titulo) {
+        const h = document.createElement('div');
+        h.textContent = titulo;
+        h.style.fontWeight = 'bold';
+        h.style.color = '#cc3366';
+        h.style.marginBottom = '8px';
+        div.appendChild(h);
+      }
+      return div;
+    }
+
+    // Bloque 1: Info General y EducaSign
+    const bloqueGeneral = crearBloque('bloqueGeneralTit', 'bloque-general');
+    const lblTitulacion = document.getElementById('lblTitulacion');
+    const divTituloEducaSign = document.getElementById('divTituloEducaSign');
+    if (lblTitulacion) bloqueGeneral.appendChild(lblTitulacion);
+    if (divTituloEducaSign) bloqueGeneral.appendChild(divTituloEducaSign);
+
+    // Bloque 2: Calificación
+    const bloqueCalificacion = crearBloque('bloqueCalificacionTit', 'bloque-calificacion');
+    const calif = document.getElementById('desplegableCalificacionesTitulo');
+    const btnRegistrar = document.getElementById('divRegistrarCalificacion');
+    if (calif) bloqueCalificacion.appendChild(calif);
+    if (btnRegistrar) bloqueCalificacion.appendChild(btnRegistrar);
+
+    // Bloque 3: Categorías y Tutoría
+    const bloqueCategorias = crearBloque('bloqueCategoriasTit', 'bloque-categorias-tutoria');
+    const categoriasEnvio = document.getElementById('divCategoriasEnvioPrincipal');
+    const tutoriaEnvio = document.getElementById('divTutoriaEnvioTitulacion');
+    if (categoriasEnvio) bloqueCategorias.appendChild(categoriasEnvio);
+    if (tutoriaEnvio) bloqueCategorias.appendChild(tutoriaEnvio);
+
+// Crear el elemento separador
+const separador = document.createElement('div');
+separador.className = 'espacioEntreBloques';
+
+    // Bloque 4: Programación y Estado Envío
+    const bloqueProgramacion = crearBloque('bloqueProgramacionTit', 'bloque-programacion-estado row');
+    const idsProgramacion = [
+      'divProgramacionEnvio',
+      'divFechaFinalEnvio',
+      'divAlbaranTitulo',
+      'divDireccionEnvioTitulo',
+      'divModoEnvioTitulo'
+    ];
+    idsProgramacion.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) bloqueProgramacion.appendChild(el);
+    });
+
+    // Bloque 5: Estados (checkboxes)
+    const bloqueEstados = crearBloque('bloqueEstadosTit', 'bloque-estados row');
+    const idsEstados = [
+      'divProgramadoEnvio',
+      'divPreProgramadoEnvio',
+      'divEnviadoTitulo',
+      'entregadoTitulo',
+      'divRecepcionExamenesFinalizada',
+      'divEnvioEmailTituloAutomatico',
+      'div39' // Cerrado expediente académico
+    ];
+    idsEstados.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.remove('flotanteIzquierda', 'flotanteDerecha');
+    el.style.marginRight = "";
+    el.style.marginBottom = "";
+    bloqueEstados.appendChild(el);
+  }
+    });
+const cerradoExpediente = document.getElementById('div39');
+if (cerradoExpediente) {
+  cerradoExpediente.style.display = "flex";
+  cerradoExpediente.style.alignItems = "center";
+  cerradoExpediente.style.flex = "1 1 180px";
+  cerradoExpediente.style.width = "auto";
+  cerradoExpediente.style.justifyContent = "flex-start";
+  cerradoExpediente.style.gap = "8px";
+
+  // Forzar flex a todos los hijos directos
+  Array.from(cerradoExpediente.children).forEach(child => {
+    child.style.margin = "0";
+    child.style.padding = "0";
+    child.style.float = "none";
+    child.style.display = "inline-flex";
+    child.style.alignItems = "center";
+    child.style.width = "auto";
+    child.style.flex = "0 0 auto";
+  });
+
+  // Si hay un checkbox con label, también lo forzamos
+  const checkboxDiv = cerradoExpediente.querySelector('.checkboxFive');
+  if (checkboxDiv) {
+    checkboxDiv.style.display = "inline-flex";
+    checkboxDiv.style.alignItems = "center";
+  }
+}
+    // Bloque "OTROS ENVÍOS"
+    const bloqueEnvios = crearBloque('bloqueEnviosTit', 'bloque-envios');
+    const envios = document.getElementById('envios');
+    if (envios) bloqueEnvios.appendChild(envios);
+
+    // Bloque 6: Gestión Apostilla
+    const bloqueApostilla = document.getElementById('divGestionApostillaTitulo');
+    if (bloqueApostilla) {
+      bloqueApostilla.classList.add('bloque-titulacion', 'bloque-apostilla', 'margeninferior10');
+    }
+
+    // Bloque 7: Notas y Evaluaciones
+    const bloqueNotas = crearBloque('bloqueNotasTit', 'bloque-notas');
+    const divNota = document.getElementById('divNota');
+    if (divNota) bloqueNotas.appendChild(divNota);
+
+    // Limpiar contenedor y añadir bloques ordenados
+    contenedor.innerHTML = '';
+    contenedor.appendChild(bloqueGeneral);
+    contenedor.appendChild(bloqueCalificacion);
+    contenedor.appendChild(bloqueCategorias);
+    contenedor.appendChild(separador);
+    contenedor.appendChild(bloqueProgramacion);
+    contenedor.appendChild(bloqueEstados);
+    contenedor.appendChild(bloqueEnvios);
+    contenedor.appendChild(bloqueApostilla);
+    contenedor.appendChild(bloqueNotas);
+
+  });
+
 
   ready(function () {
     // Panel secundario ALUMNO
@@ -419,7 +556,74 @@ ready(() => {
 });
   // --- ESTILO MODERNO Y ESPACIADO ---
   GM_addStyle(`
+ .bloque-titulacion {
+      border: none;
+      border-radius: 10px;
+      background: none;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    .bloque-titulacion.row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .bloque-titulacion .cajaTercio2,
+    .bloque-titulacion .cajaDosTercios2,
+    .bloque-titulacion .cajaCuarto2 {
+      margin-bottom: 10px;
+    }
+    .botonSegundo, .styled-select {
+      margin-top: 5px;
+    }
+    .bloque-titulacion .cajaTercio2 {
+      min-width: 180px;
+    }
+    /* Ajustes específicos para bloque OTROS ENVÍOS */
+    .bloque-envios {
+      background: none;
+      border-color: none;
+    }
+.bloque-programacion-estado.row {
+  flex-wrap: wrap;
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+}
+.bloque-programacion-estado.row > div {
+  flex: 1 1 220px;
+  min-width: 240;
+width: 100%;
+  margin-left: 0 !important;
+  margin-bottom: 12px;
+  vertical-align: top !important;
+}
 
+.bloque-estados.row {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 25px;
+  margin-bottom: 16px;
+}
+.bloque-estados.row > div {
+  min-width: 180px;
+  flex: 1 1 180px;
+  margin-bottom: 4px !important;
+  display: flex;
+  align-items: center;
+}
+.bloque-estados input[type="checkbox"] {
+  margin-right: 8px;
+  vertical-align: middle;
+}
+  .espacioEntreBloques {
+    height: 18px;
+    width: 100%;
+    clear: both;
+  }
 #botonDesplegarGrupoCompleto {
   background: #e7eaff;
   color: #1515AC;
@@ -436,6 +640,24 @@ ready(() => {
 #botonDesplegarGrupoCompleto:hover {
   background: #d8deff !important;
 }
+
+.bloque-estados.row > div, #div39 {
+  min-width: 180px !important;
+  flex: 1 1 180px !important;
+  display: flex !important;
+  align-items: center !important;
+  margin-bottom: 4px !important;
+  margin-right: 0 !important;
+}
+
+#div39 > span, #div39 > .aspNetDisabled, #div39 > .checkboxFive {
+  float: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 
     /* Estilo moderno para Ficha Alumno */
     #plhAlumno {
