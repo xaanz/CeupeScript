@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         InnoTutor País en Tutorías Github version
-// @version      1.4
+// @version      2.0
 // @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
 // @author       Lois
 // @grant        GM.xmlHttpRequest
@@ -8,6 +8,195 @@
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Filtrar%20Pais.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Filtrar%20Pais.user.js
 // ==/UserScript==
+
+
+
+(function() {
+    'use strict';
+
+    function getTutoriaId() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('tutoriaId');
+    }
+
+    if (window.location.pathname.includes('Tutoria/Tutoria.aspx')) {
+        const tutoriaId = getTutoriaId();
+        if (tutoriaId) {
+            function detectCategoria() {
+                const categoriaDiv = document.getElementById('seleccionar_tipo_tutoria');
+                if (!categoriaDiv) {
+                    setTimeout(detectCategoria, 500);
+                    return;
+                }
+                const checkboxes = categoriaDiv.querySelectorAll('input[type=checkbox]');
+                let categSeleccionada = null;
+                checkboxes.forEach(chk => {
+                    if (chk.checked) {
+                        const label = categoriaDiv.querySelector(`label[for=${chk.id}]`);
+                        if (label) categSeleccionada = label.textContent.trim();
+                    }
+                });
+                if (categSeleccionada) {
+                    localStorage.setItem(`tutoria_${tutoriaId}_categoria`, categSeleccionada);
+                }
+            }
+            detectCategoria();
+        }
+        return;
+    }
+
+    function actualizarCategoriaCell(row, categoria) {
+        let categoriaCell = row.querySelector('td.categoria-cell');
+        if (!categoriaCell) {
+            categoriaCell = document.createElement('td');
+            categoriaCell.classList.add('categoria-cell');
+            row.appendChild(categoriaCell);
+        }
+        categoriaCell.textContent = categoria || '';
+    }
+
+    function handleTable() {
+        const tabla = document.getElementById('tutorshipsTable');
+        if (!tabla) return false;
+
+        const thead = tabla.tHead;
+        if (thead && thead.rows.length > 0) {
+            const headRow = thead.rows[0];
+            if (!headRow.querySelector('th.categoria')) {
+                const th = document.createElement('th');
+                th.textContent = 'Categoría';
+                th.classList.add('categoria');
+                headRow.appendChild(th);
+            }
+        }
+
+        tabla.querySelectorAll('tbody tr').forEach(row => {
+            if (!row.getAttribute('data-tutoriaid')) {
+                const link = row.querySelector('a[href*="tutoriaId="]');
+                if (link) {
+                    const url = new URL(link.href);
+                    const id = url.searchParams.get('tutoriaId');
+                    if (id) row.setAttribute('data-tutoriaid', id);
+                }
+            }
+            const tutoriaId = row.getAttribute('data-tutoriaid');
+            if (!tutoriaId) return;
+            const categoria = localStorage.getItem(`tutoria_${tutoriaId}_categoria`);
+            actualizarCategoriaCell(row, categoria);
+        });
+
+        return true;
+    }
+
+    function iniciarActualizacionPeriodica() {
+        setInterval(() => {
+            const tabla = document.getElementById('tutorshipsTable');
+            if (!tabla) return;
+            tabla.querySelectorAll('tbody tr').forEach(row => {
+                const tutoriaId = row.getAttribute('data-tutoriaid');
+                if (!tutoriaId) return;
+                const categoria = localStorage.getItem(`tutoria_${tutoriaId}_categoria`);
+                actualizarCategoriaCell(row, categoria);
+            });
+        }, 3000); // Actualiza cada 3 segundos
+    }
+
+    if (!handleTable()) {
+        const observer = new MutationObserver((mutations, obs) => {
+            if (handleTable()) {
+                obs.disconnect();
+                iniciarActualizacionPeriodica();
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+        iniciarActualizacionPeriodica();
+    }
+
+})();
+
+(function() {
+  'use strict';
+
+  const categoryKeys = ['Plazos del curso', 'Titulación', 'Seguimiento'];
+  let lastGreenRowCount = -1;
+
+  function contarFilasYCategorias(table) {
+    let greenRowCount = 0;
+    const categoryCounts = {
+      'Plazos del curso': 0,
+      'Titulación': 0,
+      'Seguimiento': 0
+    };
+
+    const rows = table.getElementsByTagName('tr');
+    for (let row of rows) {
+      // Solo filas con clase table-success
+      if (row.classList.contains('table-success')) {
+        greenRowCount++;
+        const categoriaCell = row.querySelector('td.categoria-cell');
+        if (categoriaCell) {
+          const categoria = categoriaCell.textContent.trim();
+          if (categoryCounts.hasOwnProperty(categoria)) {
+            categoryCounts[categoria]++;
+          }
+        }
+      }
+    }
+
+    return { greenRowCount, categoryCounts };
+  }
+
+  function crearCuadroResultados(res, table) {
+    const existing = document.getElementById('cuadroResultadosInnoTutor');
+    if (existing) existing.remove();
+
+    const resultDiv = document.createElement('div');
+    resultDiv.id = 'cuadroResultadosInnoTutor';
+    resultDiv.style.border = '2px solid #006400';
+    resultDiv.style.padding = '15px';
+    resultDiv.style.margin = '15px 0';
+    resultDiv.style.background = '#e6ffe6';
+    resultDiv.style.fontFamily = 'Arial, sans-serif';
+    resultDiv.style.fontSize = '14px';
+    resultDiv.style.color = '#004d00';
+    resultDiv.style.fontWeight = 'bold';
+
+    resultDiv.innerHTML = `
+      Tutoría gestionadas: ${res.greenRowCount}<br>
+      <br>
+      Por tipos de tutoría:<br>
+      ${categoryKeys.map(k => `${k}: ${res.categoryCounts[k]}`).join('<br>')}
+    `;
+
+    table.parentNode.insertBefore(resultDiv, table);
+  }
+
+  function actualizarConteo() {
+    const table = document.getElementById('tutorshipsTable');
+    if (!table) return;
+
+    const resultado = contarFilasYCategorias(table);
+    if (resultado.greenRowCount !== lastGreenRowCount) {
+      crearCuadroResultados(resultado, table);
+      lastGreenRowCount = resultado.greenRowCount;
+      console.log('Conteo actualizado:', resultado);
+    }
+  }
+
+  const intervalId = setInterval(() => {
+    const table = document.getElementById('tutorshipsTable');
+    if (table) {
+      actualizarConteo();
+    } else {
+      const existing = document.getElementById('cuadroResultadosInnoTutor');
+      if (existing) existing.remove();
+      lastGreenRowCount = -1;
+    }
+  }, 1000);
+
+  window.addEventListener('beforeunload', () => clearInterval(intervalId));
+})();
 
 (function() {
     'use strict';
@@ -61,7 +250,7 @@
     function createLoadButton(table) {
         const btn = document.createElement('button');
         btn.id = 'loadCountriesBtn';
-        btn.textContent = '🔎 Cargar Países + Escuela 🔎';
+        btn.textContent = '🔎 Cargar Países 🔎';
         btn.style = `
             padding: 8px 16px;
             margin: 10px 0 10px 0;
@@ -123,12 +312,6 @@
                 th.setAttribute('data-country-header', 'true');
                 headerRow.appendChild(th);
             }
-            if (!headerRow.querySelector('th[data-school-header]')) {
-                const th2 = document.createElement('th');
-                th2.textContent = 'Escuela';
-                th2.setAttribute('data-school-header', 'true');
-                headerRow.appendChild(th2);
-            }
         }
 
         for (const row of rows) {
@@ -138,20 +321,15 @@
 
             const matriculaId = matriculaCell.textContent.trim();
             const countryCell = document.createElement('td');
-            const schoolCell = document.createElement('td');
             countryCell.textContent = '...';
-            schoolCell.textContent = '...';
             countryCell.setAttribute('data-country', 'true');
-            schoolCell.setAttribute('data-school', 'true');
             row.appendChild(countryCell);
-            row.appendChild(schoolCell);
 
             try {
-                const {pais, escuela} = await fetchData(matriculaId);
+                const pais = await fetchPais(matriculaId);
 
                 // País
                 if (!pais) {
-                    // Sin país => asumir España
                     countryCell.textContent = '🟥🟨🟥';
                 } else if (isEspania(pais)) {
                     countryCell.textContent = '🟥🟨🟥';
@@ -161,12 +339,8 @@
                     countryCell.textContent = `🗺 RDM 🗺 (${pais})`;
                 }
 
-                // Escuela
-                schoolCell.textContent = escuela || 'No encontrada';
-
             } catch {
                 countryCell.textContent = 'Error';
-                schoolCell.textContent = 'Error';
             }
         }
     }
@@ -181,8 +355,17 @@
         });
     }
 
-    // fetchData con búsqueda adicional para escuela en la URL del onclick del div imagenAAFF
-    function fetchData(matriculaId) {
+    // fetchPais con caché usando GM.getValue / GM.setValue
+    async function fetchPais(matriculaId) {
+        const cacheKey = `matriculaPais:${matriculaId}`;
+        let cached = await GM.getValue(cacheKey, null);
+        if (cached) {
+            try {
+                cached = JSON.parse(cached);
+                if (cached.pais !== undefined) return cached.pais;
+            } catch { /* ignorar si está corrupto */ }
+        }
+
         return new Promise((resolve, reject) => {
             GM.xmlHttpRequest({
                 method: 'GET',
@@ -191,46 +374,10 @@
                     try {
                         const parser = new DOMParser();
                         const doc = parser.parseFromString(response.responseText, 'text/html');
-
-                        // Obtener país
                         const paisElement = doc.getElementById('txtPais');
                         const pais = paisElement ? (paisElement.value || paisElement.textContent || '').trim() : '';
-
-                        // Obtener URL del div imagenAAFF
-                        const imagenAAFFDiv = doc.getElementById('imagenAAFF');
-                        let escuela = '';
-
-                        if (imagenAAFFDiv) {
-                            const onclickAttr = imagenAAFFDiv.getAttribute('onclick') || '';
-                            const urlMatch = onclickAttr.match(/window\.open\('([^']+)'\)/);
-                            if (urlMatch && urlMatch[1]) {
-                                const urlEscuela = urlMatch[1];
-
-                                // Segunda petición para obtener la escuela
-                                GM.xmlHttpRequest({
-                                    method: 'GET',
-                                    url: urlEscuela,
-                                    onload: function(response2) {
-                                        try {
-                                            const doc2 = parser.parseFromString(response2.responseText, 'text/html');
-                                            const escuelaSpan = doc2.querySelector('#lblEscuela');
-                                            escuela = escuelaSpan ? escuelaSpan.textContent.trim() : '';
-                                            resolve({ pais, escuela });
-                                        } catch (e2) {
-                                            resolve({ pais, escuela: '' });
-                                        }
-                                    },
-                                    onerror: function() {
-                                        resolve({ pais, escuela: '' });
-                                    }
-                                });
-                                return; // Esperar esta respuesta antes de resolver
-                            }
-                        }
-
-                        // Si no hay div o URL para escuela, responder con vacío en escuela
-                        resolve({ pais, escuela: '' });
-
+                        GM.setValue(cacheKey, JSON.stringify({pais}));
+                        resolve(pais);
                     } catch (e) {
                         reject(e);
                     }
@@ -265,7 +412,7 @@ const mainFunction = () => {
         hidden = !hidden;
     };
 
- const addToggleButton = (table) => {
+    const addToggleButton = (table) => {
         let button = document.getElementById('toggleEsButton');
         if (!button) {
             button = document.createElement('button');
@@ -273,7 +420,6 @@ const mainFunction = () => {
             button.type = 'button';
             button.className = 'btn btn-primary btn-sm';
 
-            // Estilo mejorado del botón
             button.style.margin = '10px 8px 10px 10px';
             button.style.padding = '8px 20px';
             button.style.fontSize = '1rem';
@@ -288,7 +434,6 @@ const mainFunction = () => {
             button.style.cursor = 'pointer';
             button.style.userSelect = 'none';
 
-            // Efecto hover
             button.addEventListener('mouseenter', () => {
                 button.style.backgroundColor = '#0056b3';
                 button.style.boxShadow = '0 6px 12px rgba(0, 86, 179, 0.5)';
@@ -306,7 +451,6 @@ const mainFunction = () => {
             });
         }
 
-        // Aplicar la ocultación inicialmente
         if (hidden) {
             toggleRows(table, button);
         }
