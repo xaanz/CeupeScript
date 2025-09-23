@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         InnoTutor País en Tutorías Github version
-// @version      2.0
+// @version      2.1
 // @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
 // @author       Lois
 // @grant        GM.xmlHttpRequest
@@ -31,16 +31,25 @@
                     return;
                 }
                 const checkboxes = categoriaDiv.querySelectorAll('input[type=checkbox]');
-                let categSeleccionada = null;
-                checkboxes.forEach(chk => {
-                    if (chk.checked) {
-                        const label = categoriaDiv.querySelector(`label[for=${chk.id}]`);
-                        if (label) categSeleccionada = label.textContent.trim();
+                function guardarCategoria() {
+                    let categSeleccionada = null;
+                    checkboxes.forEach(chk => {
+                        if (chk.checked) {
+                            const label = categoriaDiv.querySelector(`label[for=${chk.id}]`);
+                            if (label) categSeleccionada = label.textContent.trim();
+                        }
+                    });
+                    if (categSeleccionada) {
+                        localStorage.setItem(`tutoria_${tutoriaId}_categoria`, categSeleccionada);
+                        console.log('Categoría guardada:', categSeleccionada);
                     }
-                });
-                if (categSeleccionada) {
-                    localStorage.setItem(`tutoria_${tutoriaId}_categoria`, categSeleccionada);
                 }
+                // Guardar inicialmente
+                guardarCategoria();
+                // Añadir listener para actualizar al cambiar
+                checkboxes.forEach(chk => {
+                    chk.addEventListener('change', guardarCategoria);
+                });
             }
             detectCategoria();
         }
