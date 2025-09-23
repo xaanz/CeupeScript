@@ -163,9 +163,8 @@
     resultDiv.style.fontWeight = 'bold';
 
     resultDiv.innerHTML = `
-      Tutoría gestionadas: ${res.greenRowCount}<br>
+      Tutoría Total gestionadas: ${res.greenRowCount}<br>
       <br>
-      Por tipos de tutoría:<br>
       ${categoryKeys.map(k => `${k}: ${res.categoryCounts[k]}`).join('<br>')}
     `;
 
