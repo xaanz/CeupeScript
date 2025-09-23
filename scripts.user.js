@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Scripts Ceupe Panel
 // @namespace    http://tampermonkey.net/
-// @version      2.6
+// @version      2.7
 // @description  Panel flotante con scripts Ceupe, botón solo con logo Violentmonkey, NUEVO para Better TutorLXP. Modal cerrado al cargar.
 // @author       Loïs
 // @match        https://talent.educaedtech.com/*
@@ -61,6 +61,11 @@
             url: "https://github.com/xaanz/CeupeScript/raw/main/matricula.user.js"
         },
         {
+            categoria: "InnoTutor", nombre: "Categoria",
+            descripcion: "agrega la columna categoria para contar de manera automatica lo gestionado",
+            url: "https://github.com/xaanz/CeupeScript/raw/main/cate.user.js"
+        },
+        {
             categoria: "TutorLXP", nombre: "Better TutorLXP",
             descripcion: "Visualiza más fácilmente los tickets según asignación, Botones de Asignación rápida, Búsqueda automática en Innotutor",
             url: "https://github.com/xaanz/CeupeScript/raw/main/BetterTutorLXP.user.js"
@@ -107,7 +112,7 @@
             categorias[cat].forEach(script => {
     let nombreHtml = script.nombre;
     // Badge NUEVO para Better TutorLXP y Mejor Matricula
-    if (script.nombre === "EducaPay" || script.nombre === "Mejor Matricula") {
+    if (script.nombre === "Categoria" || script.nombre === "Mejor Matricula") {
         nombreHtml +=
             ' <span style="background:#e91e63;color:#fff;font-weight:600;font-size:0.78em;padding:3px 10px;border-radius:11px;margin-left:6px;vertical-align:middle;box-shadow:0 1px 3px #e91e6375;letter-spacing:1px;">NUEVO</span>';
     }
