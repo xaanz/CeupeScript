@@ -4,6 +4,8 @@
 // @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
 // @author       Lois
 // @grant        GM.xmlHttpRequest
+// @grant        GM.getValue
+// @grant        GM.setValue
 // @connect      innotutor.com
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Filtrar%20Pais.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Filtrar%20Pais.user.js
