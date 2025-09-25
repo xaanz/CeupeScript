@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      2.11
+// @version      2.12
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -250,9 +250,7 @@ nombre: 'CEUM Seguimiento',
 
             No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar el examen final del módulo.
 
-            Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses.
-
-            De no finalizar en esta, tendrá la oportunidad de ampliar la misma acogiéndose a las tasas vigentes en ese momento, durante los 12 meses siguientes. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+            Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, tendrá la oportunidad de ampliar la misma acogiéndose a las tasas vigentes en ese momento, durante los 12 meses siguientes. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
 
             Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 
@@ -282,7 +280,7 @@ nombre: 'CEUPE Seguimiento',
 
     Si quiere revisar qué tiene pendiente, no olvide consultar los requisitos de superación, donde encontrará una vista general de sus actividades y lo necesario para llevar un ritmo de estudio adecuado.
 
-    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, aunque contará con una prórroga gratuita de 3 meses, en caso de no acabar en la fecha indicada. Pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
+    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
 
     Le animamos a finalizar dentro del plazo y si necesita pautas de avance o resolver alguna duda contacte con nosotros.
 
@@ -338,7 +336,7 @@ nombre: 'CEUPE Seguimiento no responde',
     - Realizar la encuesta al finalizar cada módulo de estudio.
     - Tener todas las cuotas pagadas.
 
-    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, aunque contará con una prórroga gratuita de 3 meses, en caso de no acabar en la fecha indicada. Pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
+    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
 
     Le animamos a finalizar dentro del plazo y, si necesita pautas de avance o resolver alguna duda, contacte con nosotros. Si no logra cumplirlos para entonces, le daremos una extensión gratuita de 3 meses. Si necesita más tiempo después de eso, habrá un costo adicional.
 
@@ -421,7 +419,7 @@ nombre: 'CEUPE Acceso correcto',
 			El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
 			No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
 
-			Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+			Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, usted podrá solicitar una ampliación, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
 
 			Le invitamos a participar en la sesión de bienvenida online que se realizará el próximo lunes ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 
@@ -613,7 +611,7 @@ A continuación le exponemos los requisitos obligatorios que deberá superar:
 El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
 No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
 
-Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, usted podrá solicitar una ampliación, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18:00 hora España, podrá acceder desde el siguiente enlace:
 
@@ -640,7 +638,7 @@ Quería comentar contigo que tal estabas encontrando el temario que llevas ya vi
 
 Ten en cuenta que esta formación te permite aprender una serie de habilidades que podrás aplicar en una variedad de roles y sectores.
 
-Aprovecho para informarte que la fecha fin de tu formación es ${datos.fechaFinP}, la cual puedes revisar en tu área personal del campus o en el correo de Bienvenida. Si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional por 12 meses de ampliación.
+Aprovecho para informarte que la fecha fin de tu formación es ${datos.fechaFinP}, la cual puedes revisar en tu área personal del campus o en el correo de Bienvenida. Si llegada esta fecha no hubiera finalizado, usted podrá solicitar una ampliación, ampliar la formación tendría un coste adicional por 12 meses de ampliación.
 
 Para avanzar en tu estudio tienes que tener en cuenta los requisitos para superar tu formación, los cuales son:
 
@@ -741,7 +739,7 @@ A continuación le exponemos los requisitos obligatorios que deberá superar:
 El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
 No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
 
-Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, se activará automáticamente una prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+Indicarle que tiene 12 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}, si llegada esta fecha no hubiera finalizado, usted podrá solicitar una ampliación, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18:00 hora España, podrá acceder desde el siguiente enlace:
 
@@ -769,7 +767,7 @@ nombre: 'EURO Seguimiento Base',
 
     Si quiere revisar qué tiene pendiente, no olvide consultar los requisitos de superación, donde encontrará una vista general de sus actividades y lo necesario para llevar un ritmo de estudio adecuado.
 
-    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, aunque contará con una prórroga gratuita de 3 meses, en caso de no acabar en la fecha indicada. Pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
+    Le recuerdo también que dispone de plazo para realizar la formación hasta el ${datos.fechaFinP}, pasado ese plazo, tendrá opción de acogerse a una nueva ampliación con un coste adicional.
 
     Le animamos a finalizar dentro del plazo y si necesita pautas de avance o resolver alguna duda contacte con nosotros.
 
@@ -868,7 +866,7 @@ No podrá realizar una autoevaluación hasta haber visualizado todo el contenido
 Cuando haya superado los requisitos obligatorios, deberá de realizar la encuesta de finalización.
 
 
-Por último, no olvide su fecha fin ${datos.fechaFinP}. Si para dicha fecha no hubiera podido finalizar dispondría de una única prórroga gratuita de 3 meses. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
+Por último, no olvide su fecha fin ${datos.fechaFinP}. Si para dicha fecha no hubiera podido finalizar podrá ampliar la formación por un coste adicional que podrá consultar en las condiciones de matriculación. También informarle que tiene un periodo mínimo de docencia hasta el ${datos.minimumFinishDate}, por lo que hasta esa fecha no se podrá expedir el diploma.
 
 Puede comunicarse con nosotros a través del chat del campus virtual, en el apartado 'CENTRO DE AYUDA' o en el teléfono 958050242.
 
@@ -1075,9 +1073,7 @@ nombre: 'TODOS No baja',
 
     Usted se matriculó el pasado ${datos.fechaMatricula} por lo que ya ha pasado ese tiempo de 14 días y no es posible cancelar el curso. Al matricularse y firmar el contrato se comprometió a realizar el pago íntegro de la formación.
 
-    Dispone de un año para poder realizar el estudio, siendo la fecha fin el ${datos.fechaFinP}. Si llegada esa fecha, no ha podido finalizar la formación, tiene una prórroga de 3 meses más para poder finalizarla.
-
-    En el caso de que, tampoco pueda finalizar la formación, puede ampliar el tiempo por un año, realizando un pago adicional.
+    Dispone de un año para poder realizar el estudio, siendo la fecha fin el ${datos.fechaFinP}. Si llegada esa fecha, no ha podido finalizar la formación puede ampliar el tiempo por un año, realizando un pago adicional.
 
     Un saludo.`
         ).replace(/\r\n|\r|\n/g, "</br>")
