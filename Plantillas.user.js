@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      2.12
+// @version      2.13
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -1122,7 +1122,7 @@ nombre: 'TODOS No baja',
     }
 
     function initSelectors() {
-    const target = document.getElementById('ctl04_ExtenderContentEditable');
+        const target = document.getElementById("ctl04_ExtenderContentEditable") || document.getElementById("HtmlEditorHtmlTxaComunicacion_ExtenderContentEditable");
     if (!target) return;
 
     // Evitar duplicados
@@ -1185,7 +1185,7 @@ nombre: 'TODOS No baja',
 }
 
     function tryInit() {
-        if (document.getElementById('ctl04_ExtenderContentEditable')) {
+        if (document.getElementById("ctl04_ExtenderContentEditable") || document.getElementById("HtmlEditorHtmlTxaComunicacion_ExtenderContentEditable")) {
             initSelectors();
         }
         var checkbox = document.getElementById('chkEstadoTutoria');
@@ -1199,6 +1199,24 @@ nombre: 'TODOS No baja',
     } else {
         window.addEventListener('DOMContentLoaded', tryInit);
     }
+ const comunicacion = document.getElementById("comunicacion");
+  if (comunicacion) {
+    comunicacion.style.marginBottom = "200px";
+  }
+
+const zoneTexte = document.getElementById("ctl04_ExtenderContentEditable") || document.getElementById("HtmlEditorHtmlTxaComunicacion_ExtenderContentEditable");
+if (zoneTexte) {
+  zoneTexte.style.height = "250px";  // Hauteur souhaitée (ajuster selon besoin)
+  zoneTexte.style.width = "100%";    // Pleine largeur du conteneur parent
+  zoneTexte.style.minHeight = "250px";
+  zoneTexte.style.overflowY = "auto";  // Scroll vertical si contenu dépasse
+  zoneTexte.style.fontSize = "17px"; // texte plus grand
+  zoneTexte.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"; // police douce et lisible
+  zoneTexte.style.lineHeight = "1.2"; // interligne confortable
+  zoneTexte.style.color = "#333"; // texte moins agressif que noir pur
+  zoneTexte.style.backgroundColor = "#fff"; // fond blanc propre
+  zoneTexte.style.padding = "10px"; // un peu de marge intérieure pour le confort
+}
 
     new MutationObserver(() => {
         tryInit();
