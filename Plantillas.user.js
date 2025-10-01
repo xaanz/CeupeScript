@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      2.13
+// @version      3.0
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -978,7 +978,80 @@ Sin nada más que añadir, nos despedimos de usted recordándole que para cualqu
 Reciba un cordial saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
+{
+            nombre: 'CURSO DIP SIUM 6M',
+            contenido: datos => (
+            `${datos.greeting},
 
+Desde el Departamento Atención al alumnado, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al ${datos.tituloCurso} que ha iniciado.
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
+
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación.
+
+A continuación le exponemos los requisitos obligatorios que deberá superar:
+        - 100% visualización del contenido
+        - 100% superación de autoevaluaciones
+        - 100% superación de exámenes
+        - Actividades (no calificables)
+
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica (todos los apartados deberán quedar sombreados en verde en la plataforma en el apartado ÍNDICE). Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
+
+Cuando haya superado los requisitos obligatorios, deberá de realizar la encuesta de finalización.
+
+Por último, no olvide su fecha fin ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación durante 6 meses más, tendría un coste adicional que podrá consultar en las condiciones de matriculación. Recordarle que la fecha mínima de finalización y la que aparecerá en su titulación es ${datos.fechaFin} (independientemente de cuando finalice).
+
+Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
+
+<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
+
+Puede comunicarse con nosotros a través del chat del campus virtual, en el apartado 'CENTRO DE AYUDA' o en el teléfono ${datos.telefono}.
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
+
+Recuerde que estamos a su disposición para cualquier duda o consulta.
+
+Un Saludo`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+{
+            nombre: 'CURSO DIP UHE 3M',
+            contenido: datos => (
+            `${datos.greeting},
+
+Desde el Departamento Atención al alumnado, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al ${datos.tituloCurso} que ha iniciado.
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
+
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación.
+
+A continuación le exponemos los requisitos obligatorios que deberá superar:
+        - 100% visualización del contenido
+        - 100% superación de autoevaluaciones
+        - 100% superación de exámenes
+        - Actividades (no calificables)
+
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica (todos los apartados deberán quedar sombreados en verde en la plataforma en el apartado ÍNDICE). Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
+
+Cuando haya superado los requisitos obligatorios, deberá de realizar la encuesta de finalización.
+
+Por último, no olvide su fecha fin ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación durante 3 meses más, tendría un coste adicional que podrá consultar en las condiciones de matriculación. Recordarle que la fecha mínima de finalización y la que aparecerá en su titulación es ${datos.fechaFin}.(independientemente de cuando finalice).
+
+Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
+
+<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
+
+Puede comunicarse con nosotros a través del chat del campus virtual, en el apartado 'CENTRO DE AYUDA' o en el teléfono ${datos.telefono}.
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
+
+Recuerde que estamos a su disposición para cualquier duda o consulta.
+
+Un Saludo`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
 {
 nombre: 'TODOS grabación bienvenida',
             contenido: datos => (
@@ -1083,7 +1156,8 @@ nombre: 'TODOS No baja',
    // Separación de plantillas por grupos
     const plantillasCEUPE = plantillas.filter(p => p.nombre.startsWith('CEUPE') || p.nombre.startsWith('CEUM')|| p.nombre.startsWith('TODOS'));
     const plantillasSTRUC = plantillas.filter(p => p.nombre.startsWith('STRUC')|| p.nombre.startsWith('TODOS'));
-    const plantillasOtros = plantillas.filter(p => !p.nombre.startsWith('CEUPE') && !p.nombre.startsWith('STRUC') && !p.nombre.startsWith('CEUM'));
+    const plantillasOtros = plantillas.filter(p => !p.nombre.startsWith('CEUPE') && !p.nombre.startsWith('STRUC') && !p.nombre.startsWith('CEUM') && !p.nombre.startsWith('CEUM'));
+    const plantillasCursos = plantillas.filter(p => p.nombre.startsWith('CURSO')|| p.nombre.startsWith('TODOS'));
 
     function crearSelector(idSelector, plantillasArray, titulo) {
         const select = document.createElement('select');
@@ -1128,7 +1202,8 @@ nombre: 'TODOS No baja',
     // Evitar duplicados
     if (document.getElementById('vm-selector-ceupe') ||
         document.getElementById('vm-selector-struc') ||
-        document.getElementById('vm-selector-otros')) {
+        document.getElementById('vm-selector-otros') ||
+        document.getElementById('vm-selector-Cursos')) {
         return;
     }
 
@@ -1148,11 +1223,14 @@ nombre: 'TODOS No baja',
     selectorSTRUC.style.marginRight = "10px";
     const selectorOtros = crearSelector('vm-selector-otros', plantillasOtros, 'otros');
     selectorOtros.style.marginRight = "0";
+    const selectorCursos = crearSelector('vm-selector-Cursos', plantillasCursos, 'Cursos');
+    selectorOtros.style.marginRight = "0";
 
     // Añadir selectores al contenedor
     contenedor.appendChild(selectorCEUPE);
     contenedor.appendChild(selectorSTRUC);
     contenedor.appendChild(selectorOtros);
+    contenedor.appendChild(selectorCursos);
 
     // Insertar el contenedor antes del target
     target.parentNode.insertBefore(contenedor, target);
@@ -1179,6 +1257,14 @@ nombre: 'TODOS No baja',
         if (idx === '') return;
         const datos = obtenerDatosAlumno();
         const contenido = plantillasOtros[idx].contenido(datos);
+        insertarContenido(target, contenido);
+        this.value = '';
+    });
+    selectorCursos.addEventListener('change', function() {
+        const idx = this.value;
+        if (idx === '') return;
+        const datos = obtenerDatosAlumno();
+        const contenido = plantillasCursos[idx].contenido(datos);
         insertarContenido(target, contenido);
         this.value = '';
     });
