@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Escuela y Master prohibido
-// @version      1.4
+// @version      1.5
 // @description  Consulta el href y muestra el nombre de la escuela en el div datosCurso, buscando el span correcto
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Escuela.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Escuela.user.js
