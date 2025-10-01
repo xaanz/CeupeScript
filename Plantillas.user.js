@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      3.0
+// @version      3.1
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -94,6 +94,18 @@
         const minimumFinishDateStr = val("datosAlumnoCurso_txtFechaMinimaDocencia");
         const finishDate = finishDateStr ? new Date(finishDateStr) : new Date();
         const minimumFinishDate = minimumFinishDateStr ? minimumFinishDateStr : "";
+        const divFecha = document.getElementById("fechaFinTitulacionInfo");
+let fechaFinTitulacion = "";
+if (divFecha) {
+    // Extraer solo la fecha del contenido, quitando el texto "Fecha fin titulación: "
+    const texto = divFecha.textContent || divFecha.innerText;
+    const regexFecha = /Fecha fin titulación:\s*(\d{2}\/\d{2}\/\d{4})/;
+    const match = texto.match(regexFecha);
+    if (match) {
+        fechaFinTitulacion = match[1]; // "27/06/2026"
+    }
+}
+
 
         return {
             tituloCurso: val("datosAlumnoCurso_txtTituloCurso"),
@@ -105,9 +117,10 @@
             formacion: formacion,
             telefono: telef,
             nextMondayStr: getNextMondayStr(),
-			nextWednesdayStr: getNextWednesdayStr(),
+			      nextWednesdayStr: getNextWednesdayStr(),
             greeting: getGreeting(),
             finishDate: finishDate,
+            fechaFinTitulacion: fechaFinTitulacion,
             minimumFinishDate: minimumFinishDate
         };
     }
@@ -979,7 +992,7 @@ Reciba un cordial saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
 {
-            nombre: 'CURSO DIP SIUM 6M',
+            nombre: 'CURSO DIP BIENVENIDA SIUM 6M',
             contenido: datos => (
             `${datos.greeting},
 
@@ -1016,7 +1029,7 @@ Un Saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
 {
-            nombre: 'CURSO DIP UHE 3M',
+            nombre: 'CURSO DIP BIENVENIDA UHE 3M',
             contenido: datos => (
             `${datos.greeting},
 
@@ -1037,7 +1050,7 @@ No podrá realizar una autoevaluación hasta haber visualizado todo el contenido
 
 Cuando haya superado los requisitos obligatorios, deberá de realizar la encuesta de finalización.
 
-Por último, no olvide su fecha fin ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación durante 3 meses más, tendría un coste adicional que podrá consultar en las condiciones de matriculación. Recordarle que la fecha mínima de finalización y la que aparecerá en su titulación es ${datos.fechaFin}.(independientemente de cuando finalice).
+Por último, no olvide su fecha fin ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación durante 3 meses más, tendría un coste adicional que podrá consultar en las condiciones de matriculación. Recordarle que la fecha mínima de finalización y la que aparecerá en su titulación es ${datos.fechaFinTitulacion}.(independientemente de cuando finalice).
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el ${datos.nextMondayStr} a las 18.00 (hora de España), podrá acceder desde el siguiente enlace:
 
@@ -1050,6 +1063,42 @@ Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y
 Recuerde que estamos a su disposición para cualquier duda o consulta.
 
 Un Saludo`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
+		{
+            nombre: 'CURSO DIP BIENVENIDA UHE 3M',
+            contenido: datos => (
+            `${datos.greeting},
+
+Desde el Departamento de Atención al alumnado, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado.  
+
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener. 
+
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación.  
+
+A continuación le exponemos los requisitos obligatorios que deberá superar: 
+
+Visualizar el 100% del contenido en su campus virtual. 
+
+Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.  
+
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma. 
+
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final. 
+
+Recordarle que la fecha mínima de finalización y la que aparecerá en su titulación es ${datos.fechaFinTitulacion}  (independientemente de cuando finalice).  
+
+No obstante, indicarle que tiene 6 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. 
+
+Le invitamos a participar en la sesión de bienvenida online que se realizará el próximo  ${datos.nextMondayStr} a las 18:00h Zona horaria: Europe/Madrid 
+
+Enlace de la videollamada: https://meet.google.com/sxv-svxk-jgk  
+
+Puede comunicarse con nosotros desde el apartado centro de ayuda, desde la App o en el teléfono ${datos.telefono}.  
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.  
+
+Recuerde que estamos a su disposición para cualquier duda o consulta.  
             ).replace(/\r\n|\n/g, "</br>")
             },
 {
