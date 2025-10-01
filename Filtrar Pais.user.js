@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         InnoTutor País en Tutorías Github version
-// @version      2.2
+// @version      2.3
 // @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
 // @author       Lois
 // @grant        GM.xmlHttpRequest
@@ -10,88 +10,6 @@
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Filtrar%20Pais.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Filtrar%20Pais.user.js
 // ==/UserScript==
-
-(function() {
-  'use strict';
-
-  const categoryKeys = ['Plazos del curso', 'Titulación', 'Seguimiento'];
-  let lastGreenRowCount = -1;
-
-  function contarFilasYCategorias(table) {
-    let greenRowCount = 0;
-    const categoryCounts = {
-      'Plazos del curso': 0,
-      'Titulación': 0,
-      'Seguimiento': 0
-    };
-
-    const rows = table.getElementsByTagName('tr');
-    for (let row of rows) {
-      // Solo filas con clase table-success
-      if (row.classList.contains('table-success')) {
-        greenRowCount++;
-        const categoriaCell = row.querySelector('td.categoria-cell');
-        if (categoriaCell) {
-          const categoria = categoriaCell.textContent.trim();
-          if (categoryCounts.hasOwnProperty(categoria)) {
-            categoryCounts[categoria]++;
-          }
-        }
-      }
-    }
-
-    return { greenRowCount, categoryCounts };
-  }
-
-  function crearCuadroResultados(res, table) {
-    const existing = document.getElementById('cuadroResultadosInnoTutor');
-    if (existing) existing.remove();
-
-    const resultDiv = document.createElement('div');
-    resultDiv.id = 'cuadroResultadosInnoTutor';
-    resultDiv.style.border = '2px solid #006400';
-    resultDiv.style.padding = '15px';
-    resultDiv.style.margin = '15px 0';
-    resultDiv.style.background = '#e6ffe6';
-    resultDiv.style.fontFamily = 'Arial, sans-serif';
-    resultDiv.style.fontSize = '14px';
-    resultDiv.style.color = '#004d00';
-    resultDiv.style.fontWeight = 'bold';
-
-    resultDiv.innerHTML = `
-      Tutoría Total gestionadas: ${res.greenRowCount}<br>
-      <br>
-      ${categoryKeys.map(k => `${k}: ${res.categoryCounts[k]}`).join('<br>')}
-    `;
-
-    table.parentNode.insertBefore(resultDiv, table);
-  }
-
-  function actualizarConteo() {
-    const table = document.getElementById('tutorshipsTable');
-    if (!table) return;
-
-    const resultado = contarFilasYCategorias(table);
-    if (resultado.greenRowCount !== lastGreenRowCount) {
-      crearCuadroResultados(resultado, table);
-      lastGreenRowCount = resultado.greenRowCount;
-      console.log('Conteo actualizado:', resultado);
-    }
-  }
-
-  const intervalId = setInterval(() => {
-    const table = document.getElementById('tutorshipsTable');
-    if (table) {
-      actualizarConteo();
-    } else {
-      const existing = document.getElementById('cuadroResultadosInnoTutor');
-      if (existing) existing.remove();
-      lastGreenRowCount = -1;
-    }
-  }, 1000);
-
-  window.addEventListener('beforeunload', () => clearInterval(intervalId));
-})();
 
 (function() {
     'use strict';
