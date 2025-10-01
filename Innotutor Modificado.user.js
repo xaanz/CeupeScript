@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         InnoTutor Modificado GitHub version
+// @name         InnoTutor Modificado con Fecha Fin Titulación integrada
 // @namespace    http://tampermonkey.net/
-// @version      1.4
-// @description  Modifica elementos en la página de respuesta de tutorías y muestra país, bandera y código telefónico por matrícula
+// @version      1.6
+// @description  Modifica elementos en la página de tutorías, muestra país, bandera, código telefónico y fecha fin titulación a partir de matrícula
 // @author       Lois
 // @grant        none
 // @grant        GM_xmlhttpRequest
@@ -14,30 +14,28 @@
 (function() {
     'use strict';
 
-    // =========================
     // PARTE 1: Modificaciones InnoTutor (Firma, editor, espaciado)
-    // =========================
 
-   // 1. Firma automática no editable
-const spanUsuario = document.getElementById("headerTutorizacion_usuarioSesion_lblUsuario");
-const nombreUsuario = spanUsuario ? spanUsuario.textContent.trim() : "Su coordinador";
-const NUEVO_TEXTO = "\n\n" + nombreUsuario;
-const textarea = document.getElementById("txtRemitente");
-if (textarea) {
-    textarea.value = NUEVO_TEXTO;
-    const enforceText = () => textarea.value = NUEVO_TEXTO;
-    textarea.addEventListener('input', enforceText);
-    textarea.addEventListener('blur', enforceText);
-    textarea.style.width = "360px";
-    textarea.style.height = "60px";
-}
+    // 1. Firma automática no editable
+    const spanUsuario = document.getElementById("headerTutorizacion_usuarioSesion_lblUsuario");
+    const nombreUsuario = spanUsuario ? spanUsuario.textContent.trim() : "Su coordinador";
+    const NUEVO_TEXTO = "\n\n" + nombreUsuario;
+    const textarea = document.getElementById("txtRemitente");
+    if (textarea) {
+        textarea.value = NUEVO_TEXTO;
+        const enforceText = () => textarea.value = NUEVO_TEXTO;
+        textarea.addEventListener('input', enforceText);
+        textarea.addEventListener('blur', enforceText);
+        textarea.style.width = "360px";
+        textarea.style.height = "60px";
+    }
 
     // Ajustar campo de puesto
     const textareaPuesto = document.getElementById('txtPuesto');
-      if (textareaPuesto) {
-          textareaPuesto.style.width = '390px';
-          textareaPuesto.style.height = '20px';
-      }
+    if (textareaPuesto) {
+        textareaPuesto.style.width = '390px';
+        textareaPuesto.style.height = '20px';
+    }
 
     // 2. Editor redimensionable
     const makeResizable = () => {
@@ -82,7 +80,7 @@ if (textarea) {
         }
     };
 
-      function scrollToCheckbox() {
+    function scrollToCheckbox() {
         var checkbox = document.getElementById('txtDestinatario');
         if (checkbox) {
             checkbox.scrollIntoView({ behavior: 'auto', block: 'center' });
@@ -249,68 +247,92 @@ if (textarea) {
   "Palestina":       { code: "PS", flag: "ps", phone: "+970", tz: "Asia/Gaza" }
 };
 
-function getSpainTimeString() {
-    // Crear un objeto Date con la hora actual en España
-    const spainTime = new Date().toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-        timeZone: 'Europe/Madrid'
-    });
-    return spainTime;
-}
+    function getSpainTimeString() {
+        return new Date().toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+            timeZone: 'Europe/Madrid'
+        });
+    }
 
-function getCountryTime(tz) {
-    return new Date().toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false,
-        timeZone: tz
-    });
-}
+    function getCountryTime(tz) {
+        return new Date().toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+            timeZone: tz
+        });
+    }
 
     function showCountryInfo(countryName, estadoMatricula) {
-    const infoDivId = "pais-bandera-codigo-info";
-    let infoDiv = document.getElementById(infoDivId);
-    if (!infoDiv) {
-        infoDiv = document.createElement("div");
-        infoDiv.id = infoDivId;
-        infoDiv.style.marginTop = "10px";
-        infoDiv.style.fontSize = "1.2em";
-        let ref = document.getElementById("datosAlumno");
-        if (ref) {
-            ref.insertAdjacentElement('afterend', infoDiv);
-        } else {
-            document.body.appendChild(infoDiv);
+        const infoDivId = "pais-bandera-codigo-info";
+        let infoDiv = document.getElementById(infoDivId);
+        if (!infoDiv) {
+            infoDiv = document.createElement("div");
+            infoDiv.id = infoDivId;
+            infoDiv.style.marginTop = "10px";
+            infoDiv.style.fontSize = "1.2em";
+            let ref = document.getElementById("datosAlumno");
+            if (ref) {
+                ref.insertAdjacentElement('afterend', infoDiv);
+            } else {
+                document.body.appendChild(infoDiv);
+            }
         }
+        if (countryName) {
+            const normalizedCountry = normalize(countryName);
+            const match = Object.keys(countryData).find(key => normalize(key) === normalizedCountry);
+            if (match) {
+                infoDiv.style.fontSize = "3em";
+                infoDiv.innerHTML = `
+                    <strong>País:</strong> ${match} <br>
+                    <strong>Código telefónico:</strong> ${countryData[match].phone}<br>
+                    <img src="https://flagcdn.com/48x36/${countryData[match].flag}.png"
+                         style="vertical-align:middle; margin-top:8px;"
+                         width="72" height="54" alt="Bandera de ${match}">
+                    <span style="display:inline-block; vertical-align:middle; margin-left:10px; font-size:0.7em;">
+                        <strong>Estado matrícula:</strong> ${estadoMatricula ? estadoMatricula : "Desconocido"}
+                    </span>
+                    <br>
+                    <span style="font-size:0.5em;">
+                        <strong>Hora actual en ${match}:</strong> ${getCountryTime(countryData[match].tz)}<br>
+                        <strong>Hora actual en España:</strong> ${getSpainTimeString()}
+                    </span>
+                `;
+                return;
+            }
+        }
+        infoDiv.innerHTML = "<em>No se pudo encontrar el país o no está en la base de datos.</em>";
     }
-    if (countryName) {
-        const normalizedCountry = normalize(countryName);
-        const match = Object.keys(countryData).find(key => normalize(key) === normalizedCountry);
-        if (match) {
-            infoDiv.style.fontSize = "3em";
-            infoDiv.innerHTML = `
-                <strong>País:</strong> ${match} <br>
-                <strong>Código telefónico:</strong> ${countryData[match].phone}<br>
-                <img src="https://flagcdn.com/48x36/${countryData[match].flag}.png"
-                     style="vertical-align:middle; margin-top:8px;"
-                     width="72" height="54" alt="Bandera de ${match}">
-                <span style="display:inline-block; vertical-align:middle; margin-left:10px; font-size:0.7em;">
-                    <strong>Estado matrícula:</strong> ${estadoMatricula ? estadoMatricula : "Desconocido"}
-                </span>
-                <br>
-                <span style="font-size:0.5em;">
-                    <strong>Hora actual en ${match}:</strong> ${getCountryTime(countryData[match].tz)}<br>
-                    <strong>Hora actual en España:</strong> ${getSpainTimeString()}
-                </span>
+
+    function mostrarFechaFinTitulacionDesdeFetch(fechaFin) {
+        let contenedor = document.getElementById("fechaFinTitulacionInfo");
+        if (!contenedor) {
+            contenedor = document.createElement("div");
+            contenedor.id = "fechaFinTitulacionInfo";
+            contenedor.style.cssText = `
+                margin-top: 10px;
+                font-size: 1.4em;
+                font-weight: bold;
+                color: #fc6000;
             `;
-            return;
+            const referencia = document.getElementById("datosAlumno");
+            if (referencia) {
+                referencia.insertAdjacentElement("afterend", contenedor);
+            } else {
+                document.body.appendChild(contenedor);
+            }
+        }
+        if (fechaFin) {
+            contenedor.textContent = "Fecha fin titulación: " + fechaFin;
+        } else {
+            contenedor.textContent = "Fecha fin titulación no disponible";
         }
     }
-    infoDiv.innerHTML = "<em>No se pudo encontrar el país o no está en la base de datos.</em>";
-}
+
     function fetchCountryFromEnrollment(enrollmentID) {
         const enrollmentURL = `http://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx?matriculaId=${enrollmentID}`;
         if (typeof GM_xmlhttpRequest !== "undefined") {
@@ -324,10 +346,17 @@ function getCountryTime(tz) {
                     let countryName = countryInput ? countryInput.value.trim() : null;
                     let estadoDiv = doc.getElementById("barraEstadoMatricula_iconoEstado");
                     let estadoMatricula = estadoDiv ? estadoDiv.getAttribute("title") : null;
+
+                    // Obtener fecha fin titulacion directamente del HTML de la matrícula
+                    let fechaInput = doc.getElementById("txtFechaTitulacionFin");
+                    let fechaFin = fechaInput ? fechaInput.value.trim() : null;
+
                     showCountryInfo(countryName, estadoMatricula);
+                    mostrarFechaFinTitulacionDesdeFetch(fechaFin);
                 },
                 onerror: function() {
                     showCountryInfo(null, null);
+                    mostrarFechaFinTitulacionDesdeFetch(null);
                 }
             });
         }
@@ -344,9 +373,8 @@ function getCountryTime(tz) {
         });
     }
 
-   // === BLOQUE 2: Popup <div> & CSS mejoras ===
+    // BLOQUE 2: Popup <div> & CSS mejoras
 
-    // Separar <div> con <br> internos en <div> y <br>
     function splitDivByBr(element) {
         if (!element || element.dataset.splitted === "1") return;
         let hijos = Array.from(element.children);
@@ -372,7 +400,6 @@ function getCountryTime(tz) {
         element.dataset.splitted = "1";
     }
 
-    // Parte el contenido por <br> y crea <div> por bloque
     function brToDivs(element) {
         if (!element || element.dataset.brtodivs === "1") return;
         let partes = element.innerHTML.split(/<br\s*\/?>/i).map(t => t.trim()).filter(Boolean);
@@ -380,7 +407,6 @@ function getCountryTime(tz) {
         element.dataset.brtodivs = "1";
     }
 
-    // Inserta <br> entre <div> consecutivos con texto
     function insertarBRs(element) {
         if (!element) return;
         const hijos = Array.from(element.children);
@@ -404,7 +430,6 @@ function getCountryTime(tz) {
         }
     }
 
-    // MutationObserver para el popup
     const observer = new MutationObserver(() => {
         const contenido = document.querySelector('#win1_content');
         if (contenido) {
@@ -415,90 +440,89 @@ function getCountryTime(tz) {
     });
     observer.observe(document.body, { childList: true, subtree: true });
 
-    // CSS de popup
     const css = `
-#win1 {
- background: #6f88e8 !important;
- border: 2px solid #6f88e8 !important;
- border-radius: 14px !important;
- overflow: visible !important;
-}
-#win1 .alphacube_title {
- background: #6f88e8 !important;
- color: #ffffff !important;
- font-size: 1.36em !important;
-}
-#win1 #win1_content {
- color: #353b48 !important;
- background: #fff !important;
- font-size: 1.22em !important;
-}
-#win1 #win1_top,
-#win1 .alphacube_nw,
-#win1 .alphacube_ne,
-#win1 .alphacube_n,
-#win1 .alphacube_title,
-#win1 #win1_top.alphacube_title {
- background: #6f88e8 !important;
- color: #6f88e8 !important;
- height: 20px !important;
-}
-#win1_close.alphacube_close {
- position: absolute !important;
- top: 2px !important;
- right: 10px !important;
- width: 22px !important;
- height: 22px !important;
- padding: 0 !important;
- border-radius: 50% !important;
- background: #fff !important;
- border: 2px solid #dcdde1 !important;
- box-shadow: 0 2px 6px rgba(55,60,85,0.14) !important;
- display: flex !important;
- align-items: center !important;
- justify-content: center !important;
- color: #6f88e8 !important;
- font-size: 1em !important;
- font-weight: bold;
- cursor: pointer !important;
- z-index: 10 !important;
- transition: background 0.2s, color 0.2s, box-shadow 0.2s;
- overflow: hidden !important;
-}
-#win1_close.alphacube_close::before {
- content: "×";
- font-size: 1.12em !important;
- width: 100%;
- text-align: center;
- display: flex;
- align-items: center;
- justify-content: center;
- line-height: 1 !important;
- height: 100%;
- font-family: Arial,Segoe UI,sans-serif;
- pointer-events: none;
-}
-#win1_close.alphacube_close:hover {
- background: #4e7bf5 !important;
- color: #fff !important;
- border-color: #4e7bf5 !important;
- box-shadow: 0 4px 14px rgba(38,24,232,0.17) !important;
-}
-#win1 .alphacube_w, #win1 .alphacube_e { background: #fff !important; }
-#win1 .alphacube_sizer.bottom_draggable,
-#win1 .alphacube_sw,
-#win1 .alphacube_s,
-#win1 .alphacube_se { background: #6f88e8 !important; }
-#win1 .alphacube_ne.top_draggable { border-top-right-radius: 12px !important; }
-#win1 .alphacube_sw { border-bottom-left-radius: 12px !important; }
-#win1 .alphacube_sizer.bottom_draggable { border-bottom-right-radius: 12px !important; }
-`;
+    #win1 {
+     background: #6f88e8 !important;
+     border: 2px solid #6f88e8 !important;
+     border-radius: 14px !important;
+     overflow: visible !important;
+    }
+    #win1 .alphacube_title {
+     background: #6f88e8 !important;
+     color: #ffffff !important;
+     font-size: 1.36em !important;
+    }
+    #win1 #win1_content {
+     color: #353b48 !important;
+     background: #fff !important;
+     font-size: 1.22em !important;
+    }
+    #win1 #win1_top,
+    #win1 .alphacube_nw,
+    #win1 .alphacube_ne,
+    #win1 .alphacube_n,
+    #win1 .alphacube_title,
+    #win1 #win1_top.alphacube_title {
+     background: #6f88e8 !important;
+     color: #6f88e8 !important;
+     height: 20px !important;
+    }
+    #win1_close.alphacube_close {
+     position: absolute !important;
+     top: 2px !important;
+     right: 10px !important;
+     width: 22px !important;
+     height: 22px !important;
+     padding: 0 !important;
+     border-radius: 50% !important;
+     background: #fff !important;
+     border: 2px solid #dcdde1 !important;
+     box-shadow: 0 2px 6px rgba(55,60,85,0.14) !important;
+     display: flex !important;
+     align-items: center !important;
+     justify-content: center !important;
+     color: #6f88e8 !important;
+     font-size: 1em !important;
+     font-weight: bold;
+     cursor: pointer !important;
+     z-index: 10 !important;
+     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+     overflow: hidden !important;
+    }
+    #win1_close.alphacube_close::before {
+     content: "×";
+     font-size: 1.12em !important;
+     width: 100%;
+     text-align: center;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     line-height: 1 !important;
+     height: 100%;
+     font-family: Arial,Segoe UI,sans-serif;
+     pointer-events: none;
+    }
+    #win1_close.alphacube_close:hover {
+     background: #4e7bf5 !important;
+     color: #fff !important;
+     border-color: #4e7bf5 !important;
+     box-shadow: 0 4px 14px rgba(38,24,232,0.17) !important;
+    }
+    #win1 .alphacube_w, #win1 .alphacube_e { background: #fff !important; }
+    #win1 .alphacube_sizer.bottom_draggable,
+    #win1 .alphacube_sw,
+    #win1 .alphacube_s,
+    #win1 .alphacube_se { background: #6f88e8 !important; }
+    #win1 .alphacube_ne.top_draggable { border-top-right-radius: 12px !important; }
+    #win1 .alphacube_sw { border-bottom-left-radius: 12px !important; }
+    #win1 .alphacube_sizer.bottom_draggable { border-bottom-right-radius: 12px !important; }
+    `;
 
     const style = document.createElement('style');
     style.textContent = css;
     document.head.appendChild(style);
 
-    // === EJECUCIÓN DE BLOQUES === //
+    // EJECUCIÓN
 
     setTimeout(() => {
         makeResizable();
