@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      3.1
+// @version      3.2
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -1090,9 +1090,9 @@ Recordarle que la fecha mínima de finalización y la que aparecerá en su titul
 
 No obstante, indicarle que tiene 6 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. 
 
-Le invitamos a participar en la sesión de bienvenida online que se realizará el próximo  ${datos.nextMondayStr} a las 18:00h Zona horaria: Europe/Madrid 
+Le invitamos a participar en la sesión de bienvenida online que se realizará el próximo  ${datos.nextMondayStr} a las 18:00h (Hora de españa)
 
-Enlace de la videollamada: https://meet.google.com/sxv-svxk-jgk  
+Enlace de la videollamada: <a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
 
 Puede comunicarse con nosotros desde el apartado centro de ayuda, desde la App o en el teléfono ${datos.telefono}.  
 
