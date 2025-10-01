@@ -1066,7 +1066,7 @@ Un Saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
 		{
-            nombre: 'CURSO DIP BIENVENIDA UHE 3M',
+            nombre: 'CURSO BIENVENIDA USEK/NEBI',
             contenido: datos => (
             `${datos.greeting},
 
@@ -1099,6 +1099,8 @@ Puede comunicarse con nosotros desde el apartado centro de ayuda, desde la App o
 Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.  
 
 Recuerde que estamos a su disposición para cualquier duda o consulta.  
+
+Un saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
 {
