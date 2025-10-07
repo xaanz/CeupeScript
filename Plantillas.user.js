@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      3.2
+// @version      3.3
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -74,6 +74,10 @@
             telef = "+34 958948544";
         }
         if (companyName.includes("cervantes")) {
+            formacion = "EUROINNOVA";
+            telef = "+34 958948544";
+        }
+		if (companyName.includes("unimiami")) {
             formacion = "EUROINNOVA";
             telef = "+34 958948544";
         }
@@ -412,6 +416,62 @@ nombre: 'CEUPE Acceso correcto',
     Un saludo y buen día.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
+		{
+
+nombre: 'CEUP UCMC Bienvenida',
+            contenido: datos => (
+            `${datos.greeting},
+
+Le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al ${datos.tituloCurso} que ha iniciado.  
+
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener. 
+
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación.  
+
+A continuación le exponemos los requisitos obligatorios que deberá superar: 
+
+	- Visualizar el 100% del contenido en su campus virtual.  
+
+	- Superar el 100% de los módulos de estudio. Cada módulo debe tener una calificación mínima de un 5 sobre 10, siendo la ponderación de cada módulo la siguiente:    
+ 
+	- Exámenes: 20% de la nota final del módulo.
+         
+	- Caso Prácticos: 80% de la nota final del módulo. 
+
+	- Superar el Proyecto Final + Defensa con una puntuación mínima de 5 puntos.
+
+No podrá realizar un examen hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica (todos los apartados deberán quedar con un Check verde en la plataforma). Después podrá realizar los cuestionarios y los casos prácticos de cada módulo.
+
+El Proyecto Fin  de  Máster  es  un  requerimiento  de  la  Universidad  para  completar su formación y así poder obtener la titulación de la misma. En la plataforma (en el apartado del Proyecto Final de su Máster), encontrará información imprescindible y de obligada lectura. Contará con el apoyo de un tutor/a que le guiará en su realización. Se recomienda atender a las orientaciones y sugerencias realizadas desde la tutorización con el fin de alcanzar los requisitos mínimos exigidos. 
+
+Una vez supere el Proyecto Final, deberá defenderlo (de manera virtual) ante un tribunal, constituido por personal 
+docente y personal propio de la Universidad Complutense de Madrid. La fecha y horario concreto le será comunicado con antelación. Siempre dentro de su tiempo máximo de estudio.
+
+  
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma. 
+
+ 
+Cuando haya superado los requisitos obligatorios, deberá de realizar la encuesta de finalización. 
+
+Por último, no olvide su fecha fin ${datos.fechaFinP}. 
+
+Puede comunicarse con nosotros a través del chat del campus virtual, en el apartado 'CENTRO DE AYUDA' o en el teléfono ${datos.telefono}. 
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación. 
+
+Le invitamos a participar de las sesiones de bienvenida online que se realizarán:
+
+1ª sesión: el 14 de octubre a las 17:00 (hora de España) Introducción y bienvenida a la que podrá acceder a través del siguiente enlace: <a href="https://meet.google.com/mpv-ckwj-gsw" target="_blank">https://meet.google.com/mpv-ckwj-gsw</a>
+
+
+2ª sesión: el 15 de octubre a las 19:00 (hora de España) Información sobre su plataforma de estudio, y a la que podrá acceder a través del siguiente enlace: 
+<a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
+
+Recuerde que estamos a su disposición para cualquier duda o consulta. 
+  
+Un saludo y mucho ánimo con el estudio. `.replace(/\r\n|\r|\n/g, "</br>")
+                )
+        },
 
 {
             nombre: 'STRUC Bienvenida STRUP/STEDU/STURC ES',
