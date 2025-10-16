@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         InnoTutor País en Tutorías Github version
-// @version      2.3
+// @version      2.4
 // @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
 // @author       Lois
 // @grant        GM.xmlHttpRequest
@@ -204,16 +204,14 @@
         init();
         if (checkInterval) clearInterval(checkInterval);
         checkInterval = setInterval(init, verificationInterval);
-
         new MutationObserver(init).observe(document.body, { childList: true, subtree: true });
+        observeTable();
     });
-})();
 
-const mainFunction = () => {
-    let hidden = true; // Ocultar filas inicialmente
-    let observer;
+    // Botón para ocultar filas en España
+    let hidden = true;
 
-    const toggleRows = (table, button) => {
+    function toggleRowsSpain(table, button) {
         const rows = table.querySelectorAll('tbody tr');
         rows.forEach(row => {
             const text = row.textContent.toLowerCase();
@@ -223,9 +221,9 @@ const mainFunction = () => {
         });
         button.textContent = hidden ? 'Ocultar filas España' : 'Ocultar filas España';
         hidden = !hidden;
-    };
+    }
 
-    const addToggleButton = (table) => {
+    function addToggleButton(table) {
         let button = document.getElementById('toggleEsButton');
         if (!button) {
             button = document.createElement('button');
@@ -256,30 +254,100 @@ const mainFunction = () => {
                 button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
             });
 
-            table.parentNode.insertBefore(button, table);
-
             button.addEventListener('click', e => {
                 e.preventDefault();
-                toggleRows(table, button);
+                toggleRowsSpain(table, button);
             });
+
+            table.parentNode.insertBefore(button, table);
         }
 
         if (hidden) {
-            toggleRows(table, button);
+            toggleRowsSpain(table, button);
         }
-    };
+    }
 
-    const observeTable = () => {
-        observer = new MutationObserver(() => {
+    // Botón para ocultar filas según programas
+    let hiddenProgramRows = true;
+
+    function toggleProgramRows(table, button) {
+        const rows = table.querySelectorAll('tbody tr');
+        for (const row of rows) {
+            const programCell = row.querySelector('td:nth-child(8)'); // Ajusta índice si requerido
+            if (!programCell) continue;
+            const cellData = programCell.textContent.trim().toLowerCase();
+
+            const isExactMatch = (
+                cellData === 'vico' ||
+                cellData === 'vinc' ||
+                cellData === 'uduc' ||
+                cellData === 'cece' ||
+                cellData === 'eufo' ||
+                cellData === 'cesuc' ||
+                cellData === 'cesu'
+            );
+
+            const containsB = cellData.includes('b24') || cellData.includes('b25') || cellData.includes('b26');
+
+            if (isExactMatch || containsB) {
+                row.style.display = hiddenProgramRows ? 'none' : '';
+            }
+        }
+        button.textContent = hiddenProgramRows ? 'Mostrar RVOE' : 'Ocultar RVOE';
+        hiddenProgramRows = !hiddenProgramRows;
+    }
+
+    function addProgramToggleButton(table) {
+        let button = document.getElementById('toggleProgramButton');
+        if (!button) {
+            button = document.createElement('button');
+            button.id = 'toggleProgramButton';
+            button.type = 'button';
+            button.textContent = 'Ocultar RVOE y Bonificados';
+
+            button.style.margin = '10px 8px 10px 10px';
+            button.style.padding = '8px 20px';
+            button.style.fontSize = '1rem';
+            button.style.fontWeight = '700';
+            button.style.fontFamily = '"Roboto", sans-serif';
+            button.style.borderRadius = '8px';
+            button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
+            button.style.transition = 'background-color 0.3s ease, box-shadow 0.3s ease';
+            button.style.backgroundColor = '#6c757d';
+            button.style.color = '#ffffff';
+            button.style.border = 'none';
+            button.style.cursor = 'pointer';
+            button.style.userSelect = 'none';
+
+            button.addEventListener('mouseenter', () => {
+                button.style.backgroundColor = '#495057';
+                button.style.boxShadow = '0 6px 12px rgba(76, 77, 79, 0.5)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.backgroundColor = '#6c757d';
+                button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
+            });
+
+            button.addEventListener('click', e => {
+                e.preventDefault();
+                toggleProgramRows(table, button);
+            });
+
+            table.parentNode.insertBefore(button, table);
+        }
+        // Si quieres ocultarlos al cargar, descomenta la línea siguiente:
+        // if (hiddenProgramRows) toggleProgramRows(table, button);
+    }
+
+    function observeTable() {
+        const observer = new MutationObserver(() => {
             const table = document.getElementById('tutorshipsTable');
             if (table) {
                 addToggleButton(table);
+                addProgramToggleButton(table);
             }
         });
         observer.observe(document.body, { childList: true, subtree: true });
-    };
+    }
 
-    observeTable();
-};
-
-mainFunction();
+})();
