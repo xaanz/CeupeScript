@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         InnoTutor País en Tutorías Github version
-// @version      2.4
+// @version      2.5
 // @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
 // @author       Lois
 // @grant        GM.xmlHttpRequest
@@ -282,6 +282,7 @@
                 cellData === 'vinc' ||
                 cellData === 'uduc' ||
                 cellData === 'cece' ||
+                cellData === 'ceuc' ||
                 cellData === 'eufo' ||
                 cellData === 'cesuc' ||
                 cellData === 'cesu'
