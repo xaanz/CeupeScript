@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      3.3
+// @version      3.4
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -422,53 +422,53 @@ nombre: 'CEUP UCMC Bienvenida',
             contenido: datos => (
             `${datos.greeting},
 
-Le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al ${datos.tituloCurso} que ha iniciado.  
+Le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al ${datos.tituloCurso} que ha iniciado.
 
-Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener. 
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
 
-Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación.  
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará todo el contenido de la formación.
 
-A continuación le exponemos los requisitos obligatorios que deberá superar: 
+A continuación le exponemos los requisitos obligatorios que deberá superar:
 
-	- Visualizar el 100% del contenido en su campus virtual.  
+	- Visualizar el 100% del contenido en su campus virtual.
 
-	- Superar el 100% de los módulos de estudio. Cada módulo debe tener una calificación mínima de un 5 sobre 10, siendo la ponderación de cada módulo la siguiente:    
- 
+	- Superar el 100% de los módulos de estudio. Cada módulo debe tener una calificación mínima de un 5 sobre 10, siendo la ponderación de cada módulo la siguiente:
+
 	- Exámenes: 20% de la nota final del módulo.
-         
-	- Caso Prácticos: 80% de la nota final del módulo. 
+
+	- Caso Prácticos: 80% de la nota final del módulo.
 
 	- Superar el Proyecto Final + Defensa con una puntuación mínima de 5 puntos.
 
 No podrá realizar un examen hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica (todos los apartados deberán quedar con un Check verde en la plataforma). Después podrá realizar los cuestionarios y los casos prácticos de cada módulo.
 
-El Proyecto Fin  de  Máster  es  un  requerimiento  de  la  Universidad  para  completar su formación y así poder obtener la titulación de la misma. En la plataforma (en el apartado del Proyecto Final de su Máster), encontrará información imprescindible y de obligada lectura. Contará con el apoyo de un tutor/a que le guiará en su realización. Se recomienda atender a las orientaciones y sugerencias realizadas desde la tutorización con el fin de alcanzar los requisitos mínimos exigidos. 
+El Proyecto Fin  de  Máster  es  un  requerimiento  de  la  Universidad  para  completar su formación y así poder obtener la titulación de la misma. En la plataforma (en el apartado del Proyecto Final de su Máster), encontrará información imprescindible y de obligada lectura. Contará con el apoyo de un tutor/a que le guiará en su realización. Se recomienda atender a las orientaciones y sugerencias realizadas desde la tutorización con el fin de alcanzar los requisitos mínimos exigidos.
 
-Una vez supere el Proyecto Final, deberá defenderlo (de manera virtual) ante un tribunal, constituido por personal 
+Una vez supere el Proyecto Final, deberá defenderlo (de manera virtual) ante un tribunal, constituido por personal
 docente y personal propio de la Universidad Complutense de Madrid. La fecha y horario concreto le será comunicado con antelación. Siempre dentro de su tiempo máximo de estudio.
 
-  
-El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma. 
 
- 
-Cuando haya superado los requisitos obligatorios, deberá de realizar la encuesta de finalización. 
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
 
-Por último, no olvide su fecha fin ${datos.fechaFinP}. 
 
-Puede comunicarse con nosotros a través del chat del campus virtual, en el apartado 'CENTRO DE AYUDA' o en el teléfono ${datos.telefono}. 
+Cuando haya superado los requisitos obligatorios, deberá de realizar la encuesta de finalización.
 
-Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación. 
+Por último, no olvide su fecha fin ${datos.fechaFinP}.
+
+Puede comunicarse con nosotros a través del chat del campus virtual, en el apartado 'CENTRO DE AYUDA' o en el teléfono ${datos.telefono}.
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
 
 Le invitamos a participar de las sesiones de bienvenida online que se realizarán:
 
 1ª sesión: el 14 de octubre a las 17:00 (hora de España) Introducción y bienvenida a la que podrá acceder a través del siguiente enlace: <a href="https://meet.google.com/mpv-ckwj-gsw" target="_blank">https://meet.google.com/mpv-ckwj-gsw</a>
 
 
-2ª sesión: el 15 de octubre a las 19:00 (hora de España) Información sobre su plataforma de estudio, y a la que podrá acceder a través del siguiente enlace: 
+2ª sesión: el 15 de octubre a las 19:00 (hora de España) Información sobre su plataforma de estudio, y a la que podrá acceder a través del siguiente enlace:
 <a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
 
-Recuerde que estamos a su disposición para cualquier duda o consulta. 
-  
+Recuerde que estamos a su disposición para cualquier duda o consulta.
+
 Un saludo y mucho ánimo con el estudio. `.replace(/\r\n|\r|\n/g, "</br>")
                 )
         },
@@ -554,7 +554,7 @@ Un saludo y mucho ánimo con el estudio. `.replace(/\r\n|\r|\n/g, "</br>")
             Nos ponemos en contacto contigo para hacerte un seguimiento del ${datos.tituloCurso} que estás realizando con nosotros.
 			Esperamos que todo sea de tu agrado y vayas avanzando sin problema.
 
-			Recuerda que nos tienes a tu disposición para ayudarte en cualquier duda que tengas del contenido del curso. Si alguna unidad te resulta más compleja y deseas que te llamemos para tener una tutoría telefónica no dudes en contactarnos o contactarnos al ${datos.telefono}. Si necesitas completar algún punto por no quedarte claro puedes contactarnos para que te enviemos algún recurso o para orientarte como estudiarlo si es preciso con algún caso práctico.
+        	Si en algún momento tiene dificultades de acceso, necesita orientación sobre cómo organizar su estudio o desea resolver alguna duda relacionada con la metodología, la evaluación o su ritmo de avance, no dude en escribirnos a través de su "Centro de ayuda" o llamar nos al ${datos.telefono}. Estaremos encantados de ayudarle.
 
 			Te animamos a que realices las actividades que seguro te ayudaran a comprender mejor el contenido del curso. Si para su realización, o para las autoevaluaciones o el examen necesitas que te echemos una mano no dudes en solicitarnos ayuda.
 
@@ -1130,39 +1130,59 @@ Un Saludo`
             contenido: datos => (
             `${datos.greeting},
 
-Desde el Departamento de Atención al alumnado, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado.  
+Desde el Departamento de Atención al alumnado, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado.
 
-Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener. 
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
 
-Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación.  
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación.
 
-A continuación le exponemos los requisitos obligatorios que deberá superar: 
+A continuación le exponemos los requisitos obligatorios que deberá superar:
 
-Visualizar el 100% del contenido en su campus virtual. 
+Visualizar el 100% del contenido en su campus virtual.
 
-Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.  
+Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
 
-El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma. 
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
 
-No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final. 
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
 
-Recordarle que la fecha mínima de finalización y la que aparecerá en su titulación es ${datos.fechaFinTitulacion}  (independientemente de cuando finalice).  
+Recordarle que la fecha mínima de finalización y la que aparecerá en su titulación es ${datos.fechaFinTitulacion}  (independientemente de cuando finalice).
 
-No obstante, indicarle que tiene 6 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación. 
+No obstante, indicarle que tiene 6 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación.
 
 Le invitamos a participar en la sesión de bienvenida online que se realizará el próximo  ${datos.nextMondayStr} a las 18:00h (Hora de españa)
 
 Enlace de la videollamada: <a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
 
-Puede comunicarse con nosotros desde el apartado centro de ayuda, desde la App o en el teléfono ${datos.telefono}.  
+Puede comunicarse con nosotros desde el apartado centro de ayuda, desde la App o en el teléfono ${datos.telefono}.
 
-Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.  
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
 
-Recuerde que estamos a su disposición para cualquier duda o consulta.  
+Recuerde que estamos a su disposición para cualquier duda o consulta.
 
 Un saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
+
+{
+nombre: 'TODOS Seguimiento vacio',
+            contenido: datos => (
+        `${datos.greeting},
+
+        Nos ponemos en contacto con usted para interesarnos por su progreso en el ${datos.tituloCurso} que está realizando con nosotros.
+
+        Esperamos que todo esté yendo bien y que la experiencia formativa le resulte útil y enriquecedora. Nuestro objetivo es acompañarle durante todo el proceso, asegurándonos de que pueda avanzar sin dificultades.
+
+        Si en algún momento tiene dificultades de acceso, necesita orientación sobre cómo organizar su estudio o desea resolver alguna duda relacionada con la metodología, la evaluación o su ritmo de avance, no dude en escribirnos a través de su "Centro de ayuda" o solicitar una llamada. Estaremos encantados de ayudarle.
+
+        Le animamos también a continuar con las actividades del curso, que son una excelente forma de afianzar los contenidos y avanzar hacia la finalización de su formación.
+
+        Recuerde que puede consultar la fecha de finalización de su estudio en el campus virtual, y que los requisitos para completarlo se detallan en el correo de bienvenida que recibió al comenzar.
+
+        Quedamos a su disposición para acompañarle en lo que necesite.`.replace(/\r\n|\r|\n/g, "</br>")
+                    )
+        },
+
 {
 nombre: 'TODOS grabación bienvenida',
             contenido: datos => (
