@@ -224,10 +224,10 @@
 
         // Lista de valores sugeridos
         const opciones = [
-            "Otros"
-            "Metodología y plazos "
-            "Incidencias"
-            "Plataforma"
+            "Otros",
+            "Metodología y plazos ",
+            "Incidencias",
+            "Plataforma",
               "Consultas genenerales",
               "Ampliación",
               "Apostilla de la Haya",
