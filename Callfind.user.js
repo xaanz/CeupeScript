@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Innollamada
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.8
 // @description  Prueba variantes y solo busca si se acaba de redirigir para evitar ciclos infinitos
 // @author       Loïs
 // @match        *://innoconvocatoria.cualifica2.es/endpoint/getProfileINNOTUTOR.php*
@@ -224,6 +224,10 @@
 
         // Lista de valores sugeridos
         const opciones = [
+            "Otros"
+            "Metodología y plazos "
+            "Incidencias"
+            "Plataforma"
               "Consultas genenerales",
               "Ampliación",
               "Apostilla de la Haya",
