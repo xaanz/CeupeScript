@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      3.4
+// @version      4.0
 // @description  plantillas para Tutorlxp
-// @author       Lois, Clara, Sandra R, Sara L
+// @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
 // @match        *://innotutor.com/Tutoria/ResponderIncidenciaMatriculaEmail.aspx?incidenciaMatriculaId=*
 // @match        *://innotutor.com/Tutoria/EditarEvento.aspx?eventoId=*
@@ -44,55 +44,69 @@
         let companyName = programaFormacion.toLowerCase();
         let formacion = "";
         let telef = "";
+        let cg = ""; // Nueva variable para condiciones generales (CG)
 
         if (companyName.includes("inesem")) {
             formacion = "INESEM";
             telef = "+34 958050242";
+            cg = "https://www.inesem.es/condiciones-generales-de-matriculacion";
         }
         if (companyName.includes("euro")) {
             formacion = "EUROINNOVA";
             telef = "+34 958948544";
+            cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
         }
         if (companyName.includes("fiscal")) {
             formacion = "INEAF";
             telef = "+34 958050236";
+            cg = "https://www.ineaf.es/Informacion/Condiciones-de-Matriculacion";
         }
         if (companyName.includes("ineaf")) {
             formacion = "INEAF";
             telef = "+34 958050236";
+            cg = "https://www.ineaf.es/Informacion/Condiciones-de-Matriculacion";
         }
         if (companyName.includes("profesorado")) {
             formacion = "REDEDUCA";
             telef = "+34 958808651";
+            cg = "https://www.rededuca.net/condiciones-de-matriculacion";
         }
         if (companyName.includes("educa")) {
             formacion = "EDUCA";
             telef = "+34 958538300";
+            cg = "https://educa.net/Informacion/Condiciones-de-matriculacion";
         }
         if (companyName.includes("lica")) {
             formacion = "EUROINNOVA";
             telef = "+34 958948544";
+            cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
         }
         if (companyName.includes("cervantes")) {
             formacion = "EUROINNOVA";
             telef = "+34 958948544";
+            cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
         }
-		if (companyName.includes("unimiami")) {
+        if (companyName.includes("unimiami")) {
             formacion = "EUROINNOVA";
             telef = "+34 958948544";
+            cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
         }
         if (companyName.includes("esibe")) {
             formacion = "ESIBE";
             telef = "+34 958991918";
+            cg = "https://euapps-prod-uploads.s3.eu-west-1.amazonaws.com/assets/enrolment_conditions_es.pdf";
         }
         if (companyName.includes("ceupe")) {
             formacion = "CEUPE";
             telef = "+34 911979567";
+            cg = "https://www.ceupe.com/condiciones-generales-de-matriculacion.html";
         }
-	if (companyName.includes("structuralia")) {
+        if (companyName.includes("structuralia")) {
             formacion = "STRUCTURALIA";
             telef = "+34 914904200";
+            cg = "https://euapps-prod-uploads.s3.eu-west-1.amazonaws.com/assets/enrolment_conditions_es.pdf";
         }
+
 
         const finishDateStr = val("datosAlumnoCurso_txtFechaFin");
         const minimumFinishDateStr = val("datosAlumnoCurso_txtFechaMinimaDocencia");
@@ -120,6 +134,7 @@ if (divFecha) {
             programaFormacion: programaFormacion,
             formacion: formacion,
             telefono: telef,
+            cg: cg,
             nextMondayStr: getNextMondayStr(),
 			      nextWednesdayStr: getNextWednesdayStr(),
             greeting: getGreeting(),
@@ -416,6 +431,28 @@ nombre: 'CEUPE Acceso correcto',
     Un saludo y buen día.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
+{
+
+nombre: 'CEUPE Finalizado opción de titulación',
+        contenido: datos => (
+    `${datos.greeting},
+
+      En primer lugar, queremos felicitarle por la finalización de su ${datos.tituloCurso}.
+
+      Para continuar con la gestión de su titulación, le pedimos por favor revisar las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a> (punto 3.10) y confirmarnos su preferencia en relación con la documentación que deseas recibir:
+
+     - Título digital o físico
+     - Solicitud de apostilla
+     - Expediente de notas
+     - Otros documentos complementarios que consideres necesarios
+
+      Una vez nos indiques su elección, procederemos con los trámites correspondientes.
+
+      Quedamos atentos a su respuesta para poder avanzar en el proceso.
+
+      Un cordial saludo, `.replace(/\r\n|\r|\n/g, "</br>")
+            )
+        },
 		{
 
 nombre: 'CEUP UCMC Bienvenida',
@@ -1126,7 +1163,7 @@ Un Saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
 		{
-            nombre: 'CURSO BIENVENIDA USEK/NEBI',
+            nombre: 'CURSO BIENVENIDA con fecha titulo',
             contenido: datos => (
             `${datos.greeting},
 
@@ -1163,7 +1200,42 @@ Recuerde que estamos a su disposición para cualquier duda o consulta.
 Un saludo`
             ).replace(/\r\n|\n/g, "</br>")
             },
+		{
+            nombre: 'CURSO BIENVENIDA sin fecha titulo',
+            contenido: datos => (
+            `${datos.greeting},
 
+Desde el Departamento de Atención al alumnado, le agradecemos la confianza que ha depositado en nosotros al confiarnos su proceso de aprendizaje. Nos ponemos en contacto con usted para darle la bienvenida al programa que ha iniciado.
+
+Le recordamos que cuenta con un equipo de especialistas en diversos ámbitos, que estarán a su disposición para atender cualquier duda o consulta que pueda tener.
+
+Indicarle que la metodología de la formación es ONLINE, por lo que en la plataforma virtual encontrará desde el inicio todo el contenido de la formación.
+
+A continuación le exponemos los requisitos obligatorios que deberá superar:
+
+Visualizar el 100% del contenido en su campus virtual.
+
+Completar y superar el 100% de las autoevaluaciones y el examen final con una puntuación mínima de 5 puntos.
+
+El tiempo de conexión en el campus es orientativo, por lo que NO es obligatorio completar un determinado número de horas en la plataforma.
+
+No podrá realizar una autoevaluación hasta haber visualizado todo el contenido de su correspondiente unidad, por lo que deberá pasar página a página cada Unidad Didáctica. Después podrá realizar la autoevaluación de cada unidad (son 5 preguntas tipo test) y completar el examen final.
+
+No obstante, indicarle que tiene 6 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación.
+
+Le invitamos a participar en la sesión de bienvenida online que se realizará el próximo  ${datos.nextMondayStr} a las 18:00h (Hora de españa)
+
+Enlace de la videollamada: <a href="https://meet.google.com/sxv-svxk-jgk" target="_blank">https://meet.google.com/sxv-svxk-jgk</a>
+
+Puede comunicarse con nosotros desde el apartado centro de ayuda, desde la App o en el teléfono ${datos.telefono}.
+
+Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
+
+Recuerde que estamos a su disposición para cualquier duda o consulta.
+
+Un saludo`
+            ).replace(/\r\n|\n/g, "</br>")
+            },
 {
 nombre: 'TODOS Seguimiento vacio',
             contenido: datos => (
@@ -1237,12 +1309,67 @@ nombre: 'TODOS Finalización Pendiente de cuotas',
 
     - Tener todas las cuotas del estudio pagadas.
 
-    Una vez recibamos la notificación de finalización definitiva, le enviaremos un correo de y podrá iniciar la gestión de su solicitud de titulación.
+    Una vez recibamos la notificación de finalización definitiva, le enviaremos un correo de y podrá iniciar la gestión de su solicitud de titulación Puede consultar desde ahora sus <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a> para mas informacion sobre los documentos disponible y sus coste.
 
         Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
             )
         },
+{
 
+nombre: 'TODOS Ampliación',
+        contenido: datos => (
+    `${datos.greeting},
+
+      Puede consultar toda la información sobre las ampliaciones en las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a> si necesitara una ampliación podrá solicitarla para contar con 12 meses más para finalizar su formación.
+
+      Si le interesa no dude en ponerse en contacto con nosotros a través de su Centro de Ayuda y le haremos llegar el enlace de pago.
+
+      Quedamos a su disposición.
+
+      Reciba un cordial saludo`.replace(/\r\n|\r|\n/g, "</br>")
+            )
+        },
+{
+
+nombre: 'TODOS Finalizado envio articulos (no CEUPE)',
+        contenido: datos => (
+    `${datos.greeting},
+
+      En primer lugar, queremos felicitarle por la finalización de su ${datos.tituloCurso}. Va a recibir en su campus MyLXP su titulación digital.
+
+      Le pedimos por favor revisar las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a> (punto 3.10) y confirmarnos si adicionalmente deseas recibir:
+
+     - Título físico
+     - Solicitud de apostilla
+     - Expediente de notas
+     - Otros documentos complementarios que consideres necesarios
+
+      Una vez nos indiques su elección, procederemos con los trámites correspondientes.
+
+      Quedamos atentos a su respuesta para poder avanzar en el proceso.
+
+      Un cordial saludo, `.replace(/\r\n|\r|\n/g, "</br>")
+            )
+        },
+{
+
+nombre: 'TODOS Finalizado envio articulos doble titulacion digital',
+        contenido: datos => (
+    `${datos.greeting},
+
+En primer lugar, queremos felicitarle por la finalización de su ${datos.tituloCurso}. El estudio realizado cuenta con una doble titulación: por un lado, va a recibir el título Privado expedido por nuestra institución y, por otro, el título universitario expedido por la universidad. Ambos podrá descargarlos en formato digital sin coste desde el campus MyLXP.
+
+La universidad tiene sus propios tiempos de expedición, ajenos a nuestra institución.
+
+Si desea apostillarlos, o solicitar alguna documentación adicional, puede consultar las tasas vigentes en las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a> (punto 3.10) .
+
+Una vez nos indiques su elección, procederemos con los trámites correspondientes.
+
+Quedamos atentos a su respuesta para poder avanzar en el proceso.
+
+Un cordial saludo, `.replace(/\r\n|\r|\n/g, "</br>")
+            )
+        },
 {
 
 nombre: 'TODOS Casos prácticos',
