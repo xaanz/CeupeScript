@@ -1,8 +1,7 @@
 // ==UserScript==
 // @name         incidencia
-// @namespace    http://tampermonkey.net/
 // @version      2.0
-// @description  Filtro fixe par Programme avec recherche, cache, et export CSV par facultad
+// @description  Filtro, búsqueda (corregida), y resaltado persistente.
 // @match        *://innotutor.com/Tutoria/ResolverIncidenciasMatriculas.aspx
 // @grant        none
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
@@ -241,3 +240,362 @@
             });
         });
     }
+
+
+    function actualizarVisibilidadFila(fila) {
+        const filtroPrograma = selectFiltroPrograma.value;
+        const filtroFacultad = selectFiltroFacultad.value;
+
+        const celdaPrograma = fila.cells[indiceColPrograma];
+        const celdaPais = fila.cells[indiceColPais];
+        const celdaFacultad = fila.cells[indiceColFacultad];
+        const celdaAsunto = fila.cells[indiceColAsunto];
+
+        if (!celdaPrograma || !celdaPais || !celdaAsunto || !celdaFacultad) return;
+
+        const paisNormalizado = celdaPais.textContent.toLowerCase().trim();
+        const programaNormalizado = celdaPrograma.textContent.toUpperCase().trim();
+        const facultadTexto = celdaFacultad.textContent.trim();
+        const asuntoText = celdaAsunto.textContent.toLowerCase();
+
+        const programasACacher = ['CECE', 'VINC', 'VICO', 'UDAV'];
+
+        const hidePorPaisOPrograma = paisNormalizado === 'españa' || paisNormalizado === 'italia' || programasACacher.includes(programaNormalizado);
+        const hidePorAsunto = asuntoText.includes('(g)') || asuntoText.includes('.g');
+        const hidePorFiltroPrograma = filtroPrograma && (programaNormalizado !== filtroPrograma);
+        const hidePorFiltroFacultad = filtroFacultad && (facultadTexto !== filtroFacultad);
+
+        if (hidePorPaisOPrograma || hidePorAsunto || hidePorFiltroPrograma || hidePorFiltroFacultad) {
+            fila.style.display = 'none';
+        } else {
+            fila.style.display = '';
+        }
+    }
+
+    function reFiltrarTodo() {
+        filas.forEach(fila => actualizarVisibilidadFila(fila));
+        actualizarContadorIncidencias();
+    }
+
+    selectFiltroPrograma.addEventListener('change', reFiltrarTodo);
+    selectFiltroFacultad.addEventListener('change', reFiltrarTodo);
+
+    // --- BOTONES Y PROCESAMIENTO PRINCIPAL ---
+
+    const divBotones = document.createElement('div');
+    divBotones.style.margin = '10px 0';
+
+    const botonIniciar = document.createElement('button');
+    botonIniciar.type = 'button';
+    botonIniciar.textContent = 'Buscar País y Facultad (Visibles)';
+    botonIniciar.style.cssText = `
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 10px 0 0;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+    `;
+    botonIniciar.addEventListener('click', async () => {
+        detenerBusqueda = false;
+        botonIniciar.disabled = true;
+        botonDetener.disabled = false;
+        botonIniciar.textContent = 'Buscando...';
+        await procesarFilas();
+        botonIniciar.textContent = 'Buscar País y Facultad (Visibles)';
+        botonIniciar.disabled = false;
+        botonDetener.disabled = true;
+    });
+
+    const botonDetener = document.createElement('button');
+    botonDetener.type = 'button';
+    botonDetener.textContent = 'Detener búsqueda';
+    botonDetener.disabled = true;
+    botonDetener.style.cssText = `
+        background: #f44336;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 0 10px 0 0;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+    `;
+    botonDetener.addEventListener('click', e => {
+        e.preventDefault();
+        detenerBusqueda = true;
+    });
+
+    const botonExportarCSV = document.createElement('button');
+    botonExportarCSV.type = 'button';
+    botonExportarCSV.textContent = 'Exportar CSV Facultades';
+    botonExportarCSV.style.cssText = `
+        background: #2196F3;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin: 0;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 14px;
+    `;
+    botonExportarCSV.addEventListener('click', () => {
+        const filasVisibles = Array.from(tabla.querySelectorAll('tbody tr')).filter(fila => fila.style.display !== 'none');
+        const datos = [];
+
+        filasVisibles.forEach(fila => {
+            const enlaceCelda = fila.cells[1];
+            let enlace = '';
+            if (enlaceCelda) {
+                const enlaceA = enlaceCelda.querySelector('a');
+                enlace = enlaceA ? enlaceA.href : '';
+            }
+
+            const nombre = fila.cells[3] ? fila.cells[3].textContent.trim() : '';
+            const fecha = fila.cells[6] ? fila.cells[6].textContent.trim() : '';
+            const titulo = fila.cells[7] ? fila.cells[7].textContent.trim() : '';
+            const pais = fila.cells[indiceColPais] ? fila.cells[indiceColPais].textContent.trim() : '';
+            const facultad = fila.cells[indiceColFacultad] ? fila.cells[indiceColFacultad].textContent.trim() : '';
+            const vertical = fila.cells[9] ? fila.cells[9].textContent.trim() : '';
+
+            datos.push({
+                facultad,
+                enlace,
+                nombre,
+                fecha,
+                titulo,
+                pais,
+                vertical
+            });
+        });
+
+        let csvContent = 'Facultad,Enlace incidencia,Nombre,Fecha,Titulo,País,Vertical\n';
+        datos.forEach(item => {
+            const ligne = [
+                `"${item.facultad}"`,
+                `"${item.enlace}"`,
+                `"${item.nombre}"`,
+                `"${item.fecha}"`,
+                `"${item.titulo}"`,
+                `"${item.pais}"`,
+                `"${item.vertical}"`
+            ].join(',');
+            csvContent += ligne + '\n';
+        });
+
+        const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `facultades_${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+    
+    divBotones.appendChild(botonIniciar);
+    divBotones.appendChild(botonDetener);
+    divBotones.appendChild(botonExportarCSV);
+    tabla.parentNode.insertBefore(divBotones, tabla);
+
+    // Fonctions obtenir matricula, pays, facultad...
+    async function obtenerMatriculaYLinkSecundario(codigo) {
+        const codigoCodificado = encodeURIComponent(codigo);
+        const url = `//innotutor.com/Tutoria/IncidenciaMatricula.aspx?incidenciaMatriculaId=${codigoCodificado}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            let elementoMatricula =
+                doc.getElementById('datosAlumnoCurso_txtNumeroMatricula') ||
+                doc.querySelector('input[name="datosAlumnoCurso$txtNumeroMatricula"]') ||
+                doc.querySelector('input[id*="NumeroMatricula"]') ||
+                doc.querySelector('input[name*="NumeroMatricula"]');
+            if (!elementoMatricula) {
+                return { matricula: null, urlSecundario: null };
+            }
+            const divEnlace = doc.getElementById('datosAlumnoCurso_enlaceParrafo1');
+            let urlSecundario = null;
+            if (divEnlace) {
+                const enlace = divEnlace.querySelector('a');
+                if (enlace) {
+                    const href = enlace.getAttribute('href');
+                    if (href) {
+                        const baseURL = new URL(url, window.location.origin);
+                        urlSecundario = new URL(href, baseURL).href;
+                    }
+                }
+            }
+            return { matricula: elementoMatricula.value || null, urlSecundario };
+        } catch (error) {
+            console.error('Error obteniendo matrícula o enlace secundario:', error);
+            return { matricula: null, urlSecundario: null };
+        }
+    }
+
+    async function obtenerPais(matricula) {
+        const url = `//innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx?matriculaId=${encodeURIComponent(matricula)}`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            let inputPais = doc.querySelector('input#txtPais');
+            if (inputPais && inputPais.value) {
+                return inputPais.value.trim();
+            }
+            return null;
+        } catch (error) {
+            console.error('Error obteniendo país:', error);
+            return null;
+        }
+    }
+
+    async function obtenerFacultad(urlSecundario) {
+        if (!urlSecundario) return null;
+        try {
+            const response = await fetch(urlSecundario);
+            if (!response.ok) return null;
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const divs = doc.querySelectorAll('div.margenInferior2');
+            let facultadTexto = null;
+            divs.forEach(div => {
+                const spanTitulo = div.querySelector('span[id^="lblTitulo"]');
+                if (spanTitulo && spanTitulo.textContent.trim() === 'Facultad:') {
+                    const spanValor = div.querySelector('span[id="lblArea"]');
+                    if (spanValor) {
+                        facultadTexto = spanValor.textContent.trim();
+                    }
+                }
+            });
+            return facultadTexto;
+        } catch (error) {
+            console.error('Error al obtener la facultad:', error);
+            return null;
+        }
+    }
+    
+    // MODIFIED: This function now only processes visible rows
+    async function procesarFilas() {
+        // Filter for visible rows ONLY
+        const filasAProcesar = Array.from(tabla.querySelectorAll('tbody tr')).filter(fila => fila.style.display !== 'none');
+        let indiceCodigo = 1;
+        if (filaEncabezado) {
+            const ths = filaEncabezado.querySelectorAll('th');
+            ths.forEach((th, idx) => {
+                if (th.textContent.trim().toLowerCase().includes('código')) {
+                    indiceCodigo = idx;
+                }
+            });
+        }
+        for (let i = filasAProcesar.length - 1; i >= 0; i--) {
+            if (detenerBusqueda) {
+                for (let j = i; j >= 0; j--) {
+                    const fila = filasAProcesar[j];
+                    const celdaPais = fila.cells[indiceColPais];
+                    if (celdaPais.textContent === '...') celdaPais.textContent = 'Detenido';
+                    const celdaFacultad = fila.cells[indiceColFacultad];
+                    if (celdaFacultad.textContent === '...') celdaFacultad.textContent = 'Detenido';
+                }
+                break;
+            }
+            const fila = filasAProcesar[i];
+            const celdaCodigo = fila.cells[indiceCodigo];
+            const celdaPais = fila.cells[indiceColPais];
+            const celdaFacultad = fila.cells[indiceColFacultad];
+
+            if (!celdaCodigo) continue;
+            
+            // Only process if data is not already loaded
+            if (celdaPais.textContent.trim() !== '...' && celdaFacultad.textContent.trim() !== '...') {
+                continue;
+            }
+
+            const codigo = celdaCodigo.textContent.trim();
+            if (cacheResultados[codigo]) {
+                const dataCache = cacheResultados[codigo];
+                celdaPais.textContent = dataCache.pais || 'No encontrado';
+                celdaPais.style.backgroundColor = dataCache.pais ? '#d4edda' : '#f8d7da';
+                celdaFacultad.textContent = dataCache.facultad || 'No encontrado';
+                celdaFacultad.style.backgroundColor = dataCache.facultad ? '#d4edda' : '#f8d7da';
+                
+                if (dataCache.facultad && !facultadesUnicas.has(dataCache.facultad)) {
+                    facultadesUnicas.add(dataCache.facultad);
+                    const opt = document.createElement('option');
+                    opt.value = dataCache.facultad;
+                    opt.textContent = dataCache.facultad;
+                    selectFiltroFacultad.appendChild(opt);
+                }
+            } else {
+                celdaPais.textContent = `Buscando...`;
+                celdaFacultad.textContent = 'Buscando...';
+                try {
+                    const { matricula, urlSecundario } = await obtenerMatriculaYLinkSecundario(codigo);
+                    if (matricula) {
+                        const [pais, facultad] = await Promise.all([
+                            obtenerPais(matricula),
+                            obtenerFacultad(urlSecundario)
+                        ]);
+                        cacheResultados[codigo] = { pais, facultad };
+                        guardarCacheLocalStorage();
+                        celdaPais.textContent = pais || 'No encontrado';
+                        celdaPais.style.backgroundColor = pais ? '#d4edda' : '#f8d7da';
+                        celdaFacultad.textContent = facultad || 'No encontrado';
+                        celdaFacultad.style.backgroundColor = facultad ? '#d4edda' : '#f8d7da';
+
+                        if (facultad && !facultadesUnicas.has(facultad)) {
+                            facultadesUnicas.add(facultad);
+                            const opt = document.createElement('option');
+                            opt.value = facultad;
+                            opt.textContent = facultad;
+                            selectFiltroFacultad.appendChild(opt);
+                        }
+                    } else {
+                       celdaPais.textContent = 'Matrícula no encontrada';
+                       celdaFacultad.textContent = 'Matrícula no encontrada';
+                    }
+                } catch (error) {
+                    celdaPais.textContent = 'Error';
+                    celdaFacultad.textContent = 'Error';
+                }
+            }
+            
+            actualizarVisibilidadFila(fila);
+            await new Promise(resolve => setTimeout(resolve, 500));
+        }
+        reFiltrarTodo();
+    }
+
+    // Initial setup
+    const estilo = document.createElement('style');
+    estilo.innerHTML = `
+        table.cuadro_incidencias_matriculas {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table.cuadro_incidencias_matriculas th,
+        table.cuadro_incidencias_matriculas td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        table.cuadro_incidencias_matriculas tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    `;
+    document.head.appendChild(estilo);
+
+    reFiltrarTodo();
+    actualizarContadorIncidencias();
+    aplicarResaltadoInicial();
+    agregarListenersDeResaltado();
+
+})();
