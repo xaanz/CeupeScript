@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         incidencia
 // @namespace    http://tampermonkey.net/
-// @version      1.10
+// @version      2.0
 // @description  Filtro fixe par Programme avec recherche, cache, et export CSV par facultad
 // @match        *://innotutor.com/Tutoria/ResolverIncidenciasMatriculas.aspx
 // @grant        none
@@ -13,8 +13,15 @@
     'use strict';
 
     let detenerBusqueda = false;
+    let facultadesUnicas = new Set();
+    const visitadosKey = 'incidenciasVisitadas';
+    let visitados = new Set(JSON.parse(sessionStorage.getItem(visitadosKey) || '[]'));
 
-    // Charger cache depuis localStorage au démarrage
+    function guardarVisitados() {
+        sessionStorage.setItem(visitadosKey, JSON.stringify(Array.from(visitados)));
+    }
+
+    // Cargar cache desde localStorage al démarrage
     let cacheResultados = {};
     const cacheGuardado = localStorage.getItem('cacheResultadosIncidencias');
     if (cacheGuardado) {
@@ -53,14 +60,12 @@
         });
     }
 
-    // 2. Index colonne "Programa"
+    // 2. Index colonnes "Programa" et "Asunto"
     let indiceColPrograma = -1;
+    let indiceColAsunto = 7; // Index par défaut pour "Titulo"
     if (filaEncabezado) {
         const ths = Array.from(filaEncabezado.children);
-        indiceColPrograma = ths.findIndex(th =>
-            th.textContent.trim().toLowerCase() === 'programa' ||
-            th.textContent.trim().toLowerCase() === 'programma'
-        );
+        indiceColPrograma = ths.findIndex(th => th.textContent.trim().toLowerCase().includes('programa'));
         if (indiceColPrograma !== -1) {
             const thPrograma = filaEncabezado.children[indiceColPrograma];
             thPrograma.id = "columna_programa";
@@ -69,6 +74,7 @@
         }
     }
     if (indiceColPrograma === -1) return;
+
 
     // 3. Nettoyer colonne Programa (texte uniquement)
     const filas = tabla.querySelectorAll('tbody tr');
@@ -105,47 +111,54 @@
         "UPAD","UPIH","UPSA","URJC","USEK","UTEG","UULA","VICO","VINC"
     ];
 
+    // --- INTERFAZ DE FILTROS ---
+    const divContenedorFiltros = document.createElement('div');
+    divContenedorFiltros.style.display = 'flex';
+    divContenedorFiltros.style.gap = '20px';
+    divContenedorFiltros.style.margin = '10px 0';
+
     // 5. Créer filtre déroulant Programme
-    const divFiltro = document.createElement('div');
-    divFiltro.style.margin = "10px 0";
-    const labelFiltro = document.createElement('label');
-    labelFiltro.textContent = "Filtrar por Programa: ";
-    labelFiltro.style.marginRight = "8px";
-    const selectFiltro = document.createElement('select');
-    selectFiltro.style.padding = "5px";
-    selectFiltro.style.borderRadius = "4px";
-    selectFiltro.style.border = "1px solid #ccc";
-    selectFiltro.style.width = "250px";
-    const optionTous = document.createElement('option');
-    optionTous.value = "";
-    optionTous.textContent = "TODOS";
-    selectFiltro.appendChild(optionTous);
+    const divFiltroPrograma = document.createElement('div');
+    const labelFiltroPrograma = document.createElement('label');
+    labelFiltroPrograma.textContent = "Filtrar por Programa: ";
+    labelFiltroPrograma.style.marginRight = "8px";
+    const selectFiltroPrograma = document.createElement('select');
+    selectFiltroPrograma.style.cssText = "padding: 5px; border-radius: 4px; border: 1px solid #ccc; width: 250px;";
+    const optionTodosProg = document.createElement('option');
+    optionTodosProg.value = "";
+    optionTodosProg.textContent = "TODOS";
+    selectFiltroPrograma.appendChild(optionTodosProg);
     listaProgramas.forEach(valor => {
         const opt = document.createElement('option');
         opt.value = valor;
         opt.textContent = valor;
-        selectFiltro.appendChild(opt);
+        selectFiltroPrograma.appendChild(opt);
     });
-    divFiltro.appendChild(labelFiltro);
-    divFiltro.appendChild(selectFiltro);
-    tabla.parentNode.insertBefore(divFiltro, tabla);
+    divFiltroPrograma.appendChild(labelFiltroPrograma);
+    divFiltroPrograma.appendChild(selectFiltroPrograma);
+    divContenedorFiltros.appendChild(divFiltroPrograma);
 
-    // 6. Filtrage par programme
-    selectFiltro.addEventListener('change', function() {
-        const filtre = selectFiltro.value;
-        filas.forEach(fila => {
-            const celda = fila.cells[indiceColPrograma];
-            if (!celda) return;
-            if (!filtre || celda.textContent.trim() === filtre) {
-                fila.style.display = "";
-            } else {
-                fila.style.display = "none";
-            }
-        });
-    });
+    // 6. Créer filtro para Facultad
+    const divFiltroFacultad = document.createElement('div');
+    const labelFiltroFacultad = document.createElement('label');
+    labelFiltroFacultad.textContent = "Filtrar por Facultad: ";
+    labelFiltroFacultad.style.marginRight = "8px";
+    const selectFiltroFacultad = document.createElement('select');
+    selectFiltroFacultad.style.cssText = "padding: 5px; border-radius: 4px; border: 1px solid #ccc; width: 250px;";
+    const optionTodosFac = document.createElement('option');
+    optionTodosFac.value = "";
+    optionTodosFac.textContent = "TODAS";
+    selectFiltroFacultad.appendChild(optionTodosFac);
+    divFiltroFacultad.appendChild(labelFiltroFacultad);
+    divFiltroFacultad.appendChild(selectFiltroFacultad);
+    divContenedorFiltros.appendChild(divFiltroFacultad);
 
-    // 7. Index colonne "País"
+    tabla.parentNode.insertBefore(divContenedorFiltros, tabla);
+
+    // 7. Index colonnes "País" et "Facultad"
     let indiceColPais = -1;
+    let indiceColFacultad = -1;
+
     if (filaEncabezado) {
         const ths = Array.from(filaEncabezado.children);
         indiceColPais = ths.findIndex(th => th.textContent.trim().toLowerCase() === 'país' || th.textContent.trim().toLowerCase() === 'pays');
@@ -158,8 +171,6 @@
             indiceColPais = filaEncabezado.children.length - 1;
         }
     }
-    // 7bis. Ajouter colonne "Facultad"
-    let indiceColFacultad = -1;
     if (filaEncabezado) {
         const thFacultad = document.createElement('th');
         thFacultad.textContent = 'Facultad';
@@ -168,6 +179,7 @@
         filaEncabezado.appendChild(thFacultad);
         indiceColFacultad = filaEncabezado.children.length - 1;
     }
+
     // 8. Ajouter cellules manquantes "País" et "Facultad"
     filas.forEach(fila => {
         const faltantes = filaEncabezado.children.length - fila.cells.length;
@@ -196,356 +208,36 @@
     tabla.parentNode.insertBefore(cuadroIncidencias, tabla);
 
     function actualizarContadorIncidencias() {
-        const filas = Array.from(tabla.querySelectorAll('tbody tr'));
-        const visibles = filas.slice(1).filter(fila => fila.style.display !== 'none');
-        cuadroIncidencias.textContent = `Incidencias visibles: ${visibles.length}`;
-    }
-    actualizarContadorIncidencias();
-    setInterval(actualizarContadorIncidencias, 5000);
-    if (typeof selectFiltro !== 'undefined') {
-        selectFiltro.addEventListener('change', actualizarContadorIncidencias);
+        const filasVisibles = Array.from(tabla.querySelectorAll('tbody tr')).filter(fila => fila.style.display !== 'none');
+        cuadroIncidencias.textContent = `Incidencias visibles: ${filasVisibles.length}`;
     }
 
-    // Boutons
-    const botonIniciar = document.createElement('button');
-    botonIniciar.type = 'button';
-    botonIniciar.textContent = 'Buscar País';
-    botonIniciar.style.cssText = `
-        background: #4CAF50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        margin: 10px 10px 10px 0;
-        cursor: pointer;
-        border-radius: 4px;
-        font-size: 14px;
-    `;
-    const botonDetener = document.createElement('button');
-    botonDetener.type = 'button';
-    botonDetener.textContent = 'Detener búsqueda';
-    botonDetener.style.cssText = `
-        background: #f44336;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        margin: 10px 0 10px 0;
-        cursor: pointer;
-        border-radius: 4px;
-        font-size: 14px;
-    `;
-    botonIniciar.addEventListener('click', async () => {
-        detenerBusqueda = false;
-        botonIniciar.disabled = true;
-        botonDetener.disabled = false;
-        botonIniciar.textContent = 'Buscando...';
-        await procesarFilas();
-        botonIniciar.textContent = 'Buscar País';
-        botonIniciar.disabled = false;
-        botonDetener.disabled = true;
-    });
-    botonDetener.addEventListener('click', e => {
-        e.preventDefault();
-        detenerBusqueda = true;
-    });
-    tabla.parentNode.insertBefore(botonIniciar, tabla);
-    tabla.parentNode.insertBefore(botonDetener, tabla);
+    // --- LÓGICA DE FILTRADO Y RESALTADO ---
 
-    // Bouton exporter CSV
-    const botonExportarCSV = document.createElement('button');
-    botonExportarCSV.type = 'button';
-    botonExportarCSV.textContent = 'Exportar CSV Facultades';
-    botonExportarCSV.style.cssText = `
-        background: #2196F3;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        margin: 10px 10px 10px 0;
-        cursor: pointer;
-        border-radius: 4px;
-        font-size: 14px;
-    `;
-    tabla.parentNode.insertBefore(botonExportarCSV, tabla);
-
-    botonExportarCSV.addEventListener('click', () => {
-        const filas = Array.from(tabla.querySelectorAll('tbody tr'));
-        const datos = [];
-
+    function aplicarResaltadoInicial() {
         filas.forEach(fila => {
-            if (fila.style.display === 'none') return;
-
-            const enlaceCelda = fila.cells[1];
-            let enlace = '';
-            if (enlaceCelda) {
-                const enlaceA = enlaceCelda.querySelector('a');
-                enlace = enlaceA ? enlaceA.href : '';
-            }
-
-            const nombre = fila.cells[3] ? fila.cells[3].textContent.trim() : '';
-            const fecha = fila.cells[6] ? fila.cells[6].textContent.trim() : '';
-            const titulo = fila.cells[7] ? fila.cells[7].textContent.trim() : '';
-            const pais = fila.cells[indiceColPais] ? fila.cells[indiceColPais].textContent.trim() : '';
-            const facultad = fila.cells[indiceColFacultad] ? fila.cells[indiceColFacultad].textContent.trim() : '';
-            const vertical = fila.cells[9] ? fila.cells[9].textContent.trim() : '';
-
-            datos.push({
-                facultad,
-                enlace,
-                nombre,
-                fecha,
-                titulo,
-                pais,
-                vertical
-            });
-        });
-
-        let csvContent = 'Facultad,Enlace incidencia,Nombre,Fecha,Titulo,País,Vertical\n';
-        datos.forEach(item => {
-            const ligne = [
-                `"${item.facultad}"`,
-                `"${item.enlace}"`,
-                `"${item.nombre}"`,
-                `"${item.fecha}"`,
-                `"${item.titulo}"`,
-                `"${item.pais}"`,
-                `"${item.vertical}"`
-            ].join(',');
-            csvContent += ligne + '\n';
-        });
-
-        const blob = new Blob([csvContent], {type: 'text/csv;charset=utf-8;'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `facultades_${new Date().toISOString().slice(0,10)}.csv`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    });
-
-    // Fonction obtenir matricula et lien secondaire
-    async function obtenerMatriculaYLinkSecundario(codigo) {
-        const codigoCodificado = encodeURIComponent(codigo);
-        const url = `//innotutor.com/Tutoria/IncidenciaMatricula.aspx?incidenciaMatriculaId=${codigoCodificado}`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            let elementoMatricula =
-                doc.getElementById('datosAlumnoCurso_txtNumeroMatricula') ||
-                doc.querySelector('input[name="datosAlumnoCurso$txtNumeroMatricula"]') ||
-                doc.querySelector('input[id*="NumeroMatricula"]') ||
-                doc.querySelector('input[name*="NumeroMatricula"]');
-            if (!elementoMatricula) {
-                console.warn('Matrícula no encontrada en la página', url);
-                return { matricula: null, urlSecundario: null };
-            }
-            const divEnlace = doc.getElementById('datosAlumnoCurso_enlaceParrafo1');
-            let urlSecundario = null;
-            if (divEnlace) {
-                const enlace = divEnlace.querySelector('a');
-                if (enlace) {
-                    const href = enlace.getAttribute('href');
-                    if (href) {
-                        const baseURL = new URL(url, window.location.origin);
-                        urlSecundario = new URL(href, baseURL).href;
-                    }
+            const enlace = fila.querySelector('a.incidencia_matricula[href*="IncidenciaMatricula.aspx"]');
+            if (enlace) {
+                const idIncidencia = new URL(enlace.href).searchParams.get('incidenciaMatriculaId');
+                if (idIncidencia && visitados.has(idIncidencia)) {
+                    fila.style.backgroundColor = 'gold';
                 }
             }
-            console.log('URL secundaria para facultad:', urlSecundario);
-            return { matricula: elementoMatricula.value || null, urlSecundario };
-        } catch (error) {
-            console.error('Error obteniendo matrícula o enlace secundario:', error);
-            return { matricula: null, urlSecundario: null };
-        }
+        });
     }
 
-    // Fonction obtenir pays
-    async function obtenerPais(matricula) {
-        const url = `//innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx?matriculaId=${encodeURIComponent(matricula)}`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            let inputPais = doc.querySelector('input#txtPais');
-            if (inputPais && inputPais.value) {
-                return inputPais.value.trim();
-            }
-            console.warn('Campo país no encontrado en la página:', url);
-            return null;
-        } catch (error) {
-            console.error('Error obteniendo país:', error);
-            return null;
-        }
-    }
-
-    // Fonction obtenir facultad
-    async function obtenerFacultad(urlSecundario) {
-        if (!urlSecundario) {
-            console.warn('No hay URL secundaria para obtener facultad');
-            return null;
-        }
-        try {
-            console.log('Solicitando URL secundaria:', urlSecundario);
-            const response = await fetch(urlSecundario);
-            if (!response.ok) {
-                console.error(`Error HTTP al obtener la página de facultad: status ${response.status}`);
-                return null;
-            }
-            const html = await response.text();
-            console.log('HTML recibido en página facultad (primeros 500 caracteres):', html.substring(0, 500));
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const divs = doc.querySelectorAll('div.margenInferior2');
-            console.log(`Encontrados ${divs.length} divs con clase margenInferior2`);
-            let facultadTexto = null;
-            divs.forEach(div => {
-                const spanTitulo = div.querySelector('span[id^="lblTitulo"]');
-                if (spanTitulo && spanTitulo.textContent.trim() === 'Facultad:') {
-                    const spanValor = div.querySelector('span[id="lblArea"]');
-                    if (spanValor) {
-                        facultadTexto = spanValor.textContent.trim();
-                        console.log('Facultad encontrada:', facultadTexto);
+    function agregarListenersDeResaltado() {
+        tabla.querySelectorAll('a.incidencia_matricula[href*="IncidenciaMatricula.aspx"]').forEach(enlace => {
+            enlace.addEventListener('mousedown', function() {
+                const fila = this.closest('tr');
+                if (fila) {
+                    fila.style.backgroundColor = 'gold';
+                    const idIncidencia = new URL(this.href).searchParams.get('incidenciaMatriculaId');
+                    if (idIncidencia) {
+                        visitados.add(idIncidencia);
+                        guardarVisitados();
                     }
                 }
             });
-            if (facultadTexto) {
-                return facultadTexto;
-            } else {
-                console.warn('No se encontró la facultad en los divs margenInferior2');
-                return null;
-            }
-        } catch (error) {
-            console.error('Error al obtener o analizar la página secundaria de facultad:', error);
-            return null;
-        }
-    }
-
-    // Fonction principale avec cache et mise à jour de localStorage
-async function procesarFilas() {
-    const filas = tabla.querySelectorAll('tbody tr');
-    let indiceCodigo = 1;
-    if (filaEncabezado) {
-        const ths = filaEncabezado.querySelectorAll('th');
-        ths.forEach((th, idx) => {
-            if (th.textContent.trim().toLowerCase().includes('código')) {
-                indiceCodigo = idx;
-            }
         });
     }
-    for (let i = 1; i < filas.length; i++) {
-        if (detenerBusqueda) {
-            for (let j = i; j < filas.length; j++) {
-                const fila = filas[j];
-                const celdaPais = fila.cells[indiceColPais];
-                if (celdaPais.textContent === 'En espera...') {
-                    celdaPais.textContent = 'Detenido';
-                    celdaPais.style.backgroundColor = '#ffe0b2';
-                }
-                const celdaFacultad = fila.cells[indiceColFacultad];
-                if (celdaFacultad.textContent === '...') {
-                    celdaFacultad.textContent = 'Detenido';
-                    celdaFacultad.style.backgroundColor = '#ffe0b2';
-                }
-            }
-            break;
-        }
-        const fila = filas[i];
-        const celdaCodigo = fila.cells[indiceCodigo];
-        const celdaPais = fila.cells[indiceColPais];
-        const celdaFacultad = fila.cells[indiceColFacultad];
-        if (!celdaCodigo) {
-            celdaPais.textContent = 'Columna Código no encontrada';
-            celdaPais.style.backgroundColor = '#f8d7da';
-            celdaFacultad.textContent = 'Columna Código no encontrada';
-            celdaFacultad.style.backgroundColor = '#f8d7da';
-            continue;
-        }
-        const codigo = celdaCodigo.textContent.trim();
-        // Vérifier cache
-        if (cacheResultados[codigo]) {
-            const dataCache = cacheResultados[codigo];
-            celdaPais.textContent = dataCache.pais || 'No encontrado';
-            celdaPais.style.backgroundColor = dataCache.pais ? '#d4edda' : '#f8d7da';
-            celdaFacultad.textContent = dataCache.facultad || 'No encontrado';
-            celdaFacultad.style.backgroundColor = dataCache.facultad ? '#d4edda' : '#f8d7da';
-            console.log(`Fila ${i} - Código: ${codigo} | Datos obtenidos desde caché`);
-        } else {
-            celdaPais.textContent = `Buscando ${i}/${filas.length - 1}...`;
-            celdaPais.style.backgroundColor = '#fff3cd';
-            celdaFacultad.textContent = 'Buscando...';
-            celdaFacultad.style.backgroundColor = '#fff3cd';
-            try {
-                const { matricula, urlSecundario } = await obtenerMatriculaYLinkSecundario(codigo);
-                if (matricula) {
-                    const [pais, facultad] = await Promise.all([
-                        obtenerPais(matricula),
-                        obtenerFacultad(urlSecundario)
-                    ]);
-                    cacheResultados[codigo] = { pais, facultad };
-                    guardarCacheLocalStorage(); // Sauvegarde cache localStorage
-                    celdaPais.textContent = pais || 'No encontrado';
-                    celdaPais.style.backgroundColor = pais ? '#d4edda' : '#f8d7da';
-                    if (facultad) {
-                        celdaFacultad.textContent = facultad;
-                        celdaFacultad.style.backgroundColor = '#d4edda';
-                    } else {
-                        celdaFacultad.textContent = 'No encontrado';
-                        celdaFacultad.style.backgroundColor = '#f8d7da';
-                    }
-                    console.log(`Fila ${i} - Código: ${codigo} | Datos obtenidos vía fetch`);
-                } else {
-                    celdaPais.textContent = 'Matrícula no encontrada';
-                    celdaPais.style.backgroundColor = '#f8d7da';
-                    celdaFacultad.textContent = 'Matrícula no encontrada';
-                    celdaFacultad.style.backgroundColor = '#f8d7da';
-                }
-            } catch (error) {
-                console.error(`Error para el código ${codigo}:`, error);
-                celdaPais.textContent = 'Error';
-                celdaPais.style.backgroundColor = '#f8d7da';
-                celdaFacultad.textContent = 'Error';
-                celdaFacultad.style.backgroundColor = '#f8d7da';
-            }
-        }
-
-        // Filtrer et cacher lignes selon pays et programme
-        const paisNormalizado = (celdaPais.textContent || '').toLowerCase();
-        const programaNormalizado = (fila.cells[indiceColPrograma]?.textContent || '').toUpperCase();
-        const programasACacher = ['CECE', 'VINC', 'VICO', 'UDAV'];
-
-        if (paisNormalizado === 'españa' || paisNormalizado === 'italia' || programasACacher.includes(programaNormalizado)) {
-            fila.style.display = 'none';
-        } else {
-            fila.style.display = '';
-        }
-
-        await new Promise(resolve => setTimeout(resolve, 500));
-    }
-}
-
-
-    // Styles table
-    const estilo = document.createElement('style');
-    estilo.innerHTML = `
-        table.cuadro_incidencias_matriculas {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table.cuadro_incidencias_matriculas th,
-        table.cuadro_incidencias_matriculas td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        table.cuadro_incidencias_matriculas tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-    `;
-    document.head.appendChild(estilo);
-
-})();
