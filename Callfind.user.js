@@ -311,4 +311,6 @@ const interval = setInterval(() => {
         }
     }
 }, 500);
+    
+})();
 
