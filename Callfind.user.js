@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Innollamada
 // @namespace    http://tampermonkey.net/
-// @version      1.10
+// @version      1.11
 // @description  Prueba variantes y solo busca si se acaba de redirigir para evitar ciclos infinitos
 // @author       Loïs
 // @match        *://innoconvocatoria.cualifica2.es/endpoint/getProfileINNOTUTOR.php*
@@ -266,17 +266,19 @@
     });
 
 function checkCategoria7() {
+    // Do nothing if current page is Tutoria.aspx?tutoriaId=
+    if (window.location.pathname === "/Tutoria/Tutoria.aspx" && window.location.search.includes("tutoriaId=")) {
+        // Early return, don't touch checkboxes
+        return;
+    }
+
     const checkbox = document.getElementById('chkCategoria7');
     if (checkbox) {
-        // Try to find the label or text near chkCategoria7
-        // Common: label[for="chkCategoria7"] or parent text
         let labelText = '';
-        // Search for label by 'for' attribute
         const label = document.querySelector('label[for="chkCategoria7"]');
         if (label) {
             labelText = label.textContent.trim();
         } else if (checkbox.parentNode) {
-            // Fallback: Try parent node text
             labelText = checkbox.parentNode.textContent.trim();
         }
         if (labelText.includes('Seguimiento')) {
@@ -285,11 +287,15 @@ function checkCategoria7() {
     }
 }
 
-// Intentar marcar cuando la página esté lista
 window.addEventListener('load', checkCategoria7);
 
 // En caso de carga dinámica, repetir el intento cada 500ms hasta que exista
 const interval = setInterval(() => {
+    // Do nothing if in Tutoria.aspx?tutoriaId=
+    if (window.location.pathname === "/Tutoria/Tutoria.aspx" && window.location.search.includes("tutoriaId=")) {
+        clearInterval(interval);
+        return;
+    }
     const checkbox = document.getElementById('chkCategoria7');
     if (checkbox) {
         let labelText = '';
@@ -305,6 +311,4 @@ const interval = setInterval(() => {
         }
     }
 }, 500);
-
-})();
 
