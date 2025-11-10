@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Innollamada
 // @namespace    http://tampermonkey.net/
-// @version      1.8
+// @version      1.9
 // @description  Prueba variantes y solo busca si se acaba de redirigir para evitar ciclos infinitos
 // @author       Loïs
 // @match        *://innoconvocatoria.cualifica2.es/endpoint/getProfileINNOTUTOR.php*
-// @match        *://innotutor.com/Tutoria/NuevaTutoria.aspx?matriculaId=*
+// @match        *://innotutor.com/*
 // @grant        GM_xmlhttpRequest
 // @connect      innoconvocatoria.cualifica2.es
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Callfind.user.js
@@ -224,84 +224,30 @@
 
         // Lista de valores sugeridos
         const opciones = [
-            "Otros",
-            "Metodología y plazos ",
-            "Incidencias",
-            "Plataforma",
-              "Consultas genenerales",
-              "Ampliación",
-              "Apostilla de la Haya",
-              "Bienvenida",
-              "Borrador",
-              "Calidad-Atención recibida",
-              "Calidad-Contenido",
-              "Calidad-Discrepancia pagos",
-              "Calidad-Información Ambígua",
-              "Calidad-Material",
-              "Calidad-Metodología",
-              "Calidad-Prácticas",
-              "Calidad-Titulación",
-              "Cambio de datos",
-              "Cambio de titularidad",
-              "Certificaciones",
-              "Clases conversacionales",
-              "Confirmación de dirección",
-              "Consultas Clases en Directo",
-              "Contenido desactualizado",
-              "Convocatoria Universitaria",
-              "Desestimiento",
-              "Documentación requerida",
-              "Duplicados",
-              "Dudas de contenido",
-              "Entrega final",
-              "Erratas",
-              "Errores registro del progreso",
-              "Estado de tramitación Titulación",
-              "Expedientes y certificados",
-              "Fechas de inicio y fin",
-              "Finalización",
-              "Grabación",
-              "Información de plazos",
-              "Información general y seguimiento",
-              "Invitación",
-              "Licencias",
-              "Material Físico-Envío",
-              "Material Físico-Producción",
-              "MOFI",
-              "Nombre erróneo datos personales campus",
-              "No me llega el correo para cambiar contraseña",
-              "Orientación CV",
-              "Pago apostilla",
-              "Pago de ampliación",
-              "Pago de cuotas atrasadas",
-              "Pago duplicado de título",
-              "Pago expediente académico",
-              "Pago último plazo pendiente",
-              "Periodos mínimos",
-              "Prácticas Profesionales-Bienvenida y seguimiento",
-              "Prácticas Profesionales-Documentación",
-              "Prácticas Profesionales-Encuestas",
-              "Prácticas Profesionales-Gestión Empresa",
-              "Prácticas Profesionales-Información",
-              "Problemas apertura tutorías",
-              "Problemas de acceso",
-              "Problemas de acceso por trámites pendientes (Matrícula Interrumpida)",
-              "Problemas de visualización/carga del contenido audiovisual",
-              "Programa no disponible en el Campus",
-              "Programa sin Contenido",
-              "Propuesta",
-              "Prórroga",
-              "Radiografía Académica",
-              "Reclamación de mensajería",
-              "Recordatorio",
-              "Recursos Complementarios",
-              "Requisitos Formación",
-              "Seguimiento Académico",
-              "SIM : Semana Internacional en Madrid",
-              "Solicitud descuento no aplicado",
-              "Solicitud factura",
-              "Uso del Campus",
-              "Videodefensa",
+            "Otros", "Metodología y plazos ", "Incidencias", "Plataforma",
+//            "Consultas genenerales", "Ampliación", "Apostilla de la Haya", "Bienvenida",
+//            "Borrador", "Calidad-Atención recibida", "Calidad-Contenido", "Calidad-Discrepancia pagos",
+//            "Calidad-Información Ambígua", "Calidad-Material", "Calidad-Metodología",
+//            "Calidad-Prácticas", "Calidad-Titulación", "Cambio de datos", "Cambio de titularidad",
+//            "Certificaciones", "Clases conversacionales", "Confirmación de dirección", "Consultas Clases en Directo",
+//            "Contenido desactualizado", "Convocatoria Universitaria", "Desestimiento", "Documentación requerida",
+//            "Duplicados", "Dudas de contenido", "Entrega final", "Erratas",
+//            "Errores registro del progreso", "Estado de tramitación Titulación", "Expedientes y certificados",
+//            "Fechas de inicio y fin", "Finalización", "Grabación", "Información de plazos",
+//            "Información general y seguimiento", "Invitación", "Licencias", "Material Físico-Envío",
+//            "Material Físico-Producción", "MOFI", "Nombre erróneo datos personales campus",
+//            "No me llega el correo para cambiar contraseña", "Orientación CV", "Pago apostilla",
+//            "Pago de ampliación", "Pago de cuotas atrasadas", "Pago duplicado de título",
+//            "Pago expediente académico", "Pago último plazo pendiente", "Periodos mínimos",
+//            "Prácticas Profesionales-Bienvenida y seguimiento", "Prácticas Profesionales-Documentación",
+//            "Prácticas Profesionales-Encuestas", "Prácticas Profesionales-Gestión Empresa",
+//            "Prácticas Profesionales-Información", "Problemas apertura tutorías", "Problemas de acceso",
+//            "Problemas de acceso por trámites pendientes (Matrícula Interrumpida)",
+//            "Problemas de visualización/carga del contenido audiovisual", "Programa no disponible en el Campus",
+//            "Programa sin Contenido", "Propuesta", "Prórroga", "Radiografía Académica",
+//          "Reclamación de mensajería", "Recordatorio", "Recursos Complementarios",
+//        "Requisitos Formación", "Seguimiento Académico", "SIM : Semana Internacional en Madrid",
+//      "Solicitud descuento no aplicado", "Solicitud factura", "Uso del Campus", "Videodefensa",
         ];
 
         // Añadir opciones
@@ -311,9 +257,9 @@
             dataList.appendChild(option);
         });
 
-        // Añadir el datalist al DOM
+        // Añadir el datalist al DOM y asociarlo con el input
         inputAsunto.setAttribute('list', dataList.id);
-        inputAsunto.parentNode.appendChild(dataList);
+        document.body.appendChild(dataList); // <-- Change: Append to body for robustness
 
         // Estilo opcional
         inputAsunto.placeholder = "Escriba o seleccione un asunto...";
@@ -339,4 +285,3 @@ function checkCategoria7() {
     }, 500);
 
 })();
-
