@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Escuela y Master prohibido + Coordinador
-// @version      2.0
-// @description  Marca cursos prohibidos y muestra la escuela con su coordinador correspondiente
+// @version      2.1
+// @description  Marca cursos prohibidos y muestra la escuela con su facultad y coordinador correspondiente
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/EscuelaCOM.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/EscuelaCOM.user.js
 // @grant        none
@@ -29,137 +29,62 @@
     const textosFiltroNorm = textosFiltro.map(s => s.toLowerCase());
 
     // ===================
-    // MAPA DE COORDINADORES
+    // MAPA DE COORDINADORES POR FACULTAD
     // ===================
 
     const coordinadores = {};
 
-    // --- Coordinador Loïs ---
-    [
-      "ADMINISTRACIÓN Y DIRECCIÓN DE EMPRESAS", "AUXILIAR ADMINISTRATIVO", "COMERCIO INTERNACIONAL",
-      "CONTABILIDAD", "EMPRENDIMIENTO", "GESTIÓN DE CALIDAD", "GESTIÓN DE COMPRAS",
-      "GESTIÓN DE PROYECTOS", "GESTIÓN INMOBILIARIA", "INNOVACIÓN", "LIDERAZGO", "LOGÍSTICA",
-      "OFIMÁTICA", "PROTOCOLO", "RESPONSABILIDAD SOCIAL CORPORATIVA", "SOFT SKILLS", "VENTAS",
-      "ADIESTRAMIENTO", "AUXILIAR VETERINARIA", "CANINO Y FELINO", "CIRUGÍA Y ANESTESÍA VETERINARIA",
-      "ECUESTRE", "ENFERMERÍA VETERINARIA", "ETOLOGÍA", "FARMACIA VETERINARIA",
-      "FISIOTERAPIA Y REHABILITACIÓN VETERINARIA", "GESTIÓN DE CLÍNICAS VETERINARIAS",
-      "MEDICINA INTERNA VETERINARIA", "NUTRICIÓN Y DIETÉTICA VETERINARIA",
-      "PELUQUERÍA Y ESTÉTICA CANINA", "PRODUCCIÓN GANADERA", "URGENCIAS VETERINARIAS",
-      "VETERINARIA ANIMALES EXÓTICOS"
-    ].forEach(e => coordinadores[e] = "Loïs");
+// --- Coordinador Loïs ---
+[
+  "BUSINESS MANAGEMENT",
+  "VETERINARIA",
+  "IDIOMAS",
+  "ARTE Y PRODUCCIÓN AUDIOVISUAL",
+  "ARQUITECTURA Y DISEÑO"
+].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Loïs");
 
-    // --- Coordinador María ---
-    [
-       "ASESORAMIENTO FINANCIERO", "BANCA Y SEGUROS", "BOLSA",
-      "CERTIFICACIONES", "FINANZAS", "HIPNOSIS", "INTELIGENCIA EMOCIONAL, COACHING Y PNL",
-      "MINDFULNESS Y MEDITACIÓN", "NEUROPSICOLOGÍA", "NUTRICIÓN CLÍNICA", "NUTRICIÓN COMUNITARIA",
-      "NUTRICIÓN DEPORTIVA", "NUTRICIÓN INFANTIL", "NUTRICIÓN VEGANA Y VEGETARIANA",
-      "NUTRICIÓN Y DIETÉTICA", "PSICOGERONTOLOGÍA", "PSICOLOGÍA CLÍNICA",
-      "PSICOLOGÍA DEL DESARROLLO, INFANCIA Y ADOLESCENCIA", "PSICOLOGÍA DEL ÉXITO",
-      "PSICOLOGÍA DEL TRABAJO", "PSICOLOGÍA DEPORTIVA", "PSICOLOGÍA JURÍDICA Y FORENSE",
-      "PSICOLOGÍA SOCIAL", "PSICOTERAPIA", "SEXOLOGÍA, TERAPIA FAMILIAR Y DE PAREJA", "COACHING NUTRICIONAL",
-      "NUTRICIÓN CLÍNICA", "NUTRICIÓN COMUNITARIA", "NUTRICIÓN DEPORTIVA", "NUTRICIÓN INFANTIL",
-      "NUTRICIÓN VEGANA Y VEGETARIANA", "NUTRICIÓN Y DIETÉTICA", "CALIDAD, HIGIENE Y SEGURIDAD ALIMENTARIA",
-      "COACHING NUTRICIONAL"
-    ].forEach(e => coordinadores[e] = "María");
+// --- Coordinador María ---
+[
+  "NUTRICIÓN",
+  "INVERSIONES Y FINANZAS",
+  "PSICOLOGÍA",
+  "INGENIERÍA",
+  "FISIOTERAPIA"
+].forEach(facultad => coordinadores[facultad.toUpperCase()] = "María");
 
+// --- Coordinador Sandra ---
+[
+  "MARKETING DIGITAL Y COMUNICACIÓN",
+  "RECURSOS HUMANOS",
+  "DOCENCIA Y FORMACIÓN PARA EL PROFESORADO",
+  "PEDAGOGÍA TERAPÉUTICA",
+  "TRABAJO SOCIAL, SERVICIOS SOCIALES, IGUALDAD"
+].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Sandra");
 
-    [
-      "ABOGACÍA", "ADMINISTRACIÓN PÚBLICA Y DERECHO ADMINISTRATIVO", "ASESORÍA JURÍDICA",
-      "CIENCIAS POLÍTICAS", "COMPLIANCE", "CRIMINOLOGÍA", "DERECHO BANCARIO", "DERECHO CIVIL",
-      "DERECHO COMUNITARIO E INTERNACIONAL", "DERECHO CONCURSAL", "DERECHO DE CONSUMO",
-      "DERECHO DE EXTRANJERÍA", "DERECHO DE FAMILIA Y SUCESIONES", "DERECHO DEPORTIVO",
-      "DERECHO DE SEGUROS", "DERECHO DIGITAL", "DERECHO EMPRESARIAL", "DERECHO FISCAL Y TRIBUTARIO",
-      "DERECHO INMOBILIARIO Y URBANÍSTICO", "DERECHO LABORAL", "DERECHO MERCANTIL",
-      "DERECHO PENAL", "DERECHO SANITARIO", "DETECTIVE PRIVADO", "MEDIACIÓN, ARBITRAJE Y CONCILIACIÓN",
-      "PERITO JUDICIAL", "PROPIEDAD INTELECTUAL E INDUSTRIAL", "PROTECCIÓN DE DATOS",
-      "SUBASTAS JUDICIALES","DISEÑO INDUSTRIAL", "INGENIERÍA AERONÁUTICA", "INGENIERÍA CIVIL", "INGENIERÍA DEL MANTENIMIENTO",
-      "INGENIERÍA ELECTRÓNICA", "INGENIERÍA INDUSTRIAL", "INGENIERÍA MECÁNICA", "TELECOMUNICACIONES",
-      "FISIOTERAPIA", "FISIOTERAPIA DEPORTIVA", "GESTIÓN EN CLÍNICAS DE FISIOTERAPIA",
-      "MASAJE", "OSTEOPATÍA", "REFLEXOLOGÍA", "REHABILITACIÓN", "TERAPIAS COMPLEMENTARIAS",
-      "ELECTRICIDAD Y ELECTRÓNICA", "ESTUDIOS HOLÍSTICOS", "FORESTAL", "GRAFOLOGÍA",
-      "IMAGEN PERSONAL", "JARDINERÍA", "LIMPIEZA", "MADERA", "MANTENIMIENTO",
-      "MAQUINARIA", "PROFESIONES CONSTRUCCIÓN", "PROFESIONES INDUSTRIALES",
-      "REPOSTERÍA, PASTELERÍA Y PANADERÍA", "SERVICIOS A LA COMUNIDAD", "TEXTIL",
-      "TRANSPORTE Y MANTENIMIENTO DE VEHÍCULOS"
-    ].forEach(e => coordinadores[e] = "Beatriz");
+// --- Coordinador Javi ---
+[
+  "CIBERSEGURIDAD Y CLOUD COMPUTING",
+  "PROGRAMACIÓN Y DESARROLLO DE SOFTWARE",
+  "SEGURIDAD Y PRL",
+  "NUEVAS TECNOLOGÍAS",
+  "CIENCIAS",
+  "CIENCIAS DE DATOS E IA"
+].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Javi");
 
-    // --- Coordinador Silvia ---
-    [
-      "BRANDING", "COMMUNITY MANAGER", "COMUNICACIÓN", "COPYWRITING", "E COMMERCE",
-      "MARKETING DIGITAL", "MARKETING E INVESTIGACIÓN DE MERCADOS", "MARKETING RELACIONAL Y CRM",
-      "NEUROMARKETING", "PERIODISMO DIGITAL", "PUBLICIDAD", "SEM", "SEO",
-      "ASESORAMIENTO LABORAL", "COACHING EJECUTIVO", "GESTIÓN DEL TALENTO",
-      "ORIENTACIÓN LABORAL Y PROFESIONAL", "RECLUTAMIENTO Y SELECCIÓN DE PERSONAL",
-      "RELACIONES LABORALES", "CIBERSEGURIDAD", "CLOUD COMPUTING", "DEVOPS",
-      "ETHICAL HACKING", "REDES INFORMÁTICAS", "SISTEMAS", "AGILE METHODOLOGIES",
-      "BASES DE DATOS", "DESARROLLO DE APPS", "DIGITAL SKILLS", "DISEÑO Y DESARROLLO WEB",
-      "IT MANAGEMENT", "MARKETING WEB", "PROGRAMACIÓN", "SOFTWARE", "UX/UI",
-      "AJEDREZ", "ARTES MARCIALES","BAILE", "BALONCESTO", "BALONMANO", "BICICLETA Y CICLISMO", "BUCEO", "CAZA",
-      "DEFENSA PERSONAL", "DEPORTES DE AVENTURA", "DEPORTES ACUÁTICOS", "EDUCACIÓN FÍSICA",
-      "EJERCICIO TERAPÉUTICO", "ENTRENAMIENTO DE ALTO RENDIMIENTO", "EVENTOS DEPORTIVOS",
-      "FITNESS", "FÚTBOL", "GOLF", "HÍPICA", "MONITOR DE GIMNASIO", "NATACIÓN",
-      "OCIO Y TIEMPO LIBRE", "PADEL Y TENIS", "PATINAJE", "PILATES",
-      "PRIMEROS AUXILIOS Y SOCORRISMO", "RUNNING Y ATLETISMO", "SKI Y SNOWBOARD",
-      "TENIS DE MESA", "VOLEIBOL", "YOGA"
-    ].forEach(e => coordinadores[e.toUpperCase()] = "Silvia");
+// --- Coordinador Almudena ---
+[
+  "DEPORTE Y ACTIVIDAD FÍSICA",
+  "ENFERMERÍA",
+  "FARMACIA"
+].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Almudena");
 
-    // --- Coordinador Javi ---
-    [
-      "AUTOPROTECCIÓN, INCENDIOS Y EMERGENCIAS", "CUERPOS Y FUERZAS DE SEGURIDAD", "DETECTIVE PRIVADO",
-      "PRL", "SEGURIDAD PRIVADA", "COMPUTACIÓN CUÁNTICA", "BLOCKCHAIN", "DOMÓTICA", "DRONES",
-      "INDUSTRIA 4.0", "IOT (INTERNET OF THINGS)", "REALIDAD AUMENTADA, VIRTUAL Y METAVERSO",
-      "ROBÓTICA", "VIDEOJUEGOS", "AGRONOMÍA", "BIOLOGÍA", "BIOQUÍMICA", "BOTÁNICA Y FISIOLOGÍA VEGETAL",
-      "COMUNICACIÓN CIENTÍFICA", "EFICIENCIA ENERGÉTICA", "ENERGÍAS RENOVABLES (petroleras para chus o nieves)",
-      "FÍSICA", "GENÉTICA Y EPIGENÉTICA", "GEOGRAFIA", "HUMANIDADES Y CIENCIAS SOCIALES",
-      "INVESTIGACIÓN CIENTÍFICA", "LABORATORIO", "MATEMÁTICAS Y ESTADÍSTICA", "MEDIO AMBIENTE",
-      "MICROBIOLOGÍA", "SOSTENIBILIDAD", "ZOOLOGÍA", "QUÍMICA", "BIG DATA", "BUSINESS INTELLIGENCE",
-      "DATA SCIENCE", "INTELIGENCIA ARTIFICIAL", "MACHINE LEARNING Y DEEP LEARNING", "CURSO OBSEQUIO"
-    ].forEach(e => coordinadores[e.toUpperCase()] = "Javi");
-
-    // --- Coordinador Sara ---
-    [
-      "AGENCIAS DE VIAJE", "CALIDAD TURÍSTICA", "COCINA Y RESTAURACIÓN", "DIRECCIÓN HOTELERA",
-      "ENOTURISMO Y VINOTECA", "HOSTELERÍA", "REVENUE MANAGEMENT",
-      "SERVICIO DE LIMPIEZA Y LAVANDERÍA EN HOSTELERÍA", "TURISMO Y HOSTELERÍA",
-      "ANESTESIA", "CARDIOLOGÍA", "CIENCIAS MÉDICAS", "CIRUGÍA", "ENDOCRINOLOGÍA",
-      "FORENSE", "GERIATRÍA", "GESTIÓN SANITARIA", "GINECOLOGÍA Y OBSTETRICIA",
-      "IMAGEN PARA EL DIAGNÓSTICO Y MEDICINA NUCLEAR", "INMUNOLOGÍA", "LABORATORIO CLÍNICO Y ANATOMÍA PATOLÓGICA",
-      "MEDICINA DEL DEPORTE", "MEDICINA DIGESTIVA", "MEDICINA ESTÉTICA", "MEDICINA INTERNA",
-      "NATUROPATÍA", "NEFROLOGÍA", "NEUROLOGÍA", "ODONTOLOGÍA", "OFTALMOLOGÍA",
-      "ONCOLOGÍA", "ORTOPEDIA", "OTRAS ESPECIALIDADES MÉDICAS", "PEDIATRÍA", "PODOLOGÍA",
-      "PRIMEROS AUXILIOS", "PSIQUIATRÍA", "TERAPIA OCUPACIONAL", "URGENCIAS Y EMERGENCIAS MÉDICAS"
-    ].forEach(e => coordinadores[e.toUpperCase()] = "Sara");
-
-    // --- Coordinador Sandra ---
-    [
-      "DIRECCIÓN Y GESTIÓN DE INSTITUCIONES EDUCATIVAS", "EDUCACIÓN INFANTIL Y PRIMARIA",
-      "EDUCACIÓN SECUNDARIA", "FPDP: FORMACIÓN PERMANENTE PARA EL PROFESORADO",
-      "NUEVAS TECNOLOGÍAS E INNOVACIÓN EDUCATIVA", "ORIENTACIÓN LABORAL Y EDUCATIVA", "ATENCIÓN TEMPRANA",
-      "LOGOPEDIA", "NECESIDADES ESPECÍFICAS DE APOYO EDUCATIVO", "PSICOPEDAGOGÍA", "ADICCIONES",
-      "IGUALDAD Y VIOLENCIA DE GÉNERO", "INTERVENCIÓN SOCIAL", "MEDIACIÓN SOCIAL"
-    ].forEach(e => coordinadores[e.toUpperCase()] = "Sandra");
-
-    // --- Coordinador Almudena ---
-    [
-      "ATENCIÓN DOMICILIARIA", "ATENCIÓN PRIMARIA", "AUXILIAR DE ENFERMERÍA", "CELADOR",
-      "CUIDADOS DE ENFERMERÍA", "CUIDADOS INTENSIVOS", "ENFERMERÍA ESCOLAR", "ENFERMERÍA ESTÉTICA",
-      "ENFERMERÍA HOSPITALARIA", "ENFERMERÍA QUIRÚRGICA", "MATRONA", "OTRAS DISCIPLINAS",
-      "REPRODUCCIÓN ASISTIDA", "TRANSPORTE SANITARIO", "URGENCIAS Y EMERGENCIAS", "BIOFARMACIA",
-      "COSMÉTICA Y DERMOFARMACIA", "FARMACIA HOSPITALARIA", "FARMACOLOGÍA Y FARMACOTERAPIA",
-      "INDUSTRIA E INVESTIGACIÓN FARMACÉUTICA", "OFICINA DE FARMACIA", "RADIOFARMACIA",
-      "ALEMÁN", "CATALÁN", "CHINO", "CORRECCIÓN DE TEXTOS", "DANÉS", "ELE", "ESPAÑOL", "EUSKERA",
-      "FRANCÉS", "GALLEGO", "HOLANDÉS", "INGLÉS", "ITALIANO", "JAPONÉS", "POLACO", "PORTUGUÉS",
-      "RUMANO", "RUSO", "SUECO", "TRADUCCIÓN", "ARQUITECTURA SOSTENIBLE", "BIM", "CAD",
-      "CÁLCULO Y DISEÑO DE ESTRUCTURAS", "DISEÑO 2D Y 3D", "DISEÑO ARQUITECTÓNICO",
-      "DISEÑO DE PRODUCTO", "DISEÑO Y DECORACIÓN DE INTERIORES", "GESTIÓN DE PROYECTOS EN ARQUITECTURA",
-      "GESTIÓN DE RESIDUOS DE LA CONSTRUCCIÓN", "NORMATIVA APLICABLE", "OBRA CIVIL Y EDIFICACIÓN",
-      "REHABILITACIÓN ARQUITECTÓNICA", "TOPOGRAFÍA", "URBANISMO Y PAISAJISMO", "DISEÑO EDITORIAL",
-      "DISEÑO GRÁFICO", "EDICIÓN DE VÍDEO", "FOTOGRAFÍA", "GESTIÓN CULTURAL", "ILUSTRACIÓN",
-      "ARTESANÍA", "ARTES ESCÉNICAS", "BELLAS ARTES", "AUDIOVISUAL", "DIRECCIÓN DE ARTE",
-      "DISEÑO DE MODA", "MAQUETACIÓN Y ARTES GRÁFICAS", "MÚSICA Y AUDIO"
-    ].forEach(e => coordinadores[e.toUpperCase()] = "Almudena");
-
+// --- Coordinador Sara ---
+[
+  "TURISMO",
+  "MEDICINA",
+  "DERECHO",
+  "PROFESIONES Y OFICIOS"
+].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Sara");
 
     function aplicarFiltro() {
         const caja = document.getElementById('cajaParrafo2');
@@ -212,7 +137,7 @@
         }
     });
 
-    // --- Parte 2: obtener y mostrar nombre de escuela + coordinador ---
+    // --- Parte 2: obtener y mostrar nombre de escuela + facultad + coordinador ---
     function waitForElement(selector, callback) {
         const el = document.querySelector(selector);
         if (el) {
@@ -241,17 +166,28 @@
             .then(html => {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
+
+                // Obtener Escuela
                 const escuelaSpan = doc.querySelector('#lblEscuela');
                 let escuela = 'No se encontró el nombre de la escuela';
-
                 if (escuelaSpan) {
                     escuela = escuelaSpan.textContent.trim().toUpperCase();
                 }
 
+                // Obtener Facultad
+                const facultadSpan = doc.querySelector('#lblArea');
+                let facultad = 'No se encontró la facultad';
+                let facultadClave = null;
+                if (facultadSpan) {
+                    facultad = facultadSpan.textContent.trim().toUpperCase();
+                    // Normalizar para buscar en el diccionario
+                    facultadClave = facultad.replace(/^FACULTAD DE /, '').trim();
+                }
+
                 const datosCurso = document.getElementById('datosCurso');
                 if (datosCurso) {
+                    // Mostrar Escuela
                     let escuelaDiv = document.getElementById('escuelaExtraida');
-
                     if (!escuelaDiv) {
                         escuelaDiv = document.createElement('div');
                         escuelaDiv.id = 'escuelaExtraida';
@@ -263,10 +199,24 @@
                         `;
                         datosCurso.appendChild(escuelaDiv);
                     }
-
                     escuelaDiv.textContent = 'Escuela: ' + escuela;
 
-                    // Agregar Coordinador
+                    // Mostrar Facultad
+                    let facultadDiv = document.getElementById('facultadExtraida');
+                    if (!facultadDiv) {
+                        facultadDiv = document.createElement('div');
+                        facultadDiv.id = 'facultadExtraida';
+                        facultadDiv.style.cssText = `
+                            margin-top: 6px;
+                            font-weight: bold;
+                            font-size: 20px;
+                            color: #006600;
+                        `;
+                        datosCurso.appendChild(facultadDiv);
+                    }
+                    facultadDiv.textContent = 'Facultad: ' + facultad;
+
+                    // Mostrar Coordinador basado en facultad
                     let coordDiv = document.getElementById('coordinadorExtraido');
                     if (!coordDiv) {
                         coordDiv = document.createElement('div');
@@ -279,9 +229,8 @@
                         `;
                         datosCurso.appendChild(coordDiv);
                     }
-
-                    const coord = coordinadores[escuela];
-                    coordDiv.textContent = coord ? "Coordinador: " + coord : "Coordinador: No asignado";
+                const coord = facultadClave ? coordinadores[facultadClave] : undefined;
+                coordDiv.textContent = coord ? "Coordinador: " + coord : "Coordinador: No asignado";
                 }
             })
             .catch(err => console.error('Error al consultar el enlace:', err));
