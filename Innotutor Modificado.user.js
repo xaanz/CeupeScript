@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InnoTutor Modificado con Fecha Fin Titulación integrada
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      2.0
 // @description  Modifica elementos en la página de tutorías, muestra país, bandera, código telefónico y fecha fin titulación a partir de matrícula
 // @author       Lois
 // @grant        none
@@ -10,6 +10,66 @@
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Innotutor%20Modificado.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Innotutor%20Modificado.user.js
 // ==/UserScript==
+
+(function() {
+    function getNumeroMatricula() {
+        const inputMatricula = document.getElementById('datosAlumnoCurso_txtNumeroMatricula');
+        if (inputMatricula && inputMatricula.value) {
+            return inputMatricula.value.trim();
+        }
+        return null;
+    }
+
+    function addBotonesMenu(matriculaId) {
+        const menu = document.getElementById('entity_menu');
+        if (!menu) {
+            console.warn('Elemento entity_menu no encontrado.');
+            return;
+        }
+        const ul = menu.querySelector('ul.options');
+        if (!ul) {
+            console.warn('Elemento ul.options no encontrado dentro de entity_menu.');
+            return;
+        }
+
+        if (!document.getElementById('hlnVerTodasLasIncidencias')) {
+            const liIncidencias = document.createElement('li');
+            const aIncidencias = document.createElement('a');
+            aIncidencias.id = 'hlnVerTodasLasIncidencias';
+            aIncidencias.href = `IncidenciasMatricula.aspx?matriculaId=${matriculaId}`;
+            aIncidencias.target = '_blank';
+            aIncidencias.innerHTML = '<span>Ver todas las incidencias</span>';
+            // Añade margen visual
+            aIncidencias.style.setProperty('margin-left', '8px', 'important');
+            liIncidencias.appendChild(aIncidencias);
+            ul.appendChild(liIncidencias);
+            console.log('Botón "Ver todas las incidencias" creado.');
+        }
+
+        if (!document.getElementById('hplNuevaTutoria')) {
+            const liNuevaTutoria = document.createElement('li');
+            const aNuevaTutoria = document.createElement('a');
+            aNuevaTutoria.id = 'hplNuevaTutoria';
+            aNuevaTutoria.href = `NuevaTutoria.aspx?matriculaId=${matriculaId}`;
+            aNuevaTutoria.innerHTML = '<span>Nueva tutoría</span>';
+            // Añade margen visual
+            aNuevaTutoria.style.setProperty('margin-left', '8px', 'important');
+            liNuevaTutoria.appendChild(aNuevaTutoria);
+            ul.appendChild(liNuevaTutoria);
+            console.log('Botón "Nueva tutoría" creado.');
+        }
+    }
+
+    window.addEventListener('load', () => {
+        const matriculaId = getNumeroMatricula();
+        if (matriculaId) {
+            addBotonesMenu(matriculaId);
+        } else {
+            console.warn('No se encontró el número de matrícula en el input.');
+        }
+    });
+})();
+
 
 (function() {
     'use strict';
