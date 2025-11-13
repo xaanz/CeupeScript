@@ -242,7 +242,7 @@
             { text: "Gestión de documentación", category: "Titulación", color: "#F7C6CE" },
             { text: "Convalidaciones y homologaciones", category: "Titulación", color: "#F7C6CE" },
             { text: "Tasas y apostillas", category: "Titulación", color: "#F7C6CE" },
-            { text: "Otros (Titulación)", category: "Titulación", color: "#F7C6CE" }
+            { text: "Otros", category: "Titulación", color: "#F7C6CE" }
         ];
 
         // Inject dropdown after input
