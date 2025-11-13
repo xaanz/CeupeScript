@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Innollamada
 // @namespace    http://tampermonkey.net/
-// @version      1.11
+// @version      2.0
 // @description  Prueba variantes y solo busca si se acaba de redirigir para evitar ciclos infinitos
 // @author       Loïs
 // @match        *://innoconvocatoria.cualifica2.es/endpoint/getProfileINNOTUTOR.php*
@@ -213,57 +213,96 @@
 (function() {
     'use strict';
 
-    // Esperar a que el DOM esté cargado
+    // Wait for DOM loaded
     window.addEventListener('load', function() {
-        const inputAsunto = document.querySelector('input#txtAsunto');
-        if (!inputAsunto) return;
+        // Target input
+        const input = document.querySelector('input#txtAsunto');
+        if (!input) return;
 
-        // Crear el datalist y asignarlo al input
-        const dataList = document.createElement('datalist');
-        dataList.id = 'asunto-opciones';
+        // Create dropdown container
+        const dropdown = document.createElement('div');
+        dropdown.id = 'asunto-dropdown-custom';
+        dropdown.style.display = 'none';
+        dropdown.style.position = 'absolute';
+        dropdown.style.background = '#fff';
+        dropdown.style.boxShadow = '0 2px 8px rgba(0,0,0,.15)';
+        dropdown.style.borderRadius = '8px';
+        dropdown.style.minWidth = '280px';
+        dropdown.style.zIndex = '1001';
+        dropdown.style.padding = '4px 0';
 
-        // Lista de valores sugeridos
-        const opciones = [
-            "Otros", "Metodología y plazos ", "Incidencias", "Plataforma",
-//            "Consultas genenerales", "Ampliación", "Apostilla de la Haya", "Bienvenida",
-//            "Borrador", "Calidad-Atención recibida", "Calidad-Contenido", "Calidad-Discrepancia pagos",
-//            "Calidad-Información Ambígua", "Calidad-Material", "Calidad-Metodología",
-//            "Calidad-Prácticas", "Calidad-Titulación", "Cambio de datos", "Cambio de titularidad",
-//            "Certificaciones", "Clases conversacionales", "Confirmación de dirección", "Consultas Clases en Directo",
-//            "Contenido desactualizado", "Convocatoria Universitaria", "Desestimiento", "Documentación requerida",
-//            "Duplicados", "Dudas de contenido", "Entrega final", "Erratas",
-//            "Errores registro del progreso", "Estado de tramitación Titulación", "Expedientes y certificados",
-//            "Fechas de inicio y fin", "Finalización", "Grabación", "Información de plazos",
-//            "Información general y seguimiento", "Invitación", "Licencias", "Material Físico-Envío",
-//            "Material Físico-Producción", "MOFI", "Nombre erróneo datos personales campus",
-//            "No me llega el correo para cambiar contraseña", "Orientación CV", "Pago apostilla",
-//            "Pago de ampliación", "Pago de cuotas atrasadas", "Pago duplicado de título",
-//            "Pago expediente académico", "Pago último plazo pendiente", "Periodos mínimos",
-//            "Prácticas Profesionales-Bienvenida y seguimiento", "Prácticas Profesionales-Documentación",
-//            "Prácticas Profesionales-Encuestas", "Prácticas Profesionales-Gestión Empresa",
-//            "Prácticas Profesionales-Información", "Problemas apertura tutorías", "Problemas de acceso",
-//            "Problemas de acceso por trámites pendientes (Matrícula Interrumpida)",
-//            "Problemas de visualización/carga del contenido audiovisual", "Programa no disponible en el Campus",
-//            "Programa sin Contenido", "Propuesta", "Prórroga", "Radiografía Académica",
-//          "Reclamación de mensajería", "Recordatorio", "Recursos Complementarios",
-//        "Requisitos Formación", "Seguimiento Académico", "SIM : Semana Internacional en Madrid",
-//      "Solicitud descuento no aplicado", "Solicitud factura", "Uso del Campus", "Videodefensa",
+        // Define options by category
+        const options = [
+            { text: "Otros", category: "Seguimiento", color: "#AED9A1" },
+            { text: "Metodología y plazos", category: "Seguimiento", color: "#AED9A1" },
+            { text: "Incidencias", category: "Seguimiento", color: "#AED9A1" },
+            { text: "Plataforma", category: "Seguimiento", color: "#AED9A1" },
+            { text: "Títulos", category: "Titulación", color: "#F7C6CE" },
+            { text: "Petición de certificados", category: "Titulación", color: "#F7C6CE" },
+            { text: "Gestión de documentación", category: "Titulación", color: "#F7C6CE" },
+            { text: "Convalidaciones y homologaciones", category: "Titulación", color: "#F7C6CE" },
+            { text: "Tasas y apostillas", category: "Titulación", color: "#F7C6CE" },
+            { text: "Otros (Titulación)", category: "Titulación", color: "#F7C6CE" }
         ];
 
-        // Añadir opciones
-        opciones.forEach(t => {
-            const option = document.createElement('option');
-            option.value = t;
-            dataList.appendChild(option);
+        // Inject dropdown after input
+        input.parentNode.insertBefore(dropdown, input.nextSibling);
+
+        // Position dropdown under the input
+        function positionDropdown() {
+            const rect = input.getBoundingClientRect();
+            dropdown.style.left = rect.left + 'px';
+            dropdown.style.top = (window.scrollY + rect.bottom) + 'px';
+            dropdown.style.width = rect.width + 'px';
+        }
+
+        function renderDropdown(list) {
+            dropdown.innerHTML = '';
+            list.forEach(opt => {
+                const div = document.createElement('div');
+                div.textContent = opt.text;
+                div.style.background = opt.color;
+                div.style.padding = '8px 14px';
+                div.style.margin = '2px 8px';
+                div.style.borderRadius = '6px';
+                div.style.cursor = 'pointer';
+                div.style.color = '#222';
+                div.onmouseover = () => div.style.opacity = 0.85;
+                div.onmouseout = () => div.style.opacity = 1.0;
+                div.onclick = (e) => {
+                    input.value = opt.text;
+                    dropdown.style.display = 'none';
+                };
+                dropdown.appendChild(div);
+            });
+            dropdown.style.display = list.length ? 'block' : 'none';
+        }
+
+        function filterOptions() {
+            const term = input.value.trim().toLowerCase();
+            const filtered = options.filter(opt => opt.text.toLowerCase().includes(term));
+            renderDropdown(filtered.length ? filtered : options);
+            positionDropdown();
+        }
+
+        input.addEventListener('focus', () => {
+            filterOptions();
+            positionDropdown();
         });
 
-        // Añadir el datalist al DOM y asociarlo con el input
-        inputAsunto.setAttribute('list', dataList.id);
-        document.body.appendChild(dataList); // <-- Change: Append to body for robustness
+        input.addEventListener('input', filterOptions);
 
-        // Estilo opcional
-        inputAsunto.placeholder = "Escriba o seleccione un asunto...";
+        // Handle click outside to close dropdown
+        document.addEventListener('mousedown', e => {
+            if (!dropdown.contains(e.target) && e.target !== input) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        // Optional: Set placeholder
+        input.placeholder = "Escriba o seleccione un asunto...";
     });
+
 
 function checkCategoria7() {
     // Do nothing if current page is Tutoria.aspx?tutoriaId=
@@ -311,6 +350,6 @@ const interval = setInterval(() => {
         }
     }
 }, 500);
-    
+
 })();
 
