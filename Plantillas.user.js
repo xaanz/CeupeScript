@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      4.0
+// @version      4.1
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -10,6 +10,47 @@
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Plantillas.user.js
 // ==/UserScript==
+(function() {
+    'use strict';
+
+    // Esperar que el DOM esté cargado
+    window.addEventListener('load', () => {
+        // Buscar el botón original por su id
+        const botonOriginal = document.getElementById('btnEnviar');
+        if (!botonOriginal) return;
+
+        // Clonar el botón
+        const botonClonado = botonOriginal.cloneNode(true);
+
+        // Modificar el id y nombre para evitar duplicados si se requiere
+        botonClonado.id = botonOriginal.id + '_clonado';
+        botonClonado.name = botonOriginal.name + '_clonado';
+
+        // Buscar el contenedor destino
+        const contenedorDestino = document.getElementById('htmltxtComunicacion$HtmlEditorExtenderBehavior_ExtenderButtonContainer');
+        if (!contenedorDestino) return;
+
+        // Cambiar el estilo del contenedor a flex para permitir la alineación derecha
+        contenedorDestino.style.display = 'flex';
+        contenedorDestino.style.justifyContent = 'center';
+        contenedorDestino.style.alignItems = 'center';
+
+        // Añadir margen a la derecha del botón clonado
+        botonClonado.style.marginLeft = '500px'; // Corregido: camelCase para marginLeft
+
+        // Insertar el botón clonado al final del contenedor destino
+        contenedorDestino.appendChild(botonClonado);
+
+
+        // Listener para teclas F1, F2 y F3
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'F1' || e.key === 'F2' || e.key === 'F3' || e.keyCode === 112 || e.keyCode === 113 || e.keyCode === 114) {
+                e.preventDefault(); // Evitar acción por defecto (como ayuda para F1)
+                botonOriginal.click();
+            }
+        });
+    });
+})();
 
 (function() {
     'use strict';
@@ -143,6 +184,8 @@ if (divFecha) {
             minimumFinishDate: minimumFinishDate
         };
     }
+
+
 
     // Plantillas con variables dinámicas y HTML
     const plantillas = [
