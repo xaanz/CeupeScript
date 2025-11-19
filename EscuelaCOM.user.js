@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Escuela y Master prohibido + Coordinador
-// @version      2.1
+// @version      2.2
 // @description  Marca cursos prohibidos y muestra la escuela con su facultad y coordinador correspondiente
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/EscuelaCOM.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/EscuelaCOM.user.js
@@ -40,7 +40,8 @@
   "VETERINARIA",
   "IDIOMAS",
   "ARTE Y PRODUCCIÓN AUDIOVISUAL",
-  "ARQUITECTURA Y DISEÑO"
+  "ARQUITECTURA Y DISEÑO",
+    "FARMACIA",
 ].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Loïs");
 
 // --- Coordinador María ---
@@ -58,6 +59,7 @@
   "RECURSOS HUMANOS",
   "DOCENCIA Y FORMACIÓN PARA EL PROFESORADO",
   "PEDAGOGÍA TERAPÉUTICA",
+  "DEPORTE Y ACTIVIDAD FÍSICA",
   "TRABAJO SOCIAL, SERVICIOS SOCIALES, IGUALDAD"
 ].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Sandra");
 
@@ -71,18 +73,12 @@
   "CIENCIAS DE DATOS E IA"
 ].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Javi");
 
-// --- Coordinador Almudena ---
-[
-  "DEPORTE Y ACTIVIDAD FÍSICA",
-  "ENFERMERÍA",
-  "FARMACIA"
-].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Almudena");
-
 // --- Coordinador Sara ---
 [
   "TURISMO",
   "MEDICINA",
   "DERECHO",
+"ENFERMERÍA",
   "PROFESIONES Y OFICIOS"
 ].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Sara");
 
