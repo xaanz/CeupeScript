@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         InnoTutor País en Tutorías Github version
-// @version      2.5
-// @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa
+// @version      2.7
+// @description  Añade columnas de País y Escuela en base a matrícula, buscando escuela desde acción formativa, y botones para ocultar filas UECA y seguimiento
 // @author       Lois
 // @grant        GM.xmlHttpRequest
 // @grant        GM.getValue
@@ -141,7 +141,6 @@
             try {
                 const pais = await fetchPais(matriculaId);
 
-                // País
                 if (!pais) {
                     countryCell.textContent = '🟥🟨🟥';
                 } else if (isEspania(pais)) {
@@ -176,7 +175,7 @@
             try {
                 cached = JSON.parse(cached);
                 if (cached.pais !== undefined) return cached.pais;
-            } catch { /* ignorar si está corrupto */ }
+            } catch { }
         }
 
         return new Promise((resolve, reject) => {
@@ -219,7 +218,7 @@
                 row.style.display = hidden ? 'none' : '';
             }
         });
-        button.textContent = hidden ? 'Ocultar filas España' : 'Ocultar filas España';
+        button.textContent = hidden ? 'Ocultar filas España' : 'Mostrar filas España';
         hidden = !hidden;
     }
 
@@ -273,7 +272,7 @@
     function toggleProgramRows(table, button) {
         const rows = table.querySelectorAll('tbody tr');
         for (const row of rows) {
-            const programCell = row.querySelector('td:nth-child(8)'); // Ajusta índice si requerido
+            const programCell = row.querySelector('td:nth-child(8)');
             if (!programCell) continue;
             const cellData = programCell.textContent.trim().toLowerCase();
 
@@ -336,8 +335,120 @@
 
             table.parentNode.insertBefore(button, table);
         }
-        // Si quieres ocultarlos al cargar, descomenta la línea siguiente:
-        // if (hiddenProgramRows) toggleProgramRows(table, button);
+    }
+
+    // Botón para ocultar filas con asunto UECA
+    let hiddenUecaRows = true;
+
+    function toggleUecaRows(table, button) {
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const programCell = row.querySelector('td:nth-child(8)');
+            if (!programCell) return;
+            const text = programCell.textContent.toLowerCase();
+            if (text.includes('ueca')) {
+                row.style.display = hiddenUecaRows ? 'none' : '';
+            }
+        });
+        button.textContent = hiddenUecaRows ? 'Mostrar UECA' : 'Ocultar UECA';
+        hiddenUecaRows = !hiddenUecaRows;
+    }
+
+    function addUecaToggleButton(table) {
+        let button = document.getElementById('toggleUecaButton');
+        if (!button) {
+            button = document.createElement('button');
+            button.id = 'toggleUecaButton';
+            button.type = 'button';
+            button.textContent = 'Ocultar UECA';
+
+            button.style.margin = '10px 8px 10px 10px';
+            button.style.padding = '8px 20px';
+            button.style.fontSize = '1rem';
+            button.style.fontWeight = '700';
+            button.style.fontFamily = '"Roboto", sans-serif';
+            button.style.borderRadius = '8px';
+            button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
+            button.style.transition = 'background-color 0.3s ease, box-shadow 0.3s ease';
+            button.style.backgroundColor = '#28a745';
+            button.style.color = '#ffffff';
+            button.style.border = 'none';
+            button.style.cursor = 'pointer';
+            button.style.userSelect = 'none';
+
+            button.addEventListener('mouseenter', () => {
+                button.style.backgroundColor = '#218838';
+                button.style.boxShadow = '0 6px 12px rgba(33, 136, 56, 0.5)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.backgroundColor = '#28a745';
+                button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
+            });
+
+            button.addEventListener('click', e => {
+                e.preventDefault();
+                toggleUecaRows(table, button);
+            });
+
+            table.parentNode.insertBefore(button, table);
+        }
+    }
+
+    // Botón para ocultar filas con asunto Seguimiento
+    let hiddenSeguimientoRows = true;
+
+    function toggleSeguimientoRows(table, button) {
+        const rows = table.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            const asuntoCell = row.querySelector('td:nth-child(7)');
+            if (!asuntoCell) return;
+            const text = asuntoCell.textContent.toLowerCase();
+            if (text.includes('seguimiento')) {
+                row.style.display = hiddenSeguimientoRows ? 'none' : '';
+            }
+        });
+        button.textContent = hiddenSeguimientoRows ? 'Mostrar Seguimiento' : 'Ocultar Seguimiento';
+        hiddenSeguimientoRows = !hiddenSeguimientoRows;
+    }
+
+    function addSeguimientoToggleButton(table) {
+        let button = document.getElementById('toggleSeguimientoButton');
+        if (!button) {
+            button = document.createElement('button');
+            button.id = 'toggleSeguimientoButton';
+            button.type = 'button';
+            button.textContent = 'Ocultar Seguimiento';
+
+            button.style.margin = '10px 8px 10px 10px';
+            button.style.padding = '8px 20px';
+            button.style.fontSize = '1rem';
+            button.style.fontWeight = '700';
+            button.style.fontFamily = '"Roboto", sans-serif';
+            button.style.borderRadius = '8px';
+            button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
+            button.style.transition = 'background-color 0.3s ease, box-shadow 0.3s ease';
+            button.style.backgroundColor = '#ffc107'; // Amarillo
+            button.style.color = '#000000';
+            button.style.border = 'none';
+            button.style.cursor = 'pointer';
+            button.style.userSelect = 'none';
+
+            button.addEventListener('mouseenter', () => {
+                button.style.backgroundColor = '#e0a800';
+                button.style.boxShadow = '0 6px 12px rgba(224, 168, 0, 0.5)';
+            });
+            button.addEventListener('mouseleave', () => {
+                button.style.backgroundColor = '#ffc107';
+                button.style.boxShadow = '0 4px 8px rgba(0, 123, 255, 0.3)';
+            });
+
+            button.addEventListener('click', e => {
+                e.preventDefault();
+                toggleSeguimientoRows(table, button);
+            });
+
+            table.parentNode.insertBefore(button, table);
+        }
     }
 
     function observeTable() {
@@ -346,6 +457,8 @@
             if (table) {
                 addToggleButton(table);
                 addProgramToggleButton(table);
+                addUecaToggleButton(table);
+                addSeguimientoToggleButton(table);
             }
         });
         observer.observe(document.body, { childList: true, subtree: true });
