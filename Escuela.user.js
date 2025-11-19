@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Escuela y Master prohibido
-// @version      2.0
+// @version      2.2
 // @description  Consulta el href y muestra el nombre de la escuela en el div datosCurso, buscando el span correcto
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Escuela.user.js
 // @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/Escuela.user.js
@@ -40,7 +40,8 @@
   "VETERINARIA",
   "IDIOMAS",
   "ARTE Y PRODUCCIÓN AUDIOVISUAL",
-  "ARQUITECTURA Y DISEÑO"
+  "ARQUITECTURA Y DISEÑO",
+    "FARMACIA",
 ].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Loïs");
 
 // --- Coordinador María ---
@@ -58,6 +59,7 @@
   "RECURSOS HUMANOS",
   "DOCENCIA Y FORMACIÓN PARA EL PROFESORADO",
   "PEDAGOGÍA TERAPÉUTICA",
+  "DEPORTE Y ACTIVIDAD FÍSICA",
   "TRABAJO SOCIAL, SERVICIOS SOCIALES, IGUALDAD"
 ].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Sandra");
 
@@ -71,21 +73,14 @@
   "CIENCIAS DE DATOS E IA"
 ].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Javi");
 
-// --- Coordinador Almudena ---
-[
-  "DEPORTE Y ACTIVIDAD FÍSICA",
-  "ENFERMERÍA",
-  "FARMACIA"
-].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Almudena");
-
 // --- Coordinador Sara ---
 [
   "TURISMO",
   "MEDICINA",
   "DERECHO",
+"ENFERMERÍA",
   "PROFESIONES Y OFICIOS"
 ].forEach(facultad => coordinadores[facultad.toUpperCase()] = "Sara");
-
     function aplicarFiltro() {
         const caja = document.getElementById('cajaParrafo2');
         const datosCurso = document.getElementById('datosCurso');
