@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         incidencia
-// @namespace    [http://tampermonkey.net/](http://tampermonkey.net/)
-// @version      1.20
-// @description  Añade un botón para alternar la visibilidad de las filas que contienen "LP" en el asunto.
+// @namespace    http://tampermonkey.net/
+// @version      2.0
+// @description  Añade botones para filtrar filas y alternar visibilidad de LP, RVOE, países (España, Italia) y (G).
 // @match        *://innotutor.com/Tutoria/ResolverIncidenciasMatriculas.aspx
 // @grant        none
-// @updateURL    [https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js](https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js)
-// @downloadURL  [https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js](https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js)
+// @updateURL    https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
+// @downloadURL  https://github.com/xaanz/CeupeScript/raw/main/incidencia.user.js
 // ==/UserScript==
 
 (function() {
@@ -16,13 +16,16 @@
     let facultadesUnicas = new Set();
     const visitadosKey = 'incidenciasVisitadas';
     let visitados = new Set(JSON.parse(sessionStorage.getItem(visitadosKey) || '[]'));
-    let mostrarLP = true; // Estado para el nuevo botón de filtro LP
+    let mostrarLP = true;
+    let mostrarRVOE = true;
+    let mostrarEspaña = true;
+    let mostrarItalia = true;
+    let mostrarG = true; // Nueva variable para filtrar (G)
 
     function guardarVisitados() {
         sessionStorage.setItem(visitadosKey, JSON.stringify(Array.from(visitados)));
     }
 
-    // Cargar cache desde localStorage
     let cacheResultados = {};
     const cacheGuardado = localStorage.getItem('cacheResultadosIncidencias');
     if (cacheGuardado) {
@@ -169,10 +172,11 @@
     cuadroIncidencias.style.cssText = `background: #1976d2; color: white; font-weight: bold; padding: 10px 18px; border-radius: 6px; display: inline-block; margin: 10px 0 14px 0; font-size: 18px;`;
     tabla.parentNode.insertBefore(cuadroIncidencias, tabla);
 
-    function actualizarContadorIncidencias() {
-        const filasVisibles = Array.from(tabla.querySelectorAll('tbody tr')).filter(fila => fila.style.display !== 'none');
-        cuadroIncidencias.textContent = `Incidencias visibles: ${filasVisibles.length}`;
-    }
+function actualizarContadorIncidencias() {
+    const filasVisibles = Array.from(tabla.querySelectorAll('tbody tr')).filter(fila => fila.style.display !== 'none');
+    const total = filasVisibles.length > 0 ? filasVisibles.length - 1 : 0;
+    cuadroIncidencias.textContent = `Incidencias visibles: ${total}`;
+}
 
     function aplicarResaltadoInicial() {
         filas.forEach(fila => {
@@ -202,6 +206,8 @@
         });
     }
 
+    const programasACacher = ['CECE', 'VINC', 'VICO'];
+
     function actualizarVisibilidadFila(fila) {
         const filtroPrograma = selectFiltroPrograma.value;
         const filtroFacultad = selectFiltroFacultad.value;
@@ -215,16 +221,19 @@
         const paisNormalizado = celdaPais.textContent.toLowerCase().trim();
         const programaNormalizado = celdaPrograma.textContent.toUpperCase().trim();
         const facultadTexto = celdaFacultad.textContent.trim();
-        const asuntoText = celdaAsunto.textContent; // Texto original para "LP"
+        const asuntoText = celdaAsunto.textContent.toLowerCase();
 
-        const programasACacher = ['CECE', 'VINC', 'VICO'];
-        const hidePorPaisOPrograma = paisNormalizado === 'españa' || paisNormalizado === 'italia' || programasACacher.includes(programaNormalizado);
-        const hidePorAsuntoG = asuntoText.toLowerCase().includes('(g)') || asuntoText.toLowerCase().includes('.g');
-        const hidePorLP = !mostrarLP && asuntoText.includes('LP'); // Filtro para "LP" en mayúsculas
+        const hidePorLP = !mostrarLP && asuntoText.includes('lp');
+        const hidePorRVOE = !mostrarRVOE && programasACacher.includes(programaNormalizado);
         const hidePorFiltroPrograma = filtroPrograma && (programaNormalizado !== filtroPrograma);
         const hidePorFiltroFacultad = filtroFacultad && (facultadTexto !== filtroFacultad);
+        const hideEspaña = !mostrarEspaña && paisNormalizado === 'españa';
+        const hideItalia = !mostrarItalia && paisNormalizado === 'italia';
+        const hideG = !mostrarG && (asuntoText.includes('(g)') || asuntoText.includes('.g'));
 
-        fila.style.display = (hidePorPaisOPrograma || hidePorAsuntoG || hidePorFiltroPrograma || hidePorFiltroFacultad || hidePorLP) ? 'none' : '';
+        fila.style.display = (hidePorFiltroPrograma || hidePorFiltroFacultad || hidePorLP || hidePorRVOE || hideEspaña || hideItalia || hideG)
+            ? 'none'
+            : '';
     }
 
     function reFiltrarTodo() {
@@ -268,10 +277,9 @@
     botonExportarCSV.textContent = 'Exportar CSV Facultades';
     botonExportarCSV.style.cssText = `background: #2196F3; color: white; border: none; padding: 10px 20px; margin: 0; cursor: pointer; border-radius: 4px; font-size: 14px;`;
     botonExportarCSV.addEventListener('click', () => {
-        // ... (lógica de exportación sin cambios)
+        // Lógica exportar CSV
     });
 
-    // --- NUEVO BOTÓN LP ---
     const botonToggleLP = document.createElement('button');
     botonToggleLP.type = 'button';
     botonToggleLP.textContent = 'Ocultar LP';
@@ -282,11 +290,59 @@
         reFiltrarTodo();
     });
 
+    const botonToggleRVOE = document.createElement('button');
+    botonToggleRVOE.type = 'button';
+    botonToggleRVOE.textContent = 'Ocultar RVOE';
+    botonToggleRVOE.style.cssText = `background: #9c27b0; color: white; border: none; padding: 10px 20px; margin: 0 10px 0 0; cursor: pointer; border-radius: 4px; font-size: 14px;`;
+    botonToggleRVOE.addEventListener('click', () => {
+        mostrarRVOE = !mostrarRVOE;
+        botonToggleRVOE.textContent = mostrarRVOE ? 'Ocultar RVOE' : 'Mostrar RVOE';
+        reFiltrarTodo();
+    });
+
+    const botonToggleEspaña = document.createElement('button');
+    botonToggleEspaña.type = 'button';
+    botonToggleEspaña.textContent = 'Ocultar España';
+    botonToggleEspaña.style.cssText = `background: #607d8b; color: white; border: none; padding: 10px 20px; margin: 0 10px 0 0; cursor: pointer; border-radius: 4px; font-size: 14px;`;
+    botonToggleEspaña.addEventListener('click', () => {
+        mostrarEspaña = !mostrarEspaña;
+        botonToggleEspaña.textContent = mostrarEspaña ? 'Ocultar España' : 'Mostrar España';
+        reFiltrarTodo();
+    });
+
+    const botonToggleItalia = document.createElement('button');
+    botonToggleItalia.type = 'button';
+    botonToggleItalia.textContent = 'Ocultar Italia';
+    botonToggleItalia.style.cssText = `background: #795548; color: white; border: none; padding: 10px 20px; margin: 0 10px 0 0; cursor: pointer; border-radius: 4px; font-size: 14px;`;
+    botonToggleItalia.addEventListener('click', () => {
+        mostrarItalia = !mostrarItalia;
+        botonToggleItalia.textContent = mostrarItalia ? 'Ocultar Italia' : 'Mostrar Italia';
+        reFiltrarTodo();
+    });
+
+    const botonToggleG = document.createElement('button');
+    botonToggleG.type = 'button';
+    botonToggleG.textContent = 'Ocultar (G)';
+    botonToggleG.style.cssText = `background: #3f51b5; color: white; border: none; padding: 10px 20px; margin: 0 10px 0 0; cursor: pointer; border-radius: 4px; font-size: 14px;`;
+    botonToggleG.addEventListener('click', () => {
+        mostrarG = !mostrarG;
+        botonToggleG.textContent = mostrarG ? 'Ocultar (G)' : 'Mostrar (G)';
+        reFiltrarTodo();
+    });
+
     divBotones.appendChild(botonIniciar);
     divBotones.appendChild(botonDetener);
-    divBotones.appendChild(botonToggleLP); // Botón añadido
+    divBotones.appendChild(botonToggleLP);
+    divBotones.appendChild(botonToggleRVOE);
+    divBotones.appendChild(botonToggleEspaña);
+    divBotones.appendChild(botonToggleItalia);
+    divBotones.appendChild(botonToggleG);
     divBotones.appendChild(botonExportarCSV);
     tabla.parentNode.insertBefore(divBotones, tabla);
+
+    // Resto del código procesar filas y otros métodos se mantiene igual ...
+
+    // Código completo como antes...
 
     async function obtenerMatriculaYLinkSecundario(codigo) {
         const codigoCodificado = encodeURIComponent(codigo);
@@ -388,7 +444,7 @@
                     selectFiltroFacultad.appendChild(opt);
                 }
             } else {
-                celdaPais.textContent = `Buscando...`;
+                celdaPais.textContent = 'Buscando...';
                 celdaFacultad.textContent = 'Buscando...';
                 try {
                     const { matricula, urlSecundario } = await obtenerMatriculaYLinkSecundario(codigo);
@@ -407,8 +463,8 @@
                             selectFiltroFacultad.appendChild(opt);
                         }
                     } else {
-                       celdaPais.textContent = 'Matrícula no encontrada';
-                       celdaFacultad.textContent = 'Matrícula no encontrada';
+                        celdaPais.textContent = 'Matrícula no encontrada';
+                        celdaFacultad.textContent = 'Matrícula no encontrada';
                     }
                 } catch (error) {
                     celdaPais.textContent = 'Error';
@@ -433,5 +489,10 @@
     actualizarContadorIncidencias();
     aplicarResaltadoInicial();
     agregarListenersDeResaltado();
+
+    const enlacesTabla = tabla.querySelectorAll('a');
+    enlacesTabla.forEach(enlace => {
+        enlace.setAttribute('target', '_blank');
+    });
 
 })();
