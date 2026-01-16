@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Innollamada
 // @namespace    http://tampermonkey.net/
-// @version      2.1
+// @version      2.5
 // @description  Prueba variantes y solo busca si se acaba de redirigir para evitar ciclos infinitos
 // @author       Loïs
 // @match        *://innoconvocatoria.cualifica2.es/endpoint/getProfileINNOTUTOR.php*
@@ -235,7 +235,7 @@
         const options = [
             { text: "Otros", category: "Seguimiento", color: "#AED9A1" },
             { text: "Metodología y plazos", category: "Seguimiento", color: "#AED9A1" },
-            { text: "Incidencias", category: "Seguimiento", color: "#AED9A1" },
+            { text: "Titulación", category: "Seguimiento", color: "#AED9A1" },
             { text: "Plataforma", category: "Seguimiento", color: "#AED9A1" },
             { text: "Acreditación de certificado", category: "Seguimiento", color: "#AED9A1" },
             { text: "Material físico", category: "Seguimiento", color: "#AED9A1" },
