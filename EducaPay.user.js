@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         EducaPay
 // @namespace    https://perplexity.ai
-// @version      1.0
+// @version      1.5
 // @description  Remplissage formulaire depuis presse-papiers déclenché par bouton (évite blocage permissions)
 // @author        Loïs
 // @updateURL     https://github.com/xaanz/CeupeScript/raw/main/EducaPay.user.js
@@ -94,14 +94,11 @@
     const options = [
         {name: 'selecciona el mail', email: ''},
         {name: 'loïs', email: 'lois.vaissiere@educaedtech.com'},
-        {name: 'almudena', email: 'almudena.montero@educaedtech.com'},
-        {name: 'javier', email: 'javier.rodrigo@educaedtech.com'},
-        {name: 'laura', email: 'laura.grijalvo@educaedtech.com'},
-        {name: 'sandra', email: 'sandra.gonzalez@educaedtech.com'},
-        {name: 'clara', email: 'clara.saez@educaedtech.com'},
-        {name: 'beatriz', email: 'beatriz.corredera@educaedtech.com'},
         {name: 'maria', email: 'maria.guzman@educaedtech.com'},
+        {name: 'beatriz', email: 'beatriz.corredera@educaedtech.com'},
+        {name: 'sandra', email: 'sandra.gonzalez@educaedtech.com'},
         {name: 'sara', email: 'sara.lopez@educaedtech.com'},
+        {name: 'laura', email: 'laura.grijalvo@educaedtech.com'},
         {name: 'silvia', email: 'silvia.mesonero@educaedtech.com'}
     ];
 
