@@ -1,10 +1,9 @@
 // ==UserScript==
 // @name         InnoTutor Modificado con Fecha Fin Titulación integrada
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      2.1
 // @description  Modifica elementos en la página de tutorías, muestra país, bandera, código telefónico y fecha fin titulación a partir de matrícula
 // @author       Lois
-// @grant        none
 // @grant        GM_xmlhttpRequest
 // @connect      innotutor.com
 // @updateURL    https://github.com/xaanz/CeupeScript/raw/main/Innotutor%20Modificado.user.js
@@ -596,3 +595,4 @@
     }, 100);
 
 })();
+
