@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      4.1
+// @version      4.2
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -89,52 +89,52 @@
 
         if (companyName.includes("inesem")) {
             formacion = "INESEM";
-            telef = "+34 958050242";
+            telef = "+34 958 050 205";
             cg = "https://www.inesem.es/condiciones-generales-de-matriculacion";
         }
         if (companyName.includes("euro")) {
             formacion = "EUROINNOVA";
-            telef = "+34 958948544";
+            telef = "+34 958 050 200";
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
         }
         if (companyName.includes("fiscal")) {
             formacion = "INEAF";
-            telef = "+34 958050236";
+            telef = "+34 958 050 207";
             cg = "https://www.ineaf.es/Informacion/Condiciones-de-Matriculacion";
         }
         if (companyName.includes("ineaf")) {
             formacion = "INEAF";
-            telef = "+34 958050236";
+            telef = "+34 958 050 207";
             cg = "https://www.ineaf.es/Informacion/Condiciones-de-Matriculacion";
         }
         if (companyName.includes("profesorado")) {
             formacion = "REDEDUCA";
-            telef = "+34 958808651";
+            telef = "+34 958 050 202";
             cg = "https://www.rededuca.net/condiciones-de-matriculacion";
         }
         if (companyName.includes("educa")) {
             formacion = "EDUCA";
-            telef = "+34 958538300";
+            telef = "+34 958 050 217";
             cg = "https://educa.net/Informacion/Condiciones-de-matriculacion";
         }
         if (companyName.includes("lica")) {
             formacion = "EUROINNOVA";
-            telef = "+34 958948544";
+            telef = "+34 958 050 200";
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
         }
         if (companyName.includes("cervantes")) {
             formacion = "EUROINNOVA";
-            telef = "+34 958948544";
+            telef = "+34 958 050 200";
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
         }
         if (companyName.includes("unimiami")) {
             formacion = "EUROINNOVA";
-            telef = "+34 958948544";
+            telef = "+34 958 050 200";
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
         }
         if (companyName.includes("esibe")) {
             formacion = "ESIBE";
-            telef = "+34 958991918";
+            telef = "+34 958 991 919";
             cg = "https://euapps-prod-uploads.s3.eu-west-1.amazonaws.com/assets/enrolment_conditions_es.pdf";
         }
         if (companyName.includes("ceupe")) {
