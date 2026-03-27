@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Innollamada
 // @namespace    http://tampermonkey.net/
-// @version      2.5
+// @version      2.6
 // @description  Prueba variantes y solo busca si se acaba de redirigir para evitar ciclos infinitos
 // @author       Loïs
 // @match        *://innoconvocatoria.cualifica2.es/endpoint/getProfileINNOTUTOR.php*
@@ -240,6 +240,10 @@
             { text: "Acreditación de certificado", category: "Seguimiento", color: "#AED9A1" },
             { text: "Material físico", category: "Seguimiento", color: "#AED9A1" },
             { text: "Información general de prácticas", category: "Seguimiento", color: "#AED9A1" },
+            { text: "Info Titulación", category: "Upsell", color: "#FFE873" },
+            { text: "Info Ampliación", category: "Upsell", color: "#FFE873" },
+            { text: "Info Apostilla", category: "Upsell", color: "#FFE873" },
+            { text: "Info Sim: Semana Internacional en Madrid", category: "Upsell", color: "#FFE873" },
             { text: "Títulos", category: "Titulación", color: "#F7C6CE" },
             { text: "Petición de certificados", category: "Titulación", color: "#F7C6CE" },
             { text: "Gestión de documentación", category: "Titulación", color: "#F7C6CE" },
