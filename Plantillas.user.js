@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.0
+// @version      5.1
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -305,7 +305,7 @@ Para poder acceder al campus, siga estos pasos:
 4- Le llegará un email para confirmar el correo. En caso de no recibirlo, comprueba spam o correo no deseado. Si aun asi no recibiste el correo de confirmación, entra a esta página para recibirlo de nuevo: <a href="${datos.userConfirm}" target="_blank">${datos.userConfirm}</a>.
 5. Con su mail y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
 
-Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en su entorno educativo o vía telefónica: ${datos.telefono}.
 
     Saludos cordiales.`
         ).replace(/\r\n|\r|\n/g, "</br>")
@@ -325,7 +325,7 @@ nombre: '- Acesso / Cambio de contraseña',
 
     Si no recibiste el correo de confirmación, entra a esta página para recibirlo de nuevo: <a href="${datos.userConfirm}" target="_blank">${datos.userConfirm}</a>.
 
-    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en su entorno educativo o vía telefónica: ${datos.telefono}.
 
     Un saludo y buen día.`
         ).replace(/\r\n|\r|\n/g, "</br>")
@@ -338,9 +338,9 @@ nombre: '- Video de bienvenida',
 
         ¿No pudiste asistir a la sesión de bienvenida?
 
-        ¡No te preocupes! Puedes ver el video de bienvenida en el <a h${datos.ayuda}" target="_blank">Centro de ayuda</a> o dando clic aquí: <a href="https://cdn.educaedtech.com/bienvenida.mp4" target="_blank">https://cdn.educaedtech.com/bienvenida.mp4</a>.
+        ¡No te preocupes! Puedes ver el video de bienvenida en el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> o dando clic aquí: <a href="https://cdn.educaedtech.com/bienvenida.mp4" target="_blank">https://cdn.educaedtech.com/bienvenida.mp4</a>.
 
-        Cualquier duda que tengas, después de ver el video, me puedes preguntar directamente en el centro de ayuda, Soy su coordinador académico de tu ${datos.tituloCurso} y es un placer para mí contar contigo entre mis estudiantes.
+        Cualquier duda que tengas, después de ver el video, me puedes preguntar directamente en el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a>, Soy su coordinador académico de tu ${datos.tituloCurso} y es un placer para mí contar contigo entre mis estudiantes.
 
         Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
 
@@ -374,7 +374,7 @@ nombre: '- Centro de ayuda',
 
 Le escribo para explicarle cómo puede solicitar ayuda siempre que lo necesite desde su campus MYLXP.
 
-Dentro del campus MYLXP encontraras Centro de Ayuda en la parte inferior derecha de la pantalla, como un botón o icono de ayuda. Desde allí puede ponerse en contacto directamente con dos equipos diferentes, según el tipo de consulta que tenga.
+Dentro del campus MYLXP encontraras <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en la parte inferior derecha de la pantalla, como un botón o icono de ayuda. Desde allí puede ponerse en contacto directamente con dos equipos diferentes, según el tipo de consulta que tenga.
 
 - Equipo de coordinación en gestión académica: para todo lo relacionado con su gestión académica (matrícula, documentación, plazos, certificados, etc.), como ayuda con el campus virtual y sus contenidos formativos (temario, actividades, evaluaciones, uso de la plataforma, etc.).
 
@@ -382,7 +382,7 @@ Dentro del campus MYLXP encontraras Centro de Ayuda en la parte inferior derecha
 
 - Equipo de finanzas en Facturas y pagos: para cualquier duda sobre tus cuotas o pedir facturas.
 
-Le recomendamos utilizar siempre el Centro de Ayuda de MYLXP para que su consulta llegue al equipo adecuado y podamos atenderle con la mayor rapidez posible.
+Le recomendamos utilizar siempre el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> de MYLXP para que su consulta llegue al equipo adecuado y podamos atenderle con la mayor rapidez posible.
 
 Quedo a su disposición para cualquier otra cuestión que pueda surgir.
 
@@ -406,7 +406,7 @@ nombre: '- EURO Acceso correcto',
 
     Con su usuario y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
 
-    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en su entorno educativo o vía telefónica: ${datos.telefono}.
 
     Un saludo y buen día.`
         ).replace(/\r\n|\r|\n/g, "</br>")
@@ -435,7 +435,7 @@ nombre: '# Casos prácticos',
         contenido: datos => (
     `${datos.greeting},
 
-    Los casos prácticos no son obligatorios, pero si recomendables, si tiene dudas con los mismos puede dirigirse al centro de ayuda y crear una tutoría seleccionando "abrir tutoría" y docencia.
+    Los casos prácticos no son obligatorios, pero si recomendables, si tiene dudas con los mismos puede dirigirse al <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> y crear una tutoría seleccionando "abrir tutoría" y docencia.
 
     Es importante que esté completamente seguro antes finalizar el módulo, ya que una vez que complete la encuesta, si finalizas el módulo no podrás realizar más intentos de examen, ni entregar casos prácticos en el módulo. Si eliges "continuar", podrás seguir avanzando y subir el caso práctico sin problemas antes de la fecha de finalización del curso.
 
@@ -468,7 +468,7 @@ nombre: '# Cookies',
 
     Si el problema continúa, por favor, contacta con nuestro equipo con una captura de pantalla.
 
-    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el CENTRO DE AYUDA en su entorno educativo o vía telefónica: ${datos.telefono}.
+    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en su entorno educativo o vía telefónica: ${datos.telefono}.
 
     Un saludo y buen día.`
         ).replace(/\r\n|\r|\n/g, "</br>")
@@ -610,7 +610,7 @@ nombre: '+ Ampliación',
         contenido: datos => (
     `${datos.greeting},
 
-      Dispones de acesso a su formacion de ${datos.tituloCurso} hasta el ${datos.fechaFinP} por lo cual aun cuentas con tiempo para ir avanzando en sus estudios. Si necesitara una ampliación podrá solicitarla por el centro de ayuda para contar con 12 meses más para finalizar su formación segun las tasas establecidas en las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a>.
+      Dispones de acesso a su formacion de ${datos.tituloCurso} hasta el ${datos.fechaFinP} por lo cual aun cuentas con tiempo para ir avanzando en sus estudios. Si necesitara una ampliación podrá solicitarla por el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> para contar con 12 meses más para finalizar su formación segun las tasas establecidas en las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a>.
 
       Quedamos a su disposición.
 
@@ -673,7 +673,7 @@ nombre: '* Seguimiento vacio',
 
         Esperamos que todo esté yendo bien y que la experiencia formativa le resulte útil y enriquecedora. Nuestro objetivo es acompañarle durante todo el proceso, asegurándonos de que pueda avanzar sin dificultades.
 
-        Si en algún momento tiene dificultades de acceso, necesita orientación sobre cómo organizar su estudio o desea resolver alguna duda relacionada con la metodología, la evaluación o su ritmo de avance, no dude en escribirnos a través de su "Centro de ayuda" o solicitar una llamada. Estaremos encantados de ayudarle.
+        Si en algún momento tiene dificultades de acceso, necesita orientación sobre cómo organizar su estudio o desea resolver alguna duda relacionada con la metodología, la evaluación o su ritmo de avance, no dude en escribirnos a través de su "<a href="${datos.ayuda}" target="_blank">Centro de ayuda</a>" o solicitar una llamada. Estaremos encantados de ayudarle.
 
         Le animamos también a continuar con las actividades del curso, que son una excelente forma de afianzar los contenidos y avanzar hacia la finalización de su formación.
 
@@ -706,7 +706,7 @@ No podrá realizar una autoevaluación hasta haber visualizado todo el contenido
 
 No obstante, indicarle que tiene 6 meses para realizar la formación, siendo su fecha fin el ${datos.fechaFinP}. De no finalizar en esta, ampliar la formación tendría un coste adicional que podrá consultar en las condiciones de matriculación.
 
-Puede comunicarse con nosotros desde el apartado centro de ayuda, desde la App o en el teléfono ${datos.telefono}.
+Puede comunicarse con nosotros desde el apartado <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a>, desde la App o en el teléfono ${datos.telefono}.
 
 Esperamos que el estudio de esta acción formativa se ajuste a sus necesidades y complemente su formación.
 
@@ -874,3 +874,4 @@ if (zoneTexte) {
     }).observe(document.body, { childList: true, subtree: true });
 
 })();
+
