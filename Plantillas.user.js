@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.1
+// @version      5.2
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -495,7 +495,7 @@ nombre: '# Derivo Docencia',
         contenido: datos => (
     `${datos.greeting},
 
-    Muchas gracias por ponerse en contacto con el equipo de Gestion academica.
+    Muchas gracias por ponerse en contacto con el equipo de Gestión académica.
 
     Para que pueda recibir la información más completa y precisa sobre el contenido de sus clases y casos practicos, vamos a trasladar su consulta al departamento correspondiente, que se pondrá en contacto con usted a la mayor brevedad posible.
 
@@ -511,7 +511,7 @@ nombre: '# Derivo Otro',
         contenido: datos => (
     `${datos.greeting},
 
-    Muchas gracias por ponerse en contacto con el equipo de Gestion academica.
+    Muchas gracias por ponerse en contacto con el equipo de Gestión académica.
 
     Vamos a trasladar su consulta al departamento correspondiente, que se pondrá en contacto con usted a la mayor brevedad posible.
 
@@ -527,7 +527,7 @@ nombre: '# Derivo Facturas y Pagos',
         contenido: datos => (
     `${datos.greeting},
 
-   Muchas gracias por ponerse en contacto con el equipo de Gestion academica.
+   Muchas gracias por ponerse en contacto con el equipo de Gestión académica.
 
     Para que pueda recibir la información más completa y precisa sobre facturas y formas de pago, vamos a trasladar su consulta al departamento correspondiente, que se pondrá en contacto con usted a la mayor brevedad posible.
 
