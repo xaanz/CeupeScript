@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.2
+// @version      5.3
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -459,12 +459,12 @@ nombre: '# Cookies',
         contenido: datos => (
     `${datos.greeting},
 
-    Si observas un funcionamiento inusual en MyLXP, te recomendamos seguir estos pasos:
+    Si observa un funcionamiento inusual en MyLXP, le recomendamos seguir estos pasos:
 
     1- Fuerza la recarga a la última versión con (Ctrl+Shift+R).
     2- Cierra sesión en MyLXP.
     3- Borra las cookies y el almacenamiento local del navegador (Ctrl+Shift+Supr en el navegador).
-    4- Accede de nuevo desde la página de inicio con tus credenciales.
+    4- Accede de nuevo desde la página de inicio con sus credenciales.
 
     Si el problema continúa, por favor, contacta con nuestro equipo con una captura de pantalla.
 
@@ -559,7 +559,7 @@ nombre: '+ Finalización Ceupe envio a Upsell',
 
     En primer lugar, queremos felicitarle por la finalización de su ${datos.tituloCurso}.
 
-    Hemos remitido su solicitud al servicio encargado. Mientras tanto, puedes descargar el certificado de finalización en la pestaña Secretaría de su MyLXP.
+    Hemos remitido su solicitud al servicio encargado. Mientras tanto, puede descargar el certificado de finalización en la pestaña Secretaría de su MyLXP.
 
     Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites.
 
@@ -610,7 +610,7 @@ nombre: '+ Ampliación',
         contenido: datos => (
     `${datos.greeting},
 
-      Dispones de acesso a su formacion de ${datos.tituloCurso} hasta el ${datos.fechaFinP} por lo cual aun cuentas con tiempo para ir avanzando en sus estudios. Si necesitara una ampliación podrá solicitarla por el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> para contar con 12 meses más para finalizar su formación segun las tasas establecidas en las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a>.
+      Dispones de acesso a su formacion de ${datos.tituloCurso} hasta el ${datos.fechaFinP} por lo cual aun cuenta con tiempo para ir avanzando en sus estudios. Si necesitara una ampliación podrá solicitarla por el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> para contar con 12 meses más para finalizar su formación segun las tasas establecidas en las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a>.
 
       Quedamos a su disposición.
 
