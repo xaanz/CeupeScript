@@ -620,7 +620,7 @@ nombre: '+ Ampliación',
         contenido: datos => (
     `${datos.greeting},
 
-      Dispones de acesso a su formacion de ${datos.tituloCurso} hasta el ${datos.fechaFinP} por lo cual aun cuenta con tiempo para ir avanzando en sus estudios. Si necesitara una ampliación podrá solicitarla por el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> para contar con 12 meses más para finalizar su formación segun las tasas establecidas en las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a>.
+      Dispones de acesso a su formacion de ${datos.tituloCurso} hasta el ${datos.fechaFinP} por lo cual aún cuenta con tiempo para ir avanzando en sus estudios. Si necesitara una ampliación podrá solicitarla por el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> para contar con 12 meses más para finalizar su formación según las tasas establecidas en las <a href="${datos.cg}" target="_blank">condiciones generales de matriculación</a>.
 
       Quedamos a su disposición.
 
