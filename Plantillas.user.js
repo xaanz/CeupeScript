@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.4
+// @version      5.5
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -384,7 +384,7 @@ nombre: '- Centro de ayuda',
 
 Le escribo para explicarle cómo puede solicitar ayuda siempre que lo necesite desde su campus MYLXP.
 
-Dentro del campus MYLXP encontrarás el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en la parte inferior derecha de la pantalla, como un botón o icono de ayuda. Desde allí puede ponerse en contacto directamente con dos equipos diferentes, según el tipo de consulta que tenga.
+Dentro del campus MYLXP encontrarás el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en la parte inferior derecha de la pantalla, como un botón o icono de ayuda. Desde allí puede ponerse en contacto directamente con los diferentes equipos, según el tipo de consulta que tenga.
 
 - Equipo de coordinación en gestión académica: para todo lo relacionado con su gestión académica (matrícula, documentación, plazos, certificados, etc.), como ayuda con el campus virtual y sus contenidos formativos (temario, actividades, evaluaciones, uso de la plataforma, etc.).
 
