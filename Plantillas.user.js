@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.6
+// @version      5.7
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -350,9 +350,9 @@ nombre: '- Video de bienvenida',
 
         ¡No te preocupes! Puedes ver el video de bienvenida en el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> o dando clic aquí: <a href="https://cdn.educaedtech.com/bienvenida.mp4" target="_blank">https://cdn.educaedtech.com/bienvenida.mp4</a>.
 
-        Cualquier duda que tengas, después de ver el video, me puedes preguntar directamente en el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a>, Soy su coordinador académico de tu ${datos.tituloCurso} y es un placer para mí contar contigo entre mis estudiantes.
+        Cualquier duda que tengas, después de ver el video, me puedes preguntar directamente en el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a>, Somos el equipo de atención dedicada a su ${datos.tituloCurso} y es un placer para mí contar contigo entre mis estudiantes.
 
-        Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
+        Recuerda que tienes al equipo de Atención Académica disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
 
         Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
             )
@@ -386,7 +386,7 @@ Le escribo para explicarle cómo puede solicitar ayuda siempre que lo necesite d
 
 Dentro del campus MYLXP encontrarás el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en la parte inferior derecha de la pantalla, como un botón o icono de ayuda. Desde allí puede ponerse en contacto directamente con los diferentes equipos, según el tipo de consulta que tenga.
 
-- Equipo de coordinación en gestión académica: para todo lo relacionado con su gestión académica (matrícula, documentación, plazos, certificados, etc.), como ayuda con el campus virtual y sus contenidos formativos (temario, actividades, evaluaciones, uso de la plataforma, etc.).
+- Equipo de Atención Académica en gestión académica: para todo lo relacionado con su gestión académica (matrícula, documentación, plazos, certificados, etc.), como ayuda con el campus virtual y sus contenidos formativos (temario, actividades, evaluaciones, uso de la plataforma, etc.).
 
 - Equipo docente en docencia: para preguntas y dudas sobre sus cursos y casos prácticos, si tienes duda, no entiendes alguna parte o necesitas contenido extra.
 
@@ -434,7 +434,7 @@ nombre: '# Enlace masterclass',
 
         enlace
 
-        Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
+        Recuerda que tienes al equipo de Atención Académica disponible para todo lo que necesites. ¡Te acompañaremos durante todo tu periodo formativo!
 
         Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
             )
@@ -556,7 +556,7 @@ nombre: '+ Finalización debe dar por finalizado',
 
     Para poder iniciar la titulación, debes primero finalizar el máster; cumples todos los requisitos, pero no has autorizado la finalización dándole al botón "Quiero finalizar". Dejo captura.
 
-    Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites.
+    Recuerda que tienes al equipo de Atención Académica disponible para todo lo que necesites.
 
     Un cordial saludo.`.replace(/\r\n|\r|\n/g, "</br>")
             )
@@ -571,7 +571,7 @@ nombre: '+ Finalización Ceupe envio a Upsell',
 
     Hemos remitido su solicitud al servicio encargado. Mientras tanto, puede descargar el certificado de finalización en la pestaña Secretaría de su MyLXP.
 
-    Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites.
+    Recuerda que tienes al equipo de Atención Académica disponible para todo lo que necesites.
 
     Un cordial saludo,`.replace(/\r\n|\r|\n/g, "</br>")
                 )
@@ -586,7 +586,7 @@ nombre: '+ Finalización',
 
     Puede descargar el certificado de finalización en la pestaña Secretaría de su MyLXP y, en cuanto esté disponible y firmado, será reemplazado por el título.
 
-    Recuerda que tienes al equipo de Coordinación disponible para todo lo que necesites.
+    Recuerda que tienes al equipo de Atención Académica disponible para todo lo que necesites.
 
     Un cordial saludo`.replace(/\r\n|\r|\n/g, "</br>")
             )
