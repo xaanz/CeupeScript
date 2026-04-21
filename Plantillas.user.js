@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.7
+// @version      5.8
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -323,7 +323,7 @@ Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el
 
 {
 
-nombre: '- Acesso / Cambio de contraseña',
+nombre: '- Acceso / Cambio de contraseña',
         contenido: datos => (
     `${datos.greeting},
 
