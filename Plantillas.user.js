@@ -312,7 +312,7 @@ Para poder acceder al campus, siga estos pasos:
 1- Acceso al campus: <a href="${datos.campus}" target="_blank">${datos.campus}</a>.
 2- Si no ha generado sus claves o no las que tiene, debe darle a Crear una cuenta o directamente <a href="${datos.dosignup}" target="_blank"> dando clic aquí </a>.
 3- Inserte sus informaciones y el correo con el que se registró.
-4- Le llegará un email para confirmar el correo. En caso de no recibirlo, comprueba spam o correo no deseado. Si aun asi no recibiste el correo de confirmación, entra a esta página para recibirlo de nuevo: <a href="${datos.userConfirm}" target="_blank">${datos.userConfirm}</a>.
+4- Le llegará un email para confirmar el correo. En caso de no recibirlo, comprueba spam o correo no deseado. Si aun asi no recibiste el correo de confirmación, entre a esta página para recibirlo de nuevo: <a href="${datos.userConfirm}" target="_blank">${datos.userConfirm}</a>.
 5. Con su mail y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
 
 Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en su entorno educativo o vía telefónica: ${datos.telefono}.
@@ -333,7 +333,7 @@ nombre: '- Acceso / Cambio de contraseña',
 
     Si no recuerda su contraseña, le invito a resetearla <a href="${datos.forgotPassword}" target="_blank">dando un clic aquí</a>.
 
-    Si no recibiste el correo de confirmación, entra a esta página para recibirlo de nuevo: <a href="${datos.userConfirm}" target="_blank">${datos.userConfirm}</a>.
+    Si no recibiste el correo de confirmación, entre a esta página para recibirlo de nuevo: <a href="${datos.userConfirm}" target="_blank">${datos.userConfirm}</a>.
 
     Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en su entorno educativo o vía telefónica: ${datos.telefono}.
 
