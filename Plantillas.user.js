@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.8
+// @version      5.9
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -118,8 +118,8 @@
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
             userConfirm = 'https://mylxp.euroinnova.com/confirmUser';
             campus = 'https://mylxp.euroinnova.com'
-            forgotPassword = '';
-            dosignup = '';
+            forgotPassword = 'https://login.euroinnova.com/forgotPassword?client_id=5gtp9ireljjpq51u7k08a5dur7&response_type=code&redirect_uri=https%3A%2F%2Fmylxp.euroinnova.com%2Flogin&scope=email+openid+profile&lang=es';
+            dosignup = 'https://login.euroinnova.com/signup?client_id=5gtp9ireljjpq51u7k08a5dur7&response_type=code&redirect_uri=https%3A%2F%2Fmylxp.euroinnova.com%2Flogin&scope=email+openid+profile&lang=es';
             ayuda = 'https://mylxp.euroinnova.com/help-center'
         }
         if (companyName.includes("inesalud")) {
@@ -198,8 +198,8 @@
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
             userConfirm = 'https://mylxp.euroinnova.com/confirmUser';
             campus = 'https://mylxp.euroinnova.com';
-            forgotPassword = '';
-            dosignup = '';
+            forgotPassword = 'https://login.euroinnova.com/forgotPassword?client_id=5gtp9ireljjpq51u7k08a5dur7&response_type=code&redirect_uri=https%3A%2F%2Fmylxp.euroinnova.com%2Flogin&scope=email+openid+profile&lang=es';
+            dosignup = 'https://login.euroinnova.com/signup?client_id=5gtp9ireljjpq51u7k08a5dur7&response_type=code&redirect_uri=https%3A%2F%2Fmylxp.euroinnova.com%2Flogin&scope=email+openid+profile&lang=es';
             ayuda = 'https://mylxp.euroinnova.com/help-center'
         }
         if (companyName.includes("cervantes")) {
@@ -208,8 +208,8 @@
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
             userConfirm = 'https://mylxp.euroinnova.com/confirmUser';
             campus = 'https://mylxp.euroinnova.com';
-            forgotPassword = '';
-            dosignup = '';
+            forgotPassword = 'https://login.euroinnova.com/forgotPassword?client_id=5gtp9ireljjpq51u7k08a5dur7&response_type=code&redirect_uri=https%3A%2F%2Fmylxp.euroinnova.com%2Flogin&scope=email+openid+profile&lang=es';
+            dosignup = 'https://login.euroinnova.com/signup?client_id=5gtp9ireljjpq51u7k08a5dur7&response_type=code&redirect_uri=https%3A%2F%2Fmylxp.euroinnova.com%2Flogin&scope=email+openid+profile&lang=es';
             ayuda = 'https://mylxp.euroinnova.com/help-center'
         }
         if (companyName.includes("unimiami")) {
@@ -218,8 +218,8 @@
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
             userConfirm = 'https://mylxp.unimiami.university/confirmUser';
             campus = 'https://mylxp.unimiami.university';
-            forgotPassword = '';
-            dosignup = '';
+            forgotPassword = 'https://login.euroinnova.com/forgotPassword?client_id=5gtp9ireljjpq51u7k08a5dur7&response_type=code&redirect_uri=https%3A%2F%2Fmylxp.euroinnova.com%2Flogin&scope=email+openid+profile&lang=es';
+            dosignup = 'https://login.euroinnova.com/signup?client_id=5gtp9ireljjpq51u7k08a5dur7&response_type=code&redirect_uri=https%3A%2F%2Fmylxp.euroinnova.com%2Flogin&scope=email+openid+profile&lang=es';
             ayuda = 'https://mylxp.unimiami.university/help-center'
         }
         if (companyName.includes("esibe")) {
@@ -399,28 +399,6 @@ Quedo a su disposición para cualquier otra cuestión que pueda surgir.
 Atentamente,`.replace(/\r\n|\r|\n/g, "</br>")
                     )
         },
-
-{
-
-nombre: '- EURO Acceso correcto',
-        contenido: datos => (
-    `${datos.greeting},
-
-    Hemos comprobado su acceso y le confirmamos que su estudio aparece de forma correcta. Le adjuntamos capturas de pantalla para que pueda revisar.
-
-    Debe acceder mediante el siguiente enlace: <a href="https://mylxp.euroinnova.com" target="_blank">https://mylxp.euroinnova.com</a>: introduciendo sus claves de acceso. Buscar la formación y darle a 'continuar por donde lo dejé' para poder iniciar con la misma.
-
-    Si no recuerda su contraseña, debe darle a ¿No tiene contraseña o la has olvidado?
-
-    Después, inserte el correo con el que se registró. Le llegará un email para verificar el cambio de contraseña con un código de validación de seis dígitos.
-
-    Con su usuario y contraseña, en el apartado identificarse, podrá entrar en la plataforma.
-
-    Para cualquier duda o consulta, recuerde que estamos a su disposición, desde el <a href="${datos.ayuda}" target="_blank">Centro de ayuda</a> en su entorno educativo o vía telefónica: ${datos.telefono}.
-
-    Un saludo y buen día.`
-        ).replace(/\r\n|\r|\n/g, "</br>")
-    },
 
 {
 
