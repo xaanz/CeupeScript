@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.9
+// @version      5.10
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -327,7 +327,7 @@ nombre: '- Acceso / Cambio de contraseña',
         contenido: datos => (
     `${datos.greeting},
 
-    Hemos comprobado su acceso y le confirmamos que su estudio aparece de forma correcta. Le adjuntamos capturas de pantalla para que pueda revisar.
+    Hemos comprobado su acceso y le confirmamos que su estudio aparece de forma correcta.
 
     Debe acceder mediante el siguiente enlace: <a href="${datos.campus}" target="_blank">${datos.campus}</a>: introduciendo sus claves de acceso. Buscar la formación y darle a 'continuar por donde lo dejé' para poder iniciar con la misma.
 
