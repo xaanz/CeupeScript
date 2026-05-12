@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.12
+// @version      5.13
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -133,6 +133,16 @@
             ayuda = 'https://mylxp.inesalud.com/help-center'
         }
         if (companyName.includes("edusport")) {
+            formacion = "EDUSPORT";
+            telef = "+34 958 050 248";
+            cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
+            userConfirm = 'https://mylxp.edusport.school/confirmUser';
+            campus = 'https://mylxp.edusport.school';
+            forgotPassword = 'https://login.edusport.school/forgotPassword?response_type=code&scope=email+openid+profile&client_id=6ske3t5sngbvm5vt91ote6d4ao&redirect_uri=https%3A%2F%2Fmylxp.edusport.school%2Flogin&lang=es';
+            dosignup = 'https://login.edusport.school/signup?response_type=code&scope=email+openid+profile&client_id=6ske3t5sngbvm5vt91ote6d4ao&redirect_uri=https%3A%2F%2Fmylxp.edusport.school%2Flogin&lang=es';
+            ayuda = 'https://mylxp.edusport.school/help-center'
+        }
+		if (companyName.includes("euneiz")) {
             formacion = "EDUSPORT";
             telef = "+34 958 050 248";
             cg = "https://www.euroinnova.com/condiciones-de-matriculacion";
