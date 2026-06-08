@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.13
+// @version      5.14
 // @description  plantillas para Tutorlxp
 // @author       Lois, Clara, Sandra R, Sara L, Bea
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -534,7 +534,40 @@ nombre: '# Derivo Facturas y Pagos',
     Un saludo y buen día.`
         ).replace(/\r\n|\r|\n/g, "</br>")
     },
+nombre: '# incual-SEPE',
+        contenido: datos => (
+    `${datos.greeting},
 
+El curso que está realizando está dirigido a la obtención del Certificado de Profesionalidad por la vía no formal, es decir mediante la acreditación de competencias profesionales(R.D. 1224/2009).
+
+El procedimiento de evaluación y acreditación de competencias (PEAC) se establece en el RD 1224/2009, de 17 de julio, de reconocimiento de las competencias profesionales adquiridas por experiencia laboral, modificado por el Real Decreto 143/2021, de 9 de marzo.
+
+Se trata de un conjunto de actuaciones dirigidas a reconocer, evaluar y acreditar las competencias profesionales adquiridas mediante la experiencia laboral o por vías no formales de formación.
+
+Desde marzo de 2021 se abre un procedimiento permanente, que estará referido a la totalidad de las unidades de competencia profesional incluidas en la oferta existente de Formación Profesional de cada comunidad autónoma vinculada al Catálogo Nacional de las Cualificaciones Profesionales.
+
+Las administraciones competentes finalizarán los procedimientos iniciados con anterioridad a la entrada en vigor de la modificación del real decreto 1224/2009, en marzo de 2021, de acuerdo con la normativa vigente en el momento en el que se iniciaron.
+
+Puede consultar Unidades responsables e información de Acreditación de Competencias en las Comunidades Autónomas (en todo caso, cada Comunidad Autónoma podría establecer o disponer de otros puntos de información). Lo puede consultar en el siguiente enlace <a href="https://incual.educacion.gob.es/comunidades-autonomas" target="_blank">https://incual.educacion.gob.es/comunidades-autonomas</a>
+
+Requisitos de la persona candidata:
+
+Las personas que deseen participar en el procedimiento deberán cumplir los siguientes requisitos:
+a) Poseer la nacionalidad española, haber obtenido el certificado de registro de ciudadanía comunitaria o la tarjeta de familiar de ciudadano o ciudadana de la Unión, o ser titular de una autorización de residencia o, de residencia y trabajo en España en vigor, en los términos establecidos en la normativa española de extranjería e inmigración.
+b) Tener 18 años cumplidos en el momento de realizar la inscripción, cuando se trate de unidades de competencia correspondientes a cualificaciones de nivel I y 20 años para los niveles II y III.
+c) Tener experiencia laboral y/o formación relacionada con las competencias profesionales que se quieren acreditar:
+1) En el caso de experiencia laboral. Justificar, al menos 3 años, con un mínimo de 2.000 horas trabajadas en total, en los últimos 15 años transcurridos antes de la presentación de la solicitud. Para las unidades de competencia de nivel I, se requerirán 2 años de experiencia laboral con un mínimo de 1.200 horas trabajadas en total.
+2) En el caso de formación. Justificar, al menos 300 horas, en los últimos 10 años transcurridos antes de la presentación de la solicitud. Para las unidades de competencia de nivel I, se requerirán al menos 200 horas. En los casos en los que los módulos formativos asociados a la unidad de competencia que se pretende acreditar contemplen una duración inferior, se deberán acreditar las horas establecidas en dichos módulos.
+d) En los casos en que las unidades de competencia profesional que se van a valorar cuenten, por su naturaleza, con requisitos adicionales, poseer documento justificativo de cumplir con dichos requisitos.
+
+El proceso de acreditación varía según la Comunidad Autónoma, por lo que le dejamos dos enlaces donde podrá encontrar toda la información:
+
+<a href="https://incual.educacion.gob.es/acreditacion" target="_blank">https://incual.educacion.gob.es/acreditacion</a>
+<a href="https://incual.educacion.gob.es/informacion-sobre-el-proceso-de-acreditacion" target="_blank">https://incual.educacion.gob.es/informacion-sobre-el-proceso-de-acreditacion</a>
+
+Quedamos a su disposición.`
+        ).replace(/\r\n|\r|\n/g, "</br>")
+    },
 
 {
 
