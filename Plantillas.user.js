@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.16
+// @version      5.17
 // @description  plantillas para Tutorlxp
-// @author       Lois, Clara, Sandra R, Sara L, Bea
+// @author       Lois, con la ayuda del ceupe crew
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
 // @match        *://innotutor.com/Tutoria/ResponderIncidenciaMatriculaEmail.aspx?incidenciaMatriculaId=*
 // @match        *://innotutor.com/Tutoria/EditarEvento.aspx?eventoId=*
@@ -317,7 +317,9 @@ nombre: '- Primer acesso / registrase',
     contenido: datos => (
     `${datos.greeting},
 
-Para poder acceder al campus, siga estos pasos:
+Para poder acceder al campus, siga nuestro video o estos pasos:
+
+Videotutorial: <a href="https://cdn.educaedtech.com/Como_registrarse_en_MyLXP.mp4" target="_blank"> Cómo registrarse en MyLXP </a>
 
 1- Acceso al campus: <a href="${datos.campus}" target="_blank">${datos.campus}</a>.
 2- Si no ha generado sus claves o no las que tiene, debe darle a Crear una cuenta o directamente <a href="${datos.dosignup}" target="_blank"> dando clic aquí </a>.
@@ -341,7 +343,7 @@ nombre: '- Acceso / Cambio de contraseña',
 
     Debe acceder mediante el siguiente enlace: <a href="${datos.campus}" target="_blank">${datos.campus}</a>: introduciendo sus claves de acceso. Buscar la formación y darle a 'continuar por donde lo dejé' para poder iniciar con la misma.
 
-    Si no recuerda su contraseña, le invito a resetearla <a href="${datos.forgotPassword}" target="_blank">dando un clic aquí</a>.
+    Si no recuerda su contraseña, le invito a resetearla <a href="${datos.forgotPassword}" target="_blank">dando un clic aquí</a>. Si necesita ayuda, puede ver nuestro videotutorial : <a href="https://cdn.educaedtech.com/Como_restablecer_su_contraseña.mp4" target="_blank"> Cómo restablecer su contraseña</a>.
 
     Si no recibió el correo de confirmación, entre a esta página para recibirlo de nuevo: <a href="${datos.userConfirm}" target="_blank">${datos.userConfirm}</a>.
 
