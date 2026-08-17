@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Master Plantillas
-// @version      5.17
+// @version      5.18
 // @description  plantillas para Tutorlxp
 // @author       Lois, con la ayuda del ceupe crew
 // @match        *://innotutor.com/Tutoria/ResponderTutoriaEmail.aspx?tutoriaId=*
@@ -103,6 +103,16 @@
             ayuda = 'https://mylxp.inesem.es/help-center'
         }
 		if (companyName.includes("uhe")) {
+            formacion = "INESEM";
+            telef = "+34 958 050 205";
+            cg = "https://www.inesem.es/condiciones-generales-de-matriculacion";
+            userConfirm = 'https://mylxp.inesem.es/confirmUser';
+            campus = 'https://mylxp.inesem.es';
+            forgotPassword = 'https://login.inesem.es/forgotPassword?response_type=code&scope=email+openid+profile&client_id=41g2seb52p5hkh92o9lib2p2pl&redirect_uri=https%3A%2F%2Fmylxp.inesem.es%2Flogin&lang=es';
+            dosignup = 'https://login.inesem.es/signup?response_type=code&scope=email+openid+profile&client_id=41g2seb52p5hkh92o9lib2p2pl&redirect_uri=https%3A%2F%2Fmylxp.inesem.es%2Flogin&lang=es';
+            ayuda = 'https://mylxp.inesem.es/help-center'
+        }
+		if (companyName.includes("Salamanca")) {
             formacion = "INESEM";
             telef = "+34 958 050 205";
             cg = "https://www.inesem.es/condiciones-generales-de-matriculacion";
