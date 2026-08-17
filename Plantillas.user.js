@@ -112,7 +112,7 @@
             dosignup = 'https://login.inesem.es/signup?response_type=code&scope=email+openid+profile&client_id=41g2seb52p5hkh92o9lib2p2pl&redirect_uri=https%3A%2F%2Fmylxp.inesem.es%2Flogin&lang=es';
             ayuda = 'https://mylxp.inesem.es/help-center'
         }
-		if (companyName.includes("Salamanca")) {
+		if (companyName.includes("salamanca")) {
             formacion = "INESEM";
             telef = "+34 958 050 205";
             cg = "https://www.inesem.es/condiciones-generales-de-matriculacion";
