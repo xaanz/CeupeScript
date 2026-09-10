@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cactus
 // @namespace    xanxs-cactus-extension
-// @version      1.4
+// @version      1.5
 // @description  Recupera país, hora, fechas, estado de matrícula y estado de pago desde Innotutor.
 // @match        https://soporte.educaedtech.com/*
 // @grant        GM_xmlhttpRequest
