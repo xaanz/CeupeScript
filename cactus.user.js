@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cactus
 // @namespace    xanxs-cactus-extension
-// @version      1.2
+// @version      1.3
 // @description  Recupera país, hora, fechas, estado de matrícula y estado de pago desde Innotutor.
 // @match        https://soporte.educaedtech.com/*
 // @grant        GM_xmlhttpRequest
@@ -1232,7 +1232,9 @@
   'use strict';
 
   const SELECTOR = '[data-id="CommentContentWrapper"]';
-  const MARCADOR = '[BORRADOR IA - revisar antes de enviar]';
+
+  const MARCADOR_BORRADOR = '[BORRADOR IA - revisar antes de enviar]';
+  const MARCADOR_ESCALADO = '[AGENTE IA - ESCALADO A PERSONA]';
 
   const IMAGENES = Array.from(
     { length: 20 },
@@ -1259,6 +1261,7 @@
       })
       .catch(() => {
         boton.textContent = 'Error al copiar';
+
         setTimeout(() => {
           boton.textContent = textoOriginal;
         }, 1800);
@@ -1267,16 +1270,20 @@
 
   function ocultarSoloCabecera(contenedor) {
     const bloqueContenido = contenedor.parentElement;
+
     if (!bloqueContenido) return;
 
     const posibleCabecera = bloqueContenido.previousElementSibling;
+
     if (posibleCabecera) {
       posibleCabecera.style.display = 'none';
       return;
     }
 
     const wrapperComentario = contenedor.closest('[data-test-id^="commentList_"]');
-    const wrapperInterno = wrapperComentario?.querySelector('.zd_v2-subtablistitemwebcommon-wrapper');
+    const wrapperInterno = wrapperComentario?.querySelector(
+      '.zd_v2-subtablistitemwebcommon-wrapper'
+    );
 
     if (wrapperInterno?.firstElementChild) {
       wrapperInterno.firstElementChild.style.display = 'none';
@@ -1285,44 +1292,195 @@
 
   function crearImagenDecorativa() {
     const img = document.createElement('img');
+
     img.className = 'cactus-imagen';
     img.src = obtenerImagenAleatoria();
     img.alt = 'Decoración Cactus';
     img.width = 110;
     img.height = 110;
     img.loading = 'lazy';
+
     return img;
   }
 
-  function procesarBorrador(contenedor) {
-    if (contenedor.dataset.cactusProcesado === 'true') return;
-
-    const textoCompleto = contenedor.innerText.trim();
-    if (!textoCompleto.startsWith(MARCADOR)) return;
-
-    const textoSinMarcador = textoCompleto
-      .slice(MARCADOR.length)
-      .trim();
-
-    const coincidenciaConfianza = textoSinMarcador.match(
-      /\s*(\(confianza:[\s\S]*?\))\s*$/
+  /*
+   * Separa una línea final de confianza.
+   *
+   * Ejemplos compatibles:
+   * (confianza: alta)
+   * (confianza: 0.85)
+   * (confianza de la respuesta: 0.85)
+   * (Confianza de respuesta: media)
+   */
+  function separarConfianza(texto) {
+    const coincidenciaConfianza = texto.match(
+      /\s*(\(\s*confianza(?:\s+de(?:\s+la)?\s+respuesta)?\s*:[\s\S]*?\))\s*$/i
     );
 
-    const propuesta = coincidenciaConfianza
-      ? textoSinMarcador.slice(0, coincidenciaConfianza.index).trim()
-      : textoSinMarcador;
+    return {
+      contenido: coincidenciaConfianza
+        ? texto.slice(0, coincidenciaConfianza.index).trim()
+        : texto.trim(),
 
-    const confianza = coincidenciaConfianza
-      ? coincidenciaConfianza[1]
-      : '';
+      confianza: coincidenciaConfianza
+        ? coincidenciaConfianza[1].trim()
+        : ''
+    };
+  }
+
+  /*
+   * Para borradores IA:
+   * - propuesta: todo lo anterior a "Motivo:"
+   * - motivo: desde "Motivo:" hasta el final
+   *
+   * El motivo puede incluir la confianza. Se trata como bloque independiente
+   * para que nunca forme parte de la propuesta que se copia.
+   */
+  function separarBorrador(texto) {
+    const indiceMotivo = texto.search(/\bMotivo\s*:/i);
+
+    if (indiceMotivo === -1) {
+      const { contenido, confianza } = separarConfianza(texto);
+
+      return {
+        propuesta: contenido,
+        motivo: '',
+        confianza
+      };
+    }
+
+    const propuesta = texto.slice(0, indiceMotivo).trim();
+    const textoMotivo = texto.slice(indiceMotivo).trim();
+
+    const {
+      contenido: motivoSinConfianza,
+      confianza
+    } = separarConfianza(textoMotivo);
+
+    return {
+      propuesta,
+      motivo: motivoSinConfianza,
+      confianza
+    };
+  }
+
+  function crearBloqueSeccion(titulo, contenido, claseExtra = '') {
+    const seccion = document.createElement('div');
+
+    seccion.className = `cactus-seccion ${claseExtra}`.trim();
+
+    const encabezado = document.createElement('div');
+    encabezado.className = 'cactus-seccion-titulo';
+    encabezado.textContent = titulo;
+
+    const texto = document.createElement('div');
+    texto.className = 'cactus-seccion-texto';
+    texto.textContent = contenido || 'No indicado';
+
+    seccion.append(encabezado, texto);
+
+    return seccion;
+  }
+
+  function crearBloqueMotivoBorrador(motivo) {
+    if (!motivo) return null;
+
+    const bloqueMotivo = document.createElement('div');
+    bloqueMotivo.className = 'cactus-motivo-borrador';
+
+    const titulo = document.createElement('span');
+    titulo.className = 'cactus-motivo-titulo';
+    titulo.textContent = 'Motivo: ';
+
+    const contenido = document.createElement('span');
+    contenido.className = 'cactus-motivo-texto';
+
+    /*
+     * Quitamos la palabra "Motivo:" del texto porque ya se muestra
+     * en el elemento de título anterior.
+     */
+    contenido.textContent = motivo.replace(/^Motivo\s*:\s*/i, '');
+
+    bloqueMotivo.append(titulo, contenido);
+
+    return bloqueMotivo;
+  }
+
+  function separarEscalado(texto) {
+    const regex = /^([\s\S]*?)(?:\n|\r|\s)*Motivo:\s*([\s\S]*?)(?:\n|\r|\s)*Clasificacion propuesta:\s*([\s\S]*)$/i;
+
+    const coincidencia = texto.match(regex);
+
+    if (coincidencia) {
+      return {
+        explicacion: coincidencia[1].trim(),
+        motivo: coincidencia[2].trim(),
+        clasificacion: coincidencia[3].trim()
+      };
+    }
+
+    const indiceMotivo = texto.search(/\bMotivo\s*:/i);
+    const indiceClasificacion = texto.search(/\bClasificacion propuesta\s*:/i);
+
+    return {
+      explicacion: indiceMotivo >= 0
+        ? texto.slice(0, indiceMotivo).trim()
+        : texto.trim(),
+
+      motivo: indiceMotivo >= 0
+        ? texto.slice(
+          indiceMotivo + texto.slice(indiceMotivo).match(/^Motivo\s*:/i)[0].length,
+          indiceClasificacion >= 0 ? indiceClasificacion : texto.length
+        ).trim()
+        : '',
+
+      clasificacion: indiceClasificacion >= 0
+        ? texto.slice(
+          indiceClasificacion +
+          texto.slice(indiceClasificacion).match(/^Clasificacion propuesta\s*:/i)[0].length
+        ).trim()
+        : ''
+    };
+  }
+
+  function crearAcciones(propuesta) {
+    const acciones = document.createElement('div');
+    acciones.className = 'cactus-acciones';
+
+    const botonCopiar = document.createElement('button');
+    botonCopiar.type = 'button';
+    botonCopiar.className = 'cactus-boton-copiar';
+    botonCopiar.textContent = 'Copiar propuesta';
+
+    botonCopiar.addEventListener('click', () => {
+      copiarTexto(propuesta, botonCopiar);
+    });
+
+    acciones.appendChild(botonCopiar);
+
+    return acciones;
+  }
+
+  function crearNotaConfianza(confianza) {
+    if (!confianza) return null;
+
+    const nota = document.createElement('div');
+    nota.className = 'cactus-confianza';
+    nota.textContent = confianza;
+
+    return nota;
+  }
+
+  function procesarBorrador(contenedor, textoSinMarcador) {
+    const {
+      propuesta,
+      motivo,
+      confianza
+    } = separarBorrador(textoSinMarcador);
 
     if (!propuesta) return;
 
-    contenedor.dataset.cactusProcesado = 'true';
     contenedor.classList.add('cactus-borrador');
-
-    ocultarSoloCabecera(contenedor);
-
     contenedor.innerHTML = '';
 
     const layout = document.createElement('div');
@@ -1330,12 +1488,10 @@
 
     const lateral = document.createElement('div');
     lateral.className = 'cactus-lateral';
+    lateral.appendChild(crearImagenDecorativa());
 
     const contenido = document.createElement('div');
     contenido.className = 'cactus-contenido';
-
-    const imagen = crearImagenDecorativa();
-    lateral.appendChild(imagen);
 
     const encabezado = document.createElement('div');
     encabezado.className = 'cactus-encabezado';
@@ -1345,39 +1501,133 @@
     bloquePropuesta.className = 'cactus-propuesta';
     bloquePropuesta.textContent = propuesta;
 
-    const acciones = document.createElement('div');
-    acciones.className = 'cactus-acciones';
+    contenido.append(
+      encabezado,
+      bloquePropuesta,
+      crearAcciones(propuesta)
+    );
 
-    const botonCopiar = document.createElement('button');
-    botonCopiar.type = 'button';
-    botonCopiar.className = 'cactus-boton-copiar';
-    botonCopiar.textContent = 'Copiar propuesta';
-    botonCopiar.addEventListener('click', () => {
-      copiarTexto(propuesta, botonCopiar);
-    });
+    const bloqueMotivo = crearBloqueMotivoBorrador(motivo);
 
-    acciones.appendChild(botonCopiar);
-    contenido.append(encabezado, bloquePropuesta, acciones);
+    if (bloqueMotivo) {
+      contenido.appendChild(bloqueMotivo);
+    }
 
-    if (confianza) {
-      const nota = document.createElement('div');
-      nota.className = 'cactus-confianza';
-      nota.textContent = confianza;
-      contenido.appendChild(nota);
+    const notaConfianza = crearNotaConfianza(confianza);
+
+    if (notaConfianza) {
+      contenido.appendChild(notaConfianza);
     }
 
     layout.append(lateral, contenido);
     contenedor.appendChild(layout);
   }
 
+  function procesarEscalado(contenedor, textoSinMarcador) {
+    const {
+      contenido: textoEscalado,
+      confianza
+    } = separarConfianza(textoSinMarcador);
+
+    if (!textoEscalado) return;
+
+    const {
+      explicacion,
+      motivo,
+      clasificacion
+    } = separarEscalado(textoEscalado);
+
+    contenedor.classList.add('cactus-borrador', 'cactus-escalado');
+    contenedor.innerHTML = '';
+
+    const layout = document.createElement('div');
+    layout.className = 'cactus-layout';
+
+    const lateral = document.createElement('div');
+    lateral.className = 'cactus-lateral';
+    lateral.appendChild(crearImagenDecorativa());
+
+    const contenido = document.createElement('div');
+    contenido.className = 'cactus-contenido';
+
+    const encabezado = document.createElement('div');
+    encabezado.className = 'cactus-encabezado cactus-encabezado-escalado';
+    encabezado.textContent = 'Cactus escala a persona:';
+
+    const seccionExplicacion = crearBloqueSeccion(
+      'Explicación',
+      explicacion,
+      'cactus-seccion-explicacion'
+    );
+
+    const seccionMotivo = crearBloqueSeccion(
+      'Motivo',
+      motivo,
+      'cactus-seccion-motivo'
+    );
+
+    const seccionClasificacion = crearBloqueSeccion(
+      'Clasificación propuesta',
+      clasificacion,
+      'cactus-seccion-clasificacion'
+    );
+
+    contenido.append(
+      encabezado,
+      seccionExplicacion,
+      seccionMotivo,
+      seccionClasificacion
+    );
+
+    const notaConfianza = crearNotaConfianza(confianza);
+
+    if (notaConfianza) {
+      contenido.appendChild(notaConfianza);
+    }
+
+    layout.append(lateral, contenido);
+    contenedor.appendChild(layout);
+  }
+
+  function procesarComentario(contenedor) {
+    if (contenedor.dataset.cactusProcesado === 'true') return;
+
+    const textoCompleto = contenedor.innerText.trim();
+
+    const esBorrador = textoCompleto.startsWith(MARCADOR_BORRADOR);
+    const esEscalado = textoCompleto.startsWith(MARCADOR_ESCALADO);
+
+    if (!esBorrador && !esEscalado) return;
+
+    contenedor.dataset.cactusProcesado = 'true';
+
+    ocultarSoloCabecera(contenedor);
+
+    if (esBorrador) {
+      const textoSinMarcador = textoCompleto
+        .slice(MARCADOR_BORRADOR.length)
+        .trim();
+
+      procesarBorrador(contenedor, textoSinMarcador);
+      return;
+    }
+
+    const textoSinMarcador = textoCompleto
+      .slice(MARCADOR_ESCALADO.length)
+      .trim();
+
+    procesarEscalado(contenedor, textoSinMarcador);
+  }
+
   function escanear() {
-    document.querySelectorAll(SELECTOR).forEach(procesarBorrador);
+    document.querySelectorAll(SELECTOR).forEach(procesarComentario);
   }
 
   function insertarEstilos() {
     if (document.getElementById('cactus-borrador-estilos')) return;
 
     const estilo = document.createElement('style');
+
     estilo.id = 'cactus-borrador-estilos';
     estilo.textContent = `
       .cactus-borrador {
@@ -1422,6 +1672,10 @@
         font-size: 14px;
       }
 
+      .cactus-encabezado-escalado {
+        color: #a16207;
+      }
+
       .cactus-propuesta {
         margin: 0 0 14px;
         padding: 12px 14px;
@@ -1432,9 +1686,81 @@
         background: rgba(73, 169, 111, 0.10);
       }
 
+      .cactus-motivo-borrador {
+        margin: 0 0 10px;
+        padding: 10px 12px;
+        border-left: 4px solid #f59e0b;
+        border-radius: 4px;
+        background: rgba(245, 158, 11, 0.10);
+        color: #78350f;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        font-size: 13px;
+      }
+
+      .cactus-motivo-titulo {
+        font-weight: 700;
+      }
+
+      .cactus-motivo-texto {
+        font-weight: 400;
+      }
+
+      .cactus-seccion {
+        margin: 0 0 12px;
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid rgba(0, 0, 0, 0.10);
+      }
+
+      .cactus-seccion-titulo {
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        background: rgba(0, 0, 0, 0.05);
+        color: #374151;
+      }
+
+      .cactus-seccion-texto {
+        padding: 11px 12px;
+        white-space: pre-wrap;
+        line-height: 1.5;
+        background: #fff;
+        color: #1f2937;
+      }
+
+      .cactus-seccion-explicacion {
+        border-left: 4px solid #3b82f6;
+      }
+
+      .cactus-seccion-motivo {
+        border-left: 4px solid #f59e0b;
+      }
+
+      .cactus-seccion-clasificacion {
+        border-left: 4px solid #8b5cf6;
+      }
+
+      .cactus-escalado .cactus-seccion-explicacion .cactus-seccion-titulo {
+        background: rgba(59, 130, 246, 0.10);
+        color: #1d4ed8;
+      }
+
+      .cactus-escalado .cactus-seccion-motivo .cactus-seccion-titulo {
+        background: rgba(245, 158, 11, 0.12);
+        color: #92400e;
+      }
+
+      .cactus-escalado .cactus-seccion-clasificacion .cactus-seccion-titulo {
+        background: rgba(139, 92, 246, 0.10);
+        color: #6d28d9;
+      }
+
       .cactus-acciones {
         display: flex;
-        margin: 0 0 12px;
+        margin: 2px 0 12px;
       }
 
       .cactus-boton-copiar {
@@ -1446,11 +1772,11 @@
         color: #fff;
         font-size: 13px;
         font-weight: 600;
-        transition: opacity .15s ease, background .15s ease;
+        transition: opacity 0.15s ease, background 0.15s ease;
       }
 
       .cactus-boton-copiar:hover {
-        opacity: .88;
+        opacity: 0.88;
       }
 
       .cactus-boton-copiar.cactus-copiado {
@@ -1461,7 +1787,7 @@
         display: block;
         margin-top: 10px;
         padding-top: 10px;
-        border-top: 1px solid rgba(0, 0, 0, .12);
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
         color: #6b7280;
         font-size: 12px;
         font-style: italic;
