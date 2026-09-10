@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cactus
 // @namespace    xanxs-cactus-extension
-// @version      1.3
+// @version      1.4
 // @description  Recupera país, hora, fechas, estado de matrícula y estado de pago desde Innotutor.
 // @match        https://soporte.educaedtech.com/*
 // @grant        GM_xmlhttpRequest
@@ -20,6 +20,9 @@
     const PANEL_ID = 'cactus-extension-panel';
     const STYLE_ID = 'cactus-extension-style';
 
+    const CLAVE_MEMORIA_MATRICULAS = 'cactus-matriculas-por-ticket';
+    const LIMITE_MEMORIA_MATRICULAS = 500;
+
     const URL_INNOTUTOR =
         'http://innotutor.com/ProgramasFormacion/MatriculaVisualizar.aspx?matriculaId=';
 
@@ -27,20 +30,13 @@
     const BASE_IMAGENES_CARGA =
         'https://raw.githubusercontent.com/xaanz/image/main/';
 
- /*
-     * Zona horaria principal por país.
-     * Algunos países poseen varias zonas horarias; en esos casos se usa
-     * la zona más habitual o la correspondiente a la capital.
-     */
     const ZONAS_HORARIAS = {
-        'AFGANISTÁN': 'Asia/Kabul',
         'AFGANISTAN': 'Asia/Kabul',
         'ALBANIA': 'Europe/Tirane',
         'ALEMANIA': 'Europe/Berlin',
         'ANDORRA': 'Europe/Andorra',
         'ANGOLA': 'Africa/Luanda',
         'ANTIGUA Y BARBUDA': 'America/Antigua',
-        'ARABIA SAUDÍ': 'Asia/Riyadh',
         'ARABIA SAUDI': 'Asia/Riyadh',
         'ARGELIA': 'Africa/Algiers',
         'ARGENTINA': 'America/Argentina/Buenos_Aires',
@@ -48,14 +44,11 @@
         'ARUBA': 'America/Aruba',
         'AUSTRALIA': 'Australia/Sydney',
         'AUSTRIA': 'Europe/Vienna',
-        'AZERBAIYÁN': 'Asia/Baku',
         'AZERBAIYAN': 'Asia/Baku',
         'BAHAMAS': 'America/Nassau',
         'BARBADOS': 'America/Barbados',
-        'BÉLGICA': 'Europe/Brussels',
         'BELGICA': 'Europe/Brussels',
         'BELICE': 'America/Belize',
-        'BENÍN': 'Africa/Porto-Novo',
         'BENIN': 'Africa/Porto-Novo',
         'BIELORRUSIA': 'Europe/Minsk',
         'BOLIVIA': 'America/La_Paz',
@@ -68,9 +61,7 @@
         'BURUNDI': 'Africa/Bujumbura',
         'CABO VERDE': 'Atlantic/Cape_Verde',
         'CAMBOYA': 'Asia/Phnom_Penh',
-        'CAMERÚN': 'Africa/Douala',
         'CAMERUN': 'Africa/Douala',
-        'CANADÁ': 'America/Toronto',
         'CANADA': 'America/Toronto',
         'CHAD': 'Africa/Ndjamena',
         'CHILE': 'America/Santiago',
@@ -90,21 +81,17 @@
         'ECUADOR': 'America/Guayaquil',
         'EGIPTO': 'Africa/Cairo',
         'EL SALVADOR': 'America/El_Salvador',
-        'EMIRATOS ÁRABES UNIDOS': 'Asia/Dubai',
         'EMIRATOS ARABES UNIDOS': 'Asia/Dubai',
         'ERITREA': 'Africa/Asmara',
         'ESLOVAQUIA': 'Europe/Bratislava',
         'ESLOVENIA': 'Europe/Ljubljana',
-        'ESPAÑA': 'Europe/Madrid',
         'ESPANA': 'Europe/Madrid',
         'ESTADOS UNIDOS': 'America/New_York',
         'ESTONIA': 'Europe/Tallinn',
-        'ETIOPÍA': 'Africa/Addis_Ababa',
         'ETIOPIA': 'Africa/Addis_Ababa',
         'FILIPINAS': 'Asia/Manila',
         'FINLANDIA': 'Europe/Helsinki',
         'FRANCIA': 'Europe/Paris',
-        'GABÓN': 'Africa/Libreville',
         'GABON': 'Africa/Libreville',
         'GAMBIA': 'Africa/Banjul',
         'GEORGIA': 'Asia/Tbilisi',
@@ -113,13 +100,10 @@
         'GUATEMALA': 'America/Guatemala',
         'GUINEA': 'Africa/Conakry',
         'GUINEA ECUATORIAL': 'Africa/Malabo',
-        'GUINEA-BISÁU': 'Africa/Bissau',
         'GUINEA-BISAU': 'Africa/Bissau',
         'GUYANA': 'America/Guyana',
-        'HAITÍ': 'America/Port-au-Prince',
         'HAITI': 'America/Port-au-Prince',
         'HONDURAS': 'America/Tegucigalpa',
-        'HUNGRÍA': 'Europe/Budapest',
         'HUNGRIA': 'Europe/Budapest',
         'INDIA': 'Asia/Kolkata',
         'IRLANDA': 'Europe/Dublin',
@@ -127,17 +111,13 @@
         'ISRAEL': 'Asia/Jerusalem',
         'ITALIA': 'Europe/Rome',
         'JAMAICA': 'America/Jamaica',
-        'JAPÓN': 'Asia/Tokyo',
         'JAPON': 'Asia/Tokyo',
         'JORDANIA': 'Asia/Amman',
-        'KAZAJISTÁN': 'Asia/Almaty',
         'KAZAJISTAN': 'Asia/Almaty',
         'KENIA': 'Africa/Nairobi',
-        'KIRGUISTÁN': 'Asia/Bishkek',
         'KIRGUISTAN': 'Asia/Bishkek',
         'KUWAIT': 'Asia/Kuwait',
         'LAOS': 'Asia/Vientiane',
-        'LÍBANO': 'Asia/Beirut',
         'LIBANO': 'Asia/Beirut',
         'LIBERIA': 'Africa/Monrovia',
         'LIBIA': 'Africa/Tripoli',
@@ -145,46 +125,35 @@
         'MADAGASCAR': 'Indian/Antananarivo',
         'MALASIA': 'Asia/Kuala_Lumpur',
         'MALAWI': 'Africa/Blantyre',
-        'MALÍ': 'Africa/Bamako',
         'MALI': 'Africa/Bamako',
         'MALTA': 'Europe/Malta',
         'MARRUECOS': 'Africa/Casablanca',
         'MAURICIO': 'Indian/Mauritius',
         'MAURITANIA': 'Africa/Nouakchott',
-        'MÉXICO': 'America/Mexico_City',
         'MEXICO': 'America/Mexico_City',
         'MOLDAVIA': 'Europe/Chisinau',
-        'MÓNACO': 'Europe/Monaco',
         'MONACO': 'Europe/Monaco',
         'MONGOLIA': 'Asia/Ulaanbaatar',
         'MONTENEGRO': 'Europe/Podgorica',
         'MOZAMBIQUE': 'Africa/Maputo',
         'NAMIBIA': 'Africa/Windhoek',
         'NICARAGUA': 'America/Managua',
-        'NÍGER': 'Africa/Niamey',
         'NIGER': 'Africa/Niamey',
         'NIGERIA': 'Africa/Lagos',
         'NORUEGA': 'Europe/Oslo',
         'NUEVA ZELANDA': 'Pacific/Auckland',
-        'OMÁN': 'Asia/Muscat',
         'OMAN': 'Asia/Muscat',
-        'PAÍSES BAJOS': 'Europe/Amsterdam',
         'PAISES BAJOS': 'Europe/Amsterdam',
-        'PAKISTÁN': 'Asia/Karachi',
         'PAKISTAN': 'Asia/Karachi',
-        'PANAMÁ': 'America/Panama',
         'PANAMA': 'America/Panama',
         'PARAGUAY': 'America/Asuncion',
-        'PERÚ': 'America/Lima',
         'PERU': 'America/Lima',
         'POLONIA': 'Europe/Warsaw',
         'PORTUGAL': 'Europe/Lisbon',
         'PUERTO RICO': 'America/Puerto_Rico',
         'QATAR': 'Asia/Qatar',
         'REINO UNIDO': 'Europe/London',
-        'REPÚBLICA DOMINICANA': 'America/Santo_Domingo',
         'REPUBLICA DOMINICANA': 'America/Santo_Domingo',
-        'RUMANÍA': 'Europe/Bucharest',
         'RUMANIA': 'Europe/Bucharest',
         'RUSIA': 'Europe/Moscow',
         'RUANDA': 'Africa/Kigali',
@@ -192,16 +161,13 @@
         'SERBIA': 'Europe/Belgrade',
         'SINGAPUR': 'Asia/Singapore',
         'SIRIA': 'Asia/Damascus',
-        'SUDÁFRICA': 'Africa/Johannesburg',
         'SUDAFRICA': 'Africa/Johannesburg',
         'SUECIA': 'Europe/Stockholm',
         'SUIZA': 'Europe/Zurich',
         'TAILANDIA': 'Asia/Bangkok',
         'TANZANIA': 'Africa/Dar_es_Salaam',
         'TOGO': 'Africa/Lome',
-        'TÚNEZ': 'Africa/Tunis',
         'TUNEZ': 'Africa/Tunis',
-        'TURQUÍA': 'Europe/Istanbul',
         'TURQUIA': 'Europe/Istanbul',
         'UCRANIA': 'Europe/Kyiv',
         'UGANDA': 'Africa/Kampala',
@@ -237,9 +203,84 @@
         return ZONAS_HORARIAS[normalizarTexto(pais)] || null;
     }
 
-    function obtenerMatricula() {
-        const input = document.querySelector('input[data-id="cf_matricula"]');
+    function obtenerIdTicketActual() {
+        const coincidencia = window.location.pathname.match(
+            /\/tickets\/details\/(\d+)/i
+        );
+
+        return coincidencia?.[1] || '';
+    }
+
+    function obtenerMemoriaMatriculas() {
+        try {
+            const memoria = GM_getValue(CLAVE_MEMORIA_MATRICULAS, {});
+
+            return memoria && typeof memoria === 'object'
+                ? memoria
+                : {};
+        } catch {
+            return {};
+        }
+    }
+
+    function guardarMatriculaDelTicket(idTicket, matricula) {
+        if (!idTicket || !matricula) return;
+
+        const memoria = obtenerMemoriaMatriculas();
+
+        memoria[idTicket] = {
+            matricula: matricula.trim(),
+            fecha: Date.now()
+        };
+
+        const entradasOrdenadas = Object.entries(memoria)
+            .sort(([, datoA], [, datoB]) => {
+                return (datoB?.fecha || 0) - (datoA?.fecha || 0);
+            })
+            .slice(0, LIMITE_MEMORIA_MATRICULAS);
+
+        try {
+            GM_setValue(
+                CLAVE_MEMORIA_MATRICULAS,
+                Object.fromEntries(entradasOrdenadas)
+            );
+        } catch {
+            // El script sigue funcionando aunque la memoria falle.
+        }
+    }
+
+    function obtenerMatriculaGuardadaDelTicket() {
+        const idTicket = obtenerIdTicketActual();
+
+        if (!idTicket) return '';
+
+        const memoria = obtenerMemoriaMatriculas();
+        const dato = memoria[idTicket];
+
+        return dato?.matricula?.trim() || '';
+    }
+
+    function obtenerMatriculaVisible() {
+        const input = document.querySelector(
+            'input[data-id="cf_matricula"]'
+        );
+
         return input?.value?.trim() || '';
+    }
+
+    function obtenerMatricula() {
+        const matriculaVisible = obtenerMatriculaVisible();
+
+        if (matriculaVisible) {
+            guardarMatriculaDelTicket(
+                obtenerIdTicketActual(),
+                matriculaVisible
+            );
+
+            return matriculaVisible;
+        }
+
+        return obtenerMatriculaGuardadaDelTicket();
     }
 
     function obtenerDestinoPanel() {
@@ -287,6 +328,14 @@
                     <span class="cactus-texto-carga">
                         Esperando los datos de la matrícula…
                     </span>
+
+                    <button
+                        id="cactus-reiniciar-busqueda"
+                        class="cactus-reiniciar-busqueda"
+                        type="button"
+                    >
+                        Reinicializar búsqueda
+                    </button>
                 </div>
 
                 <div class="cactus-fila">
@@ -297,6 +346,13 @@
                 <div class="cactus-fila">
                     <span>Estado matrícula</span>
                     <strong id="cactus-estado-matricula">—</strong>
+                </div>
+
+                <div class="cactus-seccion-titulo">Formación</div>
+
+                <div class="cactus-fila cactus-fila-curso">
+                    <span>Curso</span>
+                    <strong id="cactus-curso" title="">—</strong>
                 </div>
 
                 <div class="cactus-fila">
@@ -353,12 +409,24 @@
                     <strong id="cactus-fin">—</strong>
                 </div>
 
-                <button id="cactus-consultar" type="button">
-                    Actualizar datos
-                </button>
-
-                <a id="cactus-enlace" href="#" target="_blank" rel="noopener noreferrer">
+                <a
+                    id="cactus-enlace"
+                    class="cactus-boton-innotutor"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
                     Abrir matrícula en Innotutor
+                </a>
+
+                <a
+                    id="cactus-enlace-curso"
+                    class="cactus-enlace-secundario cactus-oculto"
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Abrir acción formativa
                 </a>
 
                 <small id="cactus-estado"></small>
@@ -371,9 +439,8 @@
             panel.classList.toggle('cactus-cerrado');
         });
 
-        panel.querySelector('#cactus-consultar').addEventListener('click', () => {
-            consultarDatos(true);
-        });
+        panel.querySelector('#cactus-reiniciar-busqueda')
+            .addEventListener('click', reiniciarBusqueda);
 
         iniciarCambioImagenes();
 
@@ -456,6 +523,23 @@
         transicionEnCurso = false;
     }
 
+    function reiniciarBusqueda() {
+        ultimaMatriculaDetectada = '';
+        ultimaMatriculaConsultada = '';
+        consultaEnCurso = false;
+
+        mostrarCarga(
+            'Buscando matrícula',
+            'Revisando de nuevo los datos del ticket…'
+        );
+
+        procesarMatricula();
+
+        setTimeout(procesarMatricula, 500);
+        setTimeout(procesarMatricula, 1200);
+        setTimeout(procesarMatricula, 2500);
+    }
+
     function mostrarCarga(titulo, mensaje) {
         const cargador = document.getElementById('cactus-cargando');
 
@@ -495,12 +579,6 @@
             .replace(/[()]/g, '')
             .trim();
 
-        /*
-         * Convierte formatos como:
-         * 2819,79 -> 2819.79
-         * 2.819,79 -> 2819.79
-         * -138,87 -> -138.87
-         */
         limpio = limpio.replace(/\./g, '').replace(',', '.');
 
         const numero = Number.parseFloat(limpio);
@@ -527,10 +605,6 @@
         let cantidadPagos = 0;
         let cantidadReembolsos = 0;
 
-        /*
-         * Se toman exclusivamente las líneas confirmadas con la clase tick-16.
-         * En el HTML adjunto, el importe visible está dentro del label de ese bloque.
-         */
         const pagosConfirmados = documento.querySelectorAll(
             '#pagos .tick-16 label'
         );
@@ -647,6 +721,7 @@
         const ids = [
             'cactus-matricula',
             'cactus-estado-matricula',
+            'cactus-curso',
             'cactus-pais',
             'cactus-hora',
             'cactus-importe-total',
@@ -673,19 +748,26 @@
 
         document.getElementById('cactus-fila-universitaria')
             ?.classList.add('cactus-oculto');
+
+        const enlaceCurso = document.getElementById('cactus-enlace-curso');
+
+        if (enlaceCurso) {
+            enlaceCurso.href = '#';
+            enlaceCurso.classList.add('cactus-oculto');
+        }
     }
 
     function actualizarVistaInicial(matricula) {
         const campoMatricula = document.getElementById('cactus-matricula');
-        const enlace = document.getElementById('cactus-enlace');
+        const enlaceMatricula = document.getElementById('cactus-enlace');
         const estado = document.getElementById('cactus-estado');
 
-        if (!campoMatricula || !enlace || !estado) return;
+        if (!campoMatricula || !enlaceMatricula || !estado) return;
 
         if (!matricula) {
             limpiarDatos();
 
-            enlace.href = '#';
+            enlaceMatricula.href = '#';
             estado.textContent = '';
 
             mostrarCarga(
@@ -699,12 +781,14 @@
         limpiarDatos();
 
         campoMatricula.textContent = matricula;
-        enlace.href = `${URL_INNOTUTOR}${encodeURIComponent(matricula)}`;
+        enlaceMatricula.href =
+            `${URL_INNOTUTOR}${encodeURIComponent(matricula)}`;
+
         estado.textContent = 'Matrícula detectada. Consultando Innotutor…';
 
         mostrarCarga(
             'Consultando Innotutor',
-            'Recuperando datos, fechas y pagos de la matrícula…'
+            'Recuperando curso, datos, fechas y pagos de la matrícula…'
         );
     }
 
@@ -736,7 +820,8 @@
         const campoEstadoMatricula = document.getElementById(
             'cactus-estado-matricula'
         );
-
+        const campoCurso = document.getElementById('cactus-curso');
+        const enlaceCurso = document.getElementById('cactus-enlace-curso');
         const campoInicio = document.getElementById('cactus-inicio');
         const campoFin = document.getElementById('cactus-fin');
 
@@ -763,6 +848,21 @@
         if (campoEstadoMatricula) {
             campoEstadoMatricula.textContent =
                 datos.estadoMatricula || 'No disponible';
+        }
+
+        if (campoCurso) {
+            campoCurso.textContent = datos.curso || 'No disponible';
+            campoCurso.title = datos.curso || '';
+        }
+
+        if (enlaceCurso) {
+            if (datos.urlCurso) {
+                enlaceCurso.href = datos.urlCurso;
+                enlaceCurso.classList.remove('cactus-oculto');
+            } else {
+                enlaceCurso.href = '#';
+                enlaceCurso.classList.add('cactus-oculto');
+            }
         }
 
         if (campoInicio) {
@@ -812,27 +912,33 @@
         iniciarHoraLocal(datos.pais);
     }
 
+    function obtenerUrlCurso(documento) {
+        const contenedorCurso = documento.querySelector('#imagenAAFF');
+        const onclick = contenedorCurso?.getAttribute('onclick') || '';
+
+        const coincidencia = onclick.match(
+            /window\.open\(\s*['"]([^'"]+)['"]\s*\)/i
+        );
+
+        return coincidencia?.[1] || '';
+    }
+
     function consultarDatos(forzar = false) {
         const matricula = obtenerMatricula();
-
         const estado = document.getElementById('cactus-estado');
-        const boton = document.getElementById('cactus-consultar');
 
-        if (!matricula || !estado || !boton) return;
+        if (!matricula || !estado) return;
         if (consultaEnCurso) return;
         if (!forzar && matricula === ultimaMatriculaConsultada) return;
 
         consultaEnCurso = true;
         ultimaMatriculaConsultada = matricula;
 
-        boton.disabled = true;
-        boton.textContent = 'Consultando…';
-
         estado.textContent = 'Recuperando información desde Innotutor…';
 
         mostrarCarga(
             'Consultando Innotutor',
-            'Recuperando datos, fechas y pagos de la matrícula…'
+            'Recuperando curso, datos, fechas y pagos de la matrícula…'
         );
 
         const url = `${URL_INNOTUTOR}${encodeURIComponent(matricula)}`;
@@ -844,9 +950,6 @@
 
             onload: respuesta => {
                 consultaEnCurso = false;
-
-                boton.disabled = false;
-                boton.textContent = 'Actualizar datos';
 
                 if (obtenerMatricula() !== matricula) return;
 
@@ -877,6 +980,14 @@
                             )
                             ?.textContent
                             ?.trim() || '',
+
+                    curso:
+                        documento
+                            .querySelector('#txtNombreCurso')
+                            ?.value
+                            ?.trim() || '',
+
+                    urlCurso: obtenerUrlCurso(documento),
 
                     inicio:
                         documento
@@ -925,9 +1036,6 @@
 
             onerror: () => {
                 consultaEnCurso = false;
-
-                boton.disabled = false;
-                boton.textContent = 'Reintentar consulta';
 
                 if (obtenerMatricula() !== matricula) return;
 
@@ -1055,6 +1163,25 @@
                 font-variant-numeric: tabular-nums;
             }
 
+            #${PANEL_ID} .cactus-fila-curso {
+                align-items: center;
+            }
+
+            #${PANEL_ID} .cactus-fila-curso span {
+                flex: 0 0 auto;
+            }
+
+            #${PANEL_ID} .cactus-fila-curso strong {
+                display: -webkit-box;
+                max-width: 68%;
+                overflow: hidden;
+                line-height: 1.3;
+                text-align: right;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+            }
+
             #${PANEL_ID} .cactus-seccion-titulo {
                 margin-top: 12px;
                 padding: 6px 0 5px;
@@ -1067,7 +1194,7 @@
             }
 
             #${PANEL_ID} .cactus-oculto {
-                display: none;
+                display: none !important;
             }
 
             #${PANEL_ID} .cactus-pago-pendiente {
@@ -1086,31 +1213,29 @@
                 color: #39769f !important;
             }
 
-            #${PANEL_ID} button {
+            #${PANEL_ID} .cactus-boton-innotutor {
+                display: block;
                 width: 100%;
-                margin-top: 14px;
-                padding: 9px 10px;
+                margin-top: 16px;
+                padding: 11px 10px;
                 color: #ffffff;
-                background: #91b996;
-                border: 0;
-                border-radius: 5px;
+                background: #5d8c65;
+                border-radius: 6px;
+                box-shadow: 0 2px 4px rgba(63, 112, 73, .16);
                 cursor: pointer;
                 font-size: 13px;
-                font-weight: 600;
-                transition: background .18s ease;
+                font-weight: 700;
+                text-align: center;
+                text-decoration: none;
+                transition: background .18s ease, transform .18s ease;
             }
 
-            #${PANEL_ID} button:hover {
-                background: #709d77;
+            #${PANEL_ID} .cactus-boton-innotutor:hover {
+                background: #3f7049;
+                transform: translateY(-1px);
             }
 
-            #${PANEL_ID} button:disabled {
-                color: #f7fbf7;
-                background: #bed5c0;
-                cursor: wait;
-            }
-
-            #${PANEL_ID} #cactus-enlace {
+            #${PANEL_ID} .cactus-enlace-secundario {
                 display: block;
                 margin-top: 10px;
                 color: #5d8c65;
@@ -1120,7 +1245,7 @@
                 text-decoration: none;
             }
 
-            #${PANEL_ID} #cactus-enlace:hover {
+            #${PANEL_ID} .cactus-enlace-secundario:hover {
                 color: #3f7049;
                 text-decoration: underline;
             }
@@ -1163,6 +1288,22 @@
                 color: #718673;
                 font-size: 11px;
                 line-height: 1.4;
+            }
+
+            #${PANEL_ID} .cactus-reiniciar-busqueda {
+                margin-top: 7px;
+                padding: 8px 12px;
+                color: #ffffff;
+                background: #5d8c65;
+                border: 0;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 12px;
+                font-weight: 700;
+            }
+
+            #${PANEL_ID} .cactus-reiniciar-busqueda:hover {
+                background: #3f7049;
             }
 
             #${PANEL_ID} .cactus-spinner {
@@ -1222,7 +1363,6 @@
 
     iniciar();
 })();
-
 
 
 // CACTUS BETTER IA
