@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cactus
 // @namespace    xanxs-cactus-extension
-// @version      1.5
+// @version      1.6
 // @description  Recupera país, hora, fechas, estado de matrícula y estado de pago desde Innotutor.
 // @match        https://soporte.educaedtech.com/*
 // @grant        GM_xmlhttpRequest
@@ -283,11 +283,17 @@
         return obtenerMatriculaGuardadaDelTicket();
     }
 
-    function obtenerDestinoPanel() {
-        return document.querySelector(
-            '[data-id="marketplacePanel"] [data-test-id="CardContent"]'
-        );
-    }
+function obtenerDestinoPanel() {
+    const panelMercado = document.querySelector(
+        '[data-id="marketplacePanel"][aria-hidden="false"]'
+    );
+
+    if (!panelMercado) return null;
+
+    return panelMercado.querySelector(
+        '[data-id="CardContent"], [data-selector-id="cardContent"]'
+    );
+}
 
     function crearPanel() {
         if (document.getElementById(PANEL_ID)) return true;
