@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Cactus
 // @namespace    xanxs-cactus-extension
-// @version      1.6
+// @version      1.7
 // @description  Recupera país, hora, fechas, estado de matrícula y estado de pago desde Innotutor.
 // @match        https://soporte.educaedtech.com/*
 // @grant        GM_xmlhttpRequest
@@ -1377,7 +1377,10 @@ function obtenerDestinoPanel() {
 (() => {
   'use strict';
 
-  const SELECTOR = '[data-id="CommentContentWrapper"]';
+  const SELECTOR = [
+  '[data-id="CommentContentWrapper"]',
+  '[data-id="content"].zd_v2-conversationlistcommon-contentWrapper'
+    ].join(', ');
 
   const MARCADOR_BORRADOR = '[BORRADOR IA - revisar antes de enviar]';
   const MARCADOR_ESCALADO = '[AGENTE IA - ESCALADO A PERSONA]';
@@ -1735,35 +1738,58 @@ function obtenerDestinoPanel() {
     contenedor.appendChild(layout);
   }
 
-  function procesarComentario(contenedor) {
-    if (contenedor.dataset.cactusProcesado === 'true') return;
+function procesarComentario(contenedor) {
+  // Si el diseño de Cactus sigue presente, no volver a procesarlo.
+  if (
+    Array.from(contenedor.children).some(
+      elemento => elemento.classList.contains('cactus-layout')
+    )
+  ) {
+    return;
+  }
 
-    const textoCompleto = contenedor.innerText.trim();
+  const textoCompleto = (
+    contenedor.innerText || contenedor.textContent || ''
+  ).trim();
 
-    const esBorrador = textoCompleto.startsWith(MARCADOR_BORRADOR);
-    const esEscalado = textoCompleto.startsWith(MARCADOR_ESCALADO);
+  const esBorrador = textoCompleto.startsWith(MARCADOR_BORRADOR);
+  const esEscalado = textoCompleto.startsWith(MARCADOR_ESCALADO);
 
-    if (!esBorrador && !esEscalado) return;
+  if (!esBorrador && !esEscalado) return;
 
-    contenedor.dataset.cactusProcesado = 'true';
+  const marcador = esBorrador
+    ? MARCADOR_BORRADOR
+    : MARCADOR_ESCALADO;
 
-    ocultarSoloCabecera(contenedor);
+  const textoSinMarcador = textoCompleto
+    .slice(marcador.length)
+    .trim();
 
-    if (esBorrador) {
-      const textoSinMarcador = textoCompleto
-        .slice(MARCADOR_BORRADOR.length)
-        .trim();
+  // Esperar si todavía no se ha cargado contenido útil.
+  if (!textoSinMarcador) return;
 
-      procesarBorrador(contenedor, textoSinMarcador);
-      return;
-    }
+  if (esBorrador) {
+    const { propuesta } = separarBorrador(textoSinMarcador);
 
-    const textoSinMarcador = textoCompleto
-      .slice(MARCADOR_ESCALADO.length)
-      .trim();
+    if (!propuesta) return;
+  } else {
+    const { contenido } = separarConfianza(textoSinMarcador);
 
+    if (!contenido) return;
+  }
+
+  // Limpiar el estado anterior si la aplicación reutilizó el elemento.
+  contenedor.classList.remove('cactus-borrador', 'cactus-escalado');
+
+  if (esBorrador) {
+    procesarBorrador(contenedor, textoSinMarcador);
+  } else {
     procesarEscalado(contenedor, textoSinMarcador);
   }
+
+  contenedor.dataset.cactusProcesado = 'true';
+  ocultarSoloCabecera(contenedor);
+}
 
   function escanear() {
     document.querySelectorAll(SELECTOR).forEach(procesarComentario);
@@ -1969,8 +1995,9 @@ function obtenerDestinoPanel() {
     temporizador = setTimeout(escanear, 150);
   });
 
-  observer.observe(document.documentElement, {
-    childList: true,
-    subtree: true
-  });
+observer.observe(document.documentElement, {
+  childList: true,
+  subtree: true,
+  characterData: true
+});
 })();
